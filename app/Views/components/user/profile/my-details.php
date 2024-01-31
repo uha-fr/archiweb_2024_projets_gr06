@@ -114,4 +114,22 @@
           </form>
         </div>
 
+<script type="text/javascript">
+  $("#update-user-details-btn").click(function(e){
+      if($("#form-data")[0].checkValidity()){
+          e.preventDefault();
+  
+          performAjaxRequest(
+            "POST",
+            "update-user-details",
+            "",
+            "User details updated successfully!",
+            ""
+          );
+          
+          
+      }
+  });
+  </script>
+
 
