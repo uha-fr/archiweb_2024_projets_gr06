@@ -60,6 +60,22 @@ require_once $rootPath . '/Config/Globals.php'
     </div>
   </div>
 
+  <script src="<?=BASE_APP_DIR?>/public/js/ajax.js"></script>
+
+  <script type="text/javascript">
+    $("#login").click(function(e) {
+      console.log("dans login");
+      if ($("#form-data")[0].checkValidity()) {
+        e.preventDefault();
+        performAjaxRequest(
+          "POST",
+          "login",
+          "",
+          "User login successfully!"
+        );
+      }
+    });
+  </script>
 
 </body>
 

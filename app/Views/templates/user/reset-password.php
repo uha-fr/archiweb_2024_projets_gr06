@@ -45,6 +45,24 @@ require_once $rootPath . '/Config/Globals.php'
   </div>
 
 
+  <script src="<?=BASE_APP_DIR?>/public/js/ajax.js"></script>
+  <script type="text/javascript">
+    $("#resetPassword").click(function(e) {
+      if ($("#form-data")[0].checkValidity()) {
+        e.preventDefault();
+
+        performAjaxRequest(
+          "POST",
+          "resetPassword",
+          "",
+          "New password Email sent successfully!",
+          ""
+        );
+      }
+    });
+  </script>
+
+
 </body>
 
 </html>

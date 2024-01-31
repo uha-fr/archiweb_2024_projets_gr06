@@ -73,6 +73,8 @@ function generateTabLink($currentTab, $tabName, $label)
     </div>
   </div>
 
+  <script src="<?=BASE_APP_DIR?>/public/js/ajax.js"></script>
+
 
 </body>
 

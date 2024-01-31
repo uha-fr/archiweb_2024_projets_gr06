@@ -53,3 +53,16 @@ require_once $rootPath . '/Config/Globals.php'
   <?php endif; ?>
 </header>
 
+<script src="<?=BASE_APP_DIR ?>/public/js/ajax.js"></script>
+<script type="text/javascript">
+  $("#logout").click(function(e) {
+    e.preventDefault();
+    performAjaxRequest(
+      "GET",
+      "logout",
+      "",
+      "User logout successfully!"
+    );
+  });
+</script>
+

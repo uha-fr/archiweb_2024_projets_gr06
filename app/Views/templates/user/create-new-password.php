@@ -87,7 +87,37 @@ require_once $rootPath . '/Config/Globals.php'
       </div>
     </div>
 
+    <script src="<?=BASE_APP_DIR ?>/public/js/ajax.js"></script>
+<script type="text/javascript">
+
+$("#newPassword").click(function(e){
+    if($("#form-data")[0].checkValidity()){
+        e.preventDefault();
+
+        var password = $("#password").val();
+        var confirmPassword = $("#confPassword").val();
+
+        // Check if passwords match
+        if(password !== confirmPassword) {
+            Swal.fire({
+                title: 'failed!',
+                text: 'Passwords do not match.',
+                icon: 'error'
+            });
+            return; // Don't submit the form data
+        }
+
+        performAjaxRequest(
+          "POST",
+          "newPassword",
+          "",
+          "Password updated successfully!",
+          ""
+        );
+    }
+});
    
+</script>
 
   </body>
 </html>

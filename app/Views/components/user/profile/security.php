@@ -54,3 +54,33 @@
           </form>
         </div>
 
+<script type="text/javascript">
+$("#update-user-credentials-btn").click(function(e){
+    if($("#form-data")[0].checkValidity()){
+        e.preventDefault();
+
+        var password = $("#password").val();
+        var confirmPassword = $("#repeat_password").val();
+
+        // Check if passwords match
+        if(password !== confirmPassword) {
+            Swal.fire({
+                title: 'Update failed!',
+                text: 'Passwords do not match.',
+                icon: 'error'
+            });
+            return; // Don't submit the form data
+        }
+        performAjaxRequest(
+          "POST",
+          "update-user-credentials",
+          "",
+          "User password updated successfully!",
+          ""
+        );
+        
+    }
+});
+   
+</script>
+

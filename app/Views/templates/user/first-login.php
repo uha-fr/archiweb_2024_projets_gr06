@@ -93,6 +93,78 @@ require_once $rootPath . '/Config/Globals.php'
   </div>
 
 
+  <script type="text/javascript">
+    $("#firstLogin").click(function(e) {
+      if ($("#form-data")[0].checkValidity()) {
+        e.preventDefault();
+
+        // Get user input
+        var age = parseInt($('input[name="age"]').val());
+        var height = parseFloat($('input[name="height"]').val());
+        var weight = parseFloat($('input[name="weight"]').val());
+        var goal = $('#goal').val();
+        var gender = $('#gender').val();
+
+        // Calculate Basal Metabolic Rate (BMR) using the Harris-Benedict equation
+        var bmr = (gender === 'male') ?
+          (88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)) :
+          (447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age));
+
+        // Adjust BMR based on activity level (moderate activity level is assumed here)
+        var dailyCalories = bmr * 1.55;
+
+        // Adjust calorie intake based on the goal
+        switch (goal) {
+          case 'gain-weight-normal':
+            dailyCalories += 500; // Increase by 500 for weight gain
+            break;
+          case 'lose-weight-normal':
+            dailyCalories -= 500; // Decrease by 500 for weight loss
+            break;
+          case 'lose-weight-fast':
+            dailyCalories -= 1000; // Decrease by 1000 for fast weight loss
+            break;
+        }
+
+        var formData = $("#form-data").serialize() + "&action=first-login&dailyCalories=" + dailyCalories.toFixed(2);
+
+        // Swal to confirm user information
+        Swal.fire({
+          title: '<strong>Confirm Your Details</strong>',
+          icon: 'info',
+          html: `<div style="text-align: left;">
+                    <p><b>Gender:</b> ${gender}</p>
+                    <p><b>Age:</b> ${age} years</p>
+                    <p><b>Height:</b> ${height} cm</p>
+                    <p><b>Weight:</b> ${weight} kg</p>
+                    <p><b>Estimated Daily Calorie Needs:</b> ${dailyCalories.toFixed(2)} calories</p>
+                </div>`,
+          showCancelButton: true,
+          confirmButtonText: 'Confirm Details',
+          cancelButtonText: 'Review Information',
+          buttonsStyling: true,
+          customClass: {
+            confirmButton: 'swal-confirm-button',
+            cancelButton: 'swal-cancel-button'
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // AJAX call if user confirms
+
+            performAjaxRequest(
+              "POST",
+              "first-login",
+              "&dailyCalories=" + dailyCalories.toFixed(2),
+              "Profile Created Successfully!"
+            );
+
+          }
+        });
+      }
+    });
+  </script>
+
+
 
 </body>
 
