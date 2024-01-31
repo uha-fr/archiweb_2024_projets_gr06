@@ -16,5 +16,6 @@ function recipesCont()
 {
     
     $recipes = $this->obj->getRecipesList();
+    require_once"Views/templates/user/recipes-list.php";
 }
 }
