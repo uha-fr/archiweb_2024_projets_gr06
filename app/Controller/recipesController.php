@@ -14,8 +14,24 @@ class RecipesController{
 
 function recipesCont()
 {
-    
+    header('Content-Type: application/json');
     $recipes = $this->obj->getRecipesList();
-    require_once"Views/templates/user/recipes-list.php";
+        // Start output buffering
+        ob_start();
+        // Include the view file, the $data variable will be used there
+        require VIEWSDIR.DS.'components'.DS.'user'.DS.'recipes'.DS."recipes-table.php";
+        
+        // Store the buffer content into ¨$output variable
+        $output = ob_get_clean();
+    
+        // Return JSON
+        if ($recipes) {
+            echo json_encode(['message' => $output]);
+            exit;
+        } else {
+           echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">No recipe found!!</h3>']);
+           exit;
+        }
+    }
 }
-}
+?>
