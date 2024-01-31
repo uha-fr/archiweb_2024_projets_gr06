@@ -92,7 +92,7 @@ require_once $rootPath . '/Config/Globals.php'
     </div>
   </div>
 
-
+  <script src="<?=BASE_APP_DIR ?>/public/js/ajax.js"></script>
   <script type="text/javascript">
     $("#firstLogin").click(function(e) {
       if ($("#form-data")[0].checkValidity()) {
