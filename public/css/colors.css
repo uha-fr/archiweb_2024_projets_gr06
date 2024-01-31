@@ -1,0 +1,55 @@
+:root {
+  --bg-color: #f8ede3;
+  --main-color: #678e48;
+  --gray-color: #b0b29f;
+  --accent-color: #d6ff92;
+  --red-color: #ffb0b0;
+}
+
+.bg-bg {
+  background-color: #f8ede3;
+}
+.bg-main {
+  background-color: #678e48;
+}
+.bg-gray {
+  background-color: #b0b29f;
+}
+.bg-accent {
+  background-color: #d6ff92;
+}
+.bg-red {
+  background-color: #ffb0b0;
+}
+
+.text-bg {
+  color: #f8ede3;
+}
+.text-main {
+  color: #678e48;
+}
+.text-gray {
+  color: #b0b29f;
+}
+.text-accent {
+  color: #d6ff92;
+}
+.text-red {
+  color: #ffb0b0;
+}
+
+.border-bg {
+  border-color: #f8ede3;
+}
+.border-main {
+  border-color: #678e48;
+}
+.border-gray {
+  border-color: #b0b29f;
+}
+.border-accent {
+  border-color: #d6ff92;
+}
+.border-red {
+  border-color: #ffb0b0;
+}

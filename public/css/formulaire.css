@@ -1,0 +1,32 @@
+.header {
+    text-align: center;
+    padding: 10px;
+}
+form {
+    width: 300px;
+    margin: auto;
+    display: none; /* Hide forms by default */
+}
+input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+button:hover {
+    opacity: 0.8;
+}
+.active-form {
+    display: block;
+}
