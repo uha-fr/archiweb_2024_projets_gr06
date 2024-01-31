@@ -46,7 +46,7 @@ require_once $rootPath . '/../../Config/Globals.php'
                 <hr class="my-1">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="table-responsive" id="showRecipes">
+                        <div class="table-responsive" id="RecipeList">
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ require_once $rootPath . '/../../Config/Globals.php'
         $(document).ready(function() {
 
             performAjaxRequest(
-                "GET",
+                "POST",
                 "showAllRecipes",
                 "",
                 "",
