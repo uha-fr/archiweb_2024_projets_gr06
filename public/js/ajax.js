@@ -194,7 +194,10 @@ function performAjaxRequest(
         handleAjaxResponseResetPassword(response, successTitle, successMessage);
       } else if (action == "newPassword") {
         handleAjaxResponseNewPassword(response, successTitle, successMessage);
-      } else if (action == "showAllUsers") {
+      } else if (action == "showAllRecipes") {
+        $("#RecipeList").html(response.message);
+        $("table").DataTable({ order: [2, "desc"] });
+      }else if (action == "showAllUsers") {
         $("#showUser").html(response.message);
         $("table").DataTable({ order: [0, "desc"] });
       } else if (action == "update-user-details") {
