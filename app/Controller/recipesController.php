@@ -16,8 +16,5 @@ function recipesCont()
 {
     
     $recipes = $this->obj->getRecipesList();
-    
-    require_once 'app/Views/recipesList.php';
-    require_once 'app/Views/addRecipe.php';
 }
 }
