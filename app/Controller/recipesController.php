@@ -18,10 +18,10 @@ function recipesCont()
     $recipes = $this->obj->getRecipesList();
         // Start output buffering
         ob_start();
-        // Include the view file, the $data variable will be used there
+        // Include the view file and use $recipes variable to show the recipes array as a table
         require VIEWSDIR.DS.'components'.DS.'user'.DS.'recipes'.DS."recipes-table.php";
         
-        // Store the buffer content into ¨$output variable
+        // Store the buffer content in $output
         $output = ob_get_clean();
     
         // Return JSON
