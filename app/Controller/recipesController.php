@@ -2,7 +2,7 @@
 
 namespace Manger\Controller;
 
-use Manger\Model\RecipesModel; // fonctionnel
+use Manger\Model\RecipesModel;
 
 class RecipesController
 {
