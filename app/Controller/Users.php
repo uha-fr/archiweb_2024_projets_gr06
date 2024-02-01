@@ -19,38 +19,40 @@ class Users
 
 
 
-    public function GETPage($page){
-        require_once VIEWSDIR.DS.'UserView.php';
+    public function GETPage($page)
+    {
+        require_once VIEWSDIR . DS . 'UserView.php';
 
         $UserView = new UserView();
 
-        $html=$UserView->view_page($page);
+        $html = $UserView->view_page($page);
 
         echo $html;
         http_response_code(200);
     }
 
-   
-public function showAllUsers() {
-    header('Content-Type: application/json');
-    $data = $this->userModel->getAllUsers();
 
-    // Start output buffering
-    ob_start();
-    // Include the view file, the $data variable will be used there
-    require VIEWSDIR.DS.'components'.DS.'admin'.DS.'users-table.php';
-    // Store the buffer content into a variable
-    $output = ob_get_clean();
+    public function showAllUsers()
+    {
+        header('Content-Type: application/json');
+        $data = $this->userModel->getAllUsers();
 
-    // Return JSON
-    if ($data) {
-        echo json_encode(['message' => $output]);
-        exit;
-    } else {
-       echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">:( No users present in the database!</h3>']);
-       exit;
+        // Start output buffering
+        ob_start();
+        // Include the view file, the $data variable will be used there
+        require VIEWSDIR . DS . 'components' . DS . 'admin' . DS . 'users-table.php';
+        // Store the buffer content into a variable
+        $output = ob_get_clean();
+
+        // Return JSON
+        if ($data) {
+            echo json_encode(['message' => $output]);
+            exit;
+        } else {
+            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">:( No users present in the database!</h3>']);
+            exit;
+        }
     }
-}
 
 
 
@@ -73,7 +75,7 @@ public function showAllUsers() {
         //User with the same email already exists
         if ($this->userModel->findUserByEmail($data['email'])) {
             header('Content-Type: application/json');
-          //  http_response_code(400); 
+            //  http_response_code(400); 
             echo json_encode(['success' => false, 'message' => 'Email already exists']);
             return;
         }
@@ -97,23 +99,23 @@ public function showAllUsers() {
 
     public function login()
     {
-         // Sanitize email
-    $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+        // Sanitize email
+        $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
 
-    // Passwords should not be altered too much but trim whitespace
-    $password = trim($_POST['password'] ?? '');
+        // Passwords should not be altered too much but trim whitespace
+        $password = trim($_POST['password'] ?? '');
 
-    // Initialize data
-    $data = [
-        'email' => $email,
-        'password' => $password
-    ];
+        // Initialize data
+        $data = [
+            'email' => $email,
+            'password' => $password
+        ];
 
         if ($this->userModel->findUserByEmail($data['email'])) {
             //User found
             $loggerInUser = $this->userModel->login($data['email'], $data['password']);
             if ($loggerInUser) {
-                $this->createUserSession($loggerInUser);
+                //$this->createUserSession($loggerInUser);
                 echo json_encode(['success' => true]);
                 exit;
             } else {
