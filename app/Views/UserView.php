@@ -1,17 +1,21 @@
 <?php
 
-namespace Manger\View;
+namespace Manger\Views;
 
-require_once VIEWSDIR.DS.'utils'.DS.'global.php';
+class UserView
+{
 
-class UserView {
-
-    function view_page($page){
+    function view_page($page)
+    {
         start_stream();
 
-        include TEMPLATESDIR.DS.'user'.DS.$page.'.php';
+        $filePath = TEMPLATESDIR . DS . 'user' . DS . $page . '.php';
 
+        if (file_exists($filePath)) {
+            include $filePath;
+        } else {
+            include TEMPLATESDIR . DS . 'user' . DS . 'login.php';
+        }
         return end_stream();
     }
-    
 }

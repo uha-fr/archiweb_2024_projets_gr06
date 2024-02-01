@@ -1,8 +1,3 @@
-<?php
-$rootPath = ROOT;
-require_once $rootPath . '/Config/Globals.php'
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +6,7 @@ require_once $rootPath . '/Config/Globals.php'
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="<?=BASE_APP_DIR ?>/public/css/colors.css" />
+  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/colors.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -22,7 +17,7 @@ require_once $rootPath . '/Config/Globals.php'
 <body>
   <!-- HEADER -->
   <?php
-  include_once VIEWSDIR.DS.'components'.DS.'header.php';
+  include_once VIEWSDIR . DS . 'components' . DS . 'header.php';
 
 
   if (isset($_SESSION['age']) && $_SESSION['age'] !== null) {
@@ -92,7 +87,7 @@ require_once $rootPath . '/Config/Globals.php'
     </div>
   </div>
 
-  <script src="<?=BASE_APP_DIR ?>/public/js/ajax.js"></script>
+  <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
   <script type="text/javascript">
     $("#firstLogin").click(function(e) {
       if ($("#form-data")[0].checkValidity()) {

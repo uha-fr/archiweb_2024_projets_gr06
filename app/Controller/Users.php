@@ -4,7 +4,7 @@ namespace Manger\Controller;
 
 use Manger\Model\User; // fonctionnel
 use Manger\Helpers\Session_Helper; // fonctionnel
-use Manger\View\UserView;
+use Manger\Views\UserView;
 
 class Users
 {
@@ -21,7 +21,6 @@ class Users
 
     public function GETPage($page)
     {
-        require_once VIEWSDIR . DS . 'UserView.php';
 
         $UserView = new UserView();
 
@@ -115,7 +114,7 @@ class Users
             //User found
             $loggerInUser = $this->userModel->login($data['email'], $data['password']);
             if ($loggerInUser) {
-                //$this->createUserSession($loggerInUser);
+                $this->createUserSession($loggerInUser);
                 echo json_encode(['success' => true]);
                 exit;
             } else {
@@ -124,6 +123,124 @@ class Users
             }
         } else {
             echo json_encode(['success' => false, 'message' => 'No user found']);
+            exit;
+        }
+    }
+
+    public function createUserSession($user)
+    {
+        $_SESSION['id'] = $user->id;
+        $_SESSION['fullname'] = $user->fullname;
+        $_SESSION['email'] = $user->email;
+        $_SESSION['height'] = $user->height;
+        $_SESSION['age'] = $user->age;
+        $_SESSION['weight'] = $user->weight;
+        $_SESSION['goal'] = $user->goal;
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['id']);
+        unset($_SESSION['fullname']);
+        unset($_SESSION['email']);
+        unset($_SESSION['height']);
+        unset($_SESSION['age']);
+        unset($_SESSION['weight']);
+        unset($_SESSION['goal']);
+
+        session_destroy();
+        echo json_encode(['success' => true]);
+        exit;
+    }
+
+    /////////////////////////// USER SETTINGS /////////////////////////////////////
+    public function update_user_details()
+    {
+
+        $id = filter_var(trim($_POST['user_id'] ?? ''), FILTER_SANITIZE_NUMBER_INT);
+        $fullname = filter_var(trim($_SESSION['fullname'] ?? ''), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $goal = filter_var(trim($_POST['goal'] ?? ''), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $height = filter_var(trim($_POST['height'] ?? ''), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $weight = filter_var(trim($_POST['weight'] ?? ''), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $age = filter_var(trim($_POST['age'] ?? ''), FILTER_SANITIZE_NUMBER_INT);
+
+        //Init data
+        $data = [
+            'id' => $id,
+            'fullname' => $fullname,
+            'goal' => $goal,
+            'height' => $height,
+            'weight' => $weight,
+            'age' => $age
+        ];
+
+        if ($this->userModel->update_user_details($data)) {
+            $updatedUser = $this->userModel->getUserById($data['id']);
+            $this->createUserSession($updatedUser);
+            echo json_encode(['success' => true]);
+            exit;
+        } else {
+            echo json_encode(['success' => false, 'message' => 'No user found']);
+            exit;
+        }
+    }
+
+
+    public function update_user_credentials()
+    {
+
+
+        //Init data
+        $data = [
+            'id' => $_SESSION['id'],
+            'email' => trim($_POST['email'], FILTER_SANITIZE_EMAIL),
+            'old_password' => trim($_POST['old_password']),
+            'new_password' => trim($_POST['new_password']),
+        ];
+
+        if ($this->userModel->update_user_credentials($data)) {
+            $updatedUser = $this->userModel->getUserById($data['id']);
+            $this->createUserSession($updatedUser);
+            echo json_encode(['success' => true]);
+            exit;
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Old password incorrect']);
+            exit;
+        }
+    }
+
+    public function update_user_first_login()
+    {
+        // Sanitize each POST field individually
+        $id = filter_var(trim($_POST['id'] ?? ''), FILTER_SANITIZE_NUMBER_INT);
+        $fullname = filter_var(trim($_SESSION['fullname'] ?? ''), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $goal = filter_var(trim($_POST['goal'] ?? ''), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $height = filter_var(trim($_POST['height'] ?? ''), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $weight = filter_var(trim($_POST['weight'] ?? ''), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $age = filter_var(trim($_POST['age'] ?? ''), FILTER_SANITIZE_NUMBER_INT);
+        $gender = filter_var(trim($_POST['gender'] ?? ''), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $dailyCalories = filter_var(trim($_POST['dailyCalories'] ?? ''), FILTER_SANITIZE_NUMBER_INT);
+
+        // Initialize data
+        $data = [
+            'id' => $id,
+            'fullname' => $fullname,
+            'goal' => $goal,
+            'height' => $height,
+            'weight' => $weight,
+            'age' => $age,
+            'gender' => $gender,
+            'dailyCalories' => $dailyCalories
+        ];
+
+
+        if ($this->userModel->update_user_first_login($data)) {
+            $updatedUser = $this->userModel->getUserById($data['id']);
+            $this->createUserSession($updatedUser);
+            echo json_encode(['success' => true]);
+            exit;
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Something went wrong']);
             exit;
         }
     }

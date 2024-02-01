@@ -1,9 +1,12 @@
-<?php 
+<?php
+
 namespace Manger\Model;
+
 use Config\Database;
 
 
-class RecipesModel{
+class RecipesModel
+{
     private $db;
     public function __construct()
     {
@@ -11,17 +14,15 @@ class RecipesModel{
         $this->db = new Database();
     }
 
-function getRecipesList()
-{        
-    $sql = "SELECT * FROM recipes";
-    $this->db->query($sql);
-    $row = $this->db->single();
-    if ($this->db->rowCount() > 0) {
-        return $row;
-    } else {
-        return false;
+    function getRecipesList()
+    {
+        $sql = "SELECT * FROM recipes";
+        $this->db->query($sql);
+        $row = $this->db->single();
+        if ($this->db->rowCount() > 0) {
+            return $row;
+        } else {
+            return false;
+        }
     }
-    
-}
-
 }

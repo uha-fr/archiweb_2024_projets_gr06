@@ -1,9 +1,9 @@
 <?php
 
-require_once CONTROLLERSDIR . DS . 'Users.php';
-require_once CONTROLLERSDIR . DS . 'ResetPasswords.php';
+namespace Manger;
 
-use Manger\Controller;
+use Manger\Controller\Users;
+use Manger\Controller\ResetPasswords;
 
 
 class Router
@@ -13,8 +13,8 @@ class Router
 
     public function __construct()
     {
-        $this->userController = new \Manger\Controller\Users();
-        $this->resetPasswordController = new \Manger\Controller\ResetPasswords();
+        $this->userController = new Users();
+        $this->resetPasswordController = new ResetPasswords();
     }
 
 
@@ -59,7 +59,7 @@ class Router
                     $this->userController->update_user_credentials();
                     break;
                 case 'first-login':
-                    //$this->userController->update_user_first_login();
+                    $this->userController->update_user_first_login();
                     break;
                 case 'showAllUsers':
                     $this->userController->showAllUsers();

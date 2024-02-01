@@ -1,7 +1,3 @@
-<?php
-$rootPath = realpath(dirname(__FILE__));
-require_once $rootPath . '/../../Config/Globals.php'
-?>
 <!DOCTYPE html>
 <html lang="en">
 

@@ -2,7 +2,6 @@
 
 use Config\Database;
 // Include the database configuration file
-require_once '../Config/Database.php';
 
 // Create a new instance of the database class
 $db = new Database();
