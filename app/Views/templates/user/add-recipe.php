@@ -19,7 +19,7 @@ require_once $rootPath . '/../../Config/Globals.php'
 <body>
   <!-- HEADER -->
   <?php
-  include_once 'header.php';
+  include_once VIEWSDIR . DS . 'components' . DS . 'header.php';
   ?>
   <!-- BODY -->
   <div class="w-full min-h-screen pl-[180px] bg-bg">
