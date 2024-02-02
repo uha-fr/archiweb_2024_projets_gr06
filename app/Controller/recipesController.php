@@ -11,7 +11,7 @@ class RecipesController{
     {
         $this->obj= New RecipesModel();
     }
-//-----------------Get All Recipes
+//-----------------Get All Recipes-----------------------
 function recipesCont()
 {
     header('Content-Type: application/json');

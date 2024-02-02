@@ -8,8 +8,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Manger\\": "app"
-        }
+            "Manger\\": "app",
+            "PHPMailer\\PHPMailer\\": "app/PHPMailer/src/",
+            "Config\\": "Config/"
+        },
+        "files": [
+            "app/Views/utils/global.php",
+            "Config/Globals.php"
+        ]
     },
     "config": {
         "sort-packages": true
