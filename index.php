@@ -1,4 +1,8 @@
 <?php
+
+use Manger\Router;
+use Dotenv\Dotenv;
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -14,12 +18,8 @@ define('MODELSDIR', CLASSDIR . DS . 'Model');
 define('VIEWSDIR', CLASSDIR . DS . 'Views');
 define('TEMPLATESDIR', VIEWSDIR . DS . 'templates');
 
-require CLASSDIR . DS . 'Router.php';
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $r = new Router();
 $r->manageRequest();
-
-?>

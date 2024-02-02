@@ -2,8 +2,6 @@
 
 namespace Config;
 
-use Dotenv\Dotenv;
-
 /**
  * PDO Database Class
  * Connect to database

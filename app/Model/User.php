@@ -4,8 +4,6 @@ namespace Manger\Model;
 
 use Config\Database;
 
-require_once 'Config/Database.php';
-
 class User
 {
 
@@ -17,10 +15,11 @@ class User
         $this->db = new Database();
     }
 
-//Get all users for admin dashboard
-    public function getAllUsers(){
-        $data =array();
-        $sql ="SELECT * FROM users";
+    //Get all users for admin dashboard
+    public function getAllUsers()
+    {
+        $data = array();
+        $sql = "SELECT * FROM users";
 
         $this->db->query($sql);
 
@@ -28,16 +27,16 @@ class User
 
         if ($this->db->rowCount() > 0) {
 
-            foreach($rows as $row){
-                $data [] =$row;
+            foreach ($rows as $row) {
+                $data[] = $row;
             }
             return $data;
         } else {
             return false;
-        }  
+        }
     }
 
-//Get user details by ID
+    //Get user details by ID
     public function getUserById($userId)
     {
         $sql = "SELECT * FROM users WHERE id = :user_id";
@@ -55,7 +54,7 @@ class User
     }
 
 
-//Find user by Email
+    //Find user by Email
     public function findUserByEmail($email)
     {
         $this->db->query('SELECT * FROM users WHERE email = :email');
@@ -69,8 +68,8 @@ class User
             return false;
         }
     }
-  
-//Register function
+
+    //Register function
     public function register($data)
     {
         $this->db->query('INSERT INTO users (fullname,password,email,active,creation_date)
@@ -109,7 +108,7 @@ class User
         }
     }
 
-//Update user details
+    //Update user details
     public function update_user_details($data)
     {
         $this->db->query('UPDATE users SET fullname = :fullname, goal = :goal, height = :height, weight = :weight, age = :age WHERE id = :user_id');

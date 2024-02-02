@@ -36,7 +36,7 @@ class ResetPasswords
         //Sanitize POST data
         $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
 
-       
+
 
         if ($this->userModel->findUserByEmail($email)) {
 
@@ -45,7 +45,7 @@ class ResetPasswords
             $selector = bin2hex(random_bytes(8));
             //Will be used for confirmation once the database entry has been matched
             $token = random_bytes(32);
-        $url = 'http://localhost/calorie-tracker-php/calorie-tracker-php/create-new-password&selector=' . $selector . '&validator=' . bin2hex($token);
+            $url = 'http://localhost/calorie-tracker-php/calorie-tracker-php/create-new-password&selector=' . $selector . '&validator=' . bin2hex($token);
 
 
             //Expiration date will last for half an hour
@@ -100,7 +100,7 @@ class ResetPasswords
         ];
 
 
-        
+
         $url = '../create-new-password.php?selector=' . $data['selector'] . '&validator='
             . $data['validator'];
 
