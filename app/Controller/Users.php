@@ -5,6 +5,7 @@ namespace Manger\Controller;
 use Manger\Model\User; // fonctionnel
 use Manger\Helpers\Session_Helper; // fonctionnel
 use Manger\Views\UserView;
+use PDOException;
 
 class Users
 {
@@ -110,18 +111,20 @@ class Users
             'password' => $password
         ];
 
-        if ($this->userModel->findUserByEmail($data['email'])) {
-            //User found
-            $loggerInUser = $this->userModel->login($data['email'], $data['password']);
-            if ($loggerInUser) {
-                $this->createUserSession($loggerInUser);
-                echo json_encode(['success' => true]);
-                exit;
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Password Incorrect']);
-                exit;
+        try{
+            if ($this->userModel->findUserByEmail($data['email'])) {
+                //User found
+                $loggerInUser = $this->userModel->login($data['email'], $data['password']);
+                if ($loggerInUser) {
+                    $this->createUserSession($loggerInUser);
+                    echo json_encode(['success' => true]);
+                    exit;
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Password Incorrect']);
+                    exit;
+                }
             }
-        } else {
+        } catch(PDOException $e) {
             echo json_encode(['success' => false, 'message' => 'No user found']);
             exit;
         }
