@@ -64,6 +64,9 @@ class Router
                 case 'showAllUsers':
                     $this->userController->showAllUsers();
                     break;
+                case 'logout':
+                    $this->userController->logout();
+                    break;
                 default:
                     include __DIR__ . '/../Views/login.php';
                     exit;
@@ -75,6 +78,7 @@ class Router
                 $this->userController->GETPage("login");
                 exit();
             }
+            
             $this->userController->GETPage($requested);
         }
     }

@@ -52,7 +52,7 @@
   $("#logout").click(function(e) {
     e.preventDefault();
     performAjaxRequest(
-      "GET",
+      "POST",
       "logout",
       "",
       "User logout successfully!"

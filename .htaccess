@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Exclude directory paths
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Exclude file paths
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Route everything else to PHP router
+RewriteRule ^ index.php [QSA,L]
