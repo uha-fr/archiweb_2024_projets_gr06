@@ -30,12 +30,33 @@
 
               </div>
             </div>
+
             <div class="col-lg-6" style="max-width: 500px;">
               <h5 class="fw-bold">Timeline</h5>
               <div class="container bg-main rounded-3" style="height: 300px;">
 
               </div>
             </div>
+
+            <!-- HERE WE PUT THE DAILY MEALS -->
+            <div class="col-12" style="">
+              <h5 class="fw-bold">Daily Tracking</h5>
+              <div class="container-fluid bg-main rounded-3" style="min-height: 300px;">
+              <p class="text-bg fw-bold" style="margin-left: 28px; padding-top: 28px;">Today</p>
+              <div class="bg-gray rounded p-3 d-flex flex-wrap flex-row gap-4 container-fluid" style="width: 100%">
+                <?php
+                  include VIEWSDIR.DS.'components'.DS.'user'.DS.'dashboard'.DS.'meal.php';
+                ?>
+
+                <div class="d-flex flex-column justify-content-center bg-bg p-4 rounded" style="width: fit-content; width: 250px" >
+                    <img style="width: 60px; height: 60px; object-fit: cover; border-radius: 100%; margin-left: 50%; transform: translateX(-50%);" src="<?= BASE_APP_DIR ?>/public/images/icons/plus.png"/>
+                    <p class="fw-bold text-main text-center" style="font-size: 20px; padding-top: 0px;">Add new Item</p>
+                </div>
+              </div>
+              
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
