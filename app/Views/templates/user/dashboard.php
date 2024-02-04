@@ -41,7 +41,7 @@
             <!-- HERE WE PUT THE DAILY MEALS -->
             <div class="col-12" style="">
               <h5 class="fw-bold">Daily Tracking</h5>
-              <div class="container-fluid bg-main rounded-3" style="min-height: 300px;">
+              <div class="container-fluid bg-main rounded-3 pb-4" style="min-height: 300px;">
               <p class="text-bg fw-bold" style="margin-left: 28px; padding-top: 28px;">Today</p>
               <div class="bg-gray rounded p-3 d-flex flex-wrap flex-row gap-4 container-fluid" style="width: 100%">
                 <?php
