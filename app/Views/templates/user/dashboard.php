@@ -24,7 +24,7 @@
 
     <!-- BELL NOTIFICATIONS ICON -->
     <div class="position-absolute" style="right: 20px; top: 20px">
-      <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;">2</div>
+      <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;">0</div>
       <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" />
     </div>
 
