@@ -21,6 +21,14 @@
     ?>
     <!-- BODY -->
     <div class="bg-bg" style="min-height: 100vh; padding-left: 180px">
+
+    <!-- BELL NOTIFICATIONS ICON -->
+    <div class="position-absolute" style="right: 20px; top: 20px">
+      <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;">0</div>
+      <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" />
+    </div>
+
+    <!-- REST OF THE PAGE CONTENT -->
       <div class="px-5 pt-5">
         <div class="container-fluid">
           <div class="row gap-4">
@@ -37,6 +45,7 @@
 
               </div>
             </div>
+            
 
             <!-- HERE WE PUT THE DAILY MEALS -->
             <div class="col-12" style="">
