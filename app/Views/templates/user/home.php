@@ -26,7 +26,7 @@
   <div class="bg-bg" style="padding-left: 180px; min-height: 100vh;">
     <!-- Login Form-->
     <div class="container-fluid align-items-center flex-column d-flex" style="min-height: 100vh; padding-top: 80px">
-      <h1 class="text-5xl font-bold">Welcome ,
+      <h1 class="text-5xl font-bold">Welcome,
         <?php if (isset($_SESSION['id'])) {
           echo explode(" ", $_SESSION['fullname'])[0];
         } else {

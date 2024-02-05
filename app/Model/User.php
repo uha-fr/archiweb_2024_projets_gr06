@@ -73,11 +73,11 @@ class User
     public function register($data)
     {
         $this->db->query('INSERT INTO users (fullname,password,email,active,creation_date)
-        VALUES ( :fullname, :passwordd , :email , 1 , NOW() )');
+        VALUES ( :fullname, :password , :email, 1, NOW() )');
 
         // Bind the data from the $data array to the named placeholders
         $this->db->bind(':fullname', $data['fullname']);
-        $this->db->bind(':passwordd', $data['password']);
+        $this->db->bind(':password', $data['password']);
         $this->db->bind(':email', $data['email']);
 
         try {

@@ -1,9 +1,6 @@
-<?php
-$rootPath = realpath(dirname(__FILE__));
-require_once $rootPath . '/../../Config/Globals.php'
-?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -53,7 +50,7 @@ require_once $rootPath . '/../../Config/Globals.php'
       console.log("dans register");
       if ($("#form-data")[0].checkValidity()) {
         e.preventDefault();
-         performAjaxRequest(
+        performAjaxRequest(
           "POST",
           "addRecipe",
           "",
