@@ -79,7 +79,7 @@ class User
      *
      * Retrieves user details based on the provided email address.
      *
-     * @param string $email The email address of the user.
+     * @param $email The email address of the user.
      *
      * @return object|false An object representing the user data if found, or false if no user is found.
      */
