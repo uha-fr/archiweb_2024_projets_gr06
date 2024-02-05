@@ -164,7 +164,7 @@ class User
      *
      * @return bool True if the user details are updated successfully, false otherwise.
      */
-    public function update_user_details($data)
+    public function updateUserDetails($data)
     {
         $this->db->query('UPDATE users SET fullname = :fullname, goal = :goal, height = :height, weight = :weight, age = :age WHERE id = :user_id');
         $this->db->bind(':fullname', $data['fullname']);
@@ -190,7 +190,7 @@ class User
      *
      * @return bool True if the user credentials are updated successfully, false otherwise.
      */
-    public function update_user_credentials($data)
+    public function updateUserCredentials($data)
     {
         $this->db->query('SELECT password FROM users WHERE id = :user_id');
         $this->db->bind(':user_id', $data['id']);
@@ -225,7 +225,7 @@ class User
      *
      * @return bool True if the user account is updated successfully, false otherwise.
      */
-    public function update_user_first_login($data)
+    public function updateUserFirstLogin($data)
     {
         $this->db->query('UPDATE users SET goal = :goal, height = :height, weight = :weight, age = :age, gender= :gender,daily_caloriegoal = :dailyCalories WHERE id = :id');
         $this->db->bind(':goal', $data['goal']);

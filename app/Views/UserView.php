@@ -20,9 +20,9 @@ class UserView
      * @param mixed $page The page to be displayed.
      * @return string The captured content from the output buffer.
      */
-    function view_page($page)
+    function viewPage($page)
     {
-        start_stream();
+        startStream();
 
         $filePath = TEMPLATESDIR . DS . 'user' . DS . $page . '.php';
 
@@ -32,6 +32,6 @@ class UserView
             include TEMPLATESDIR . DS . 'user' . DS . 'login.php';
         }
 
-        return end_stream();
+        return endStream();
     }
 }

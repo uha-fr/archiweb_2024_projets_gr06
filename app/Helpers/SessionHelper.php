@@ -7,7 +7,7 @@ namespace Manger\Helpers;
  *
  * Provides helper methods for working with sessions, flash messages, and redirects.
  */
-class Session_helper
+class SessionHelper
 {
     /**
      * Start Session

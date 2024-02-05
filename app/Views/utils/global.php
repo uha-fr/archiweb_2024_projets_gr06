@@ -5,7 +5,7 @@
  *
  * @return void
  */
-function start_stream()
+function startStream()
 {
 	ob_start();
 };
@@ -17,7 +17,7 @@ function start_stream()
  *
  * @return string The captured content from the output buffer.
  */
-function end_stream()
+function endStream()
 {
 	$content = ob_get_clean();
 	return $content;

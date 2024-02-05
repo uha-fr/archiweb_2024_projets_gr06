@@ -45,7 +45,7 @@ class Users
 
         $UserView = new UserView();
 
-        $html = $UserView->view_page($page);
+        $html = $UserView->viewPage($page);
 
         echo $html;
         http_response_code(200);
@@ -216,7 +216,7 @@ class Users
      *
      * @return void
      */
-    public function update_user_details()
+    public function updateUserDetails()
     {
 
         $id = filter_var(trim($_POST['user_id'] ?? ''), FILTER_SANITIZE_NUMBER_INT);
@@ -236,7 +236,7 @@ class Users
             'age' => $age
         ];
 
-        if ($this->userModel->update_user_details($data)) {
+        if ($this->userModel->updateUserDetails($data)) {
             $updatedUser = $this->userModel->getUserById($data['id']);
             $this->createUserSession($updatedUser);
             echo json_encode(['success' => true]);
@@ -256,7 +256,7 @@ class Users
      *
      * @return void
      */
-    public function update_user_credentials()
+    public function updateUserCredentials()
     {
 
 
@@ -268,7 +268,7 @@ class Users
             'new_password' => trim($_POST['new_password']),
         ];
 
-        if ($this->userModel->update_user_credentials($data)) {
+        if ($this->userModel->updateUserCredentials($data)) {
             $updatedUser = $this->userModel->getUserById($data['id']);
             $this->createUserSession($updatedUser);
             echo json_encode(['success' => true]);
@@ -286,7 +286,7 @@ class Users
      *
      * @return void
      */
-    public function update_user_first_login()
+    public function updateUserFirstLogin()
     {
         // Sanitize each POST field individually
         $id = filter_var(trim($_POST['id'] ?? ''), FILTER_SANITIZE_NUMBER_INT);
@@ -311,7 +311,7 @@ class Users
         ];
 
 
-        if ($this->userModel->update_user_first_login($data)) {
+        if ($this->userModel->updateUserFirstLogin($data)) {
             $updatedUser = $this->userModel->getUserById($data['id']);
             $this->createUserSession($updatedUser);
             echo json_encode(['success' => true]);

@@ -29,7 +29,7 @@ class RecipesModel
      *
      * Retrieves the list of recipes from the database.
      *
-     * @return array|false An associative array representing the recipe data if found, or false if no recipes are found.
+     * @return object|false An associative array representing the recipe data if found, or false if no recipes are found.
      */
     public function getRecipesList()
     {
