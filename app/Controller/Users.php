@@ -2,15 +2,29 @@
 
 namespace Manger\Controller;
 
-use Manger\Model\User; // fonctionnel
-use Manger\Helpers\Session_Helper; // fonctionnel
+use Manger\Model\User;
 use Manger\Views\UserView;
 
+/**
+ * Controller for User-related things.
+ * 
+ * Handle actions such as registration, login, logout, and all modifications of attributes.
+ */
 class Users
 {
 
+    /**
+     * userModel
+     *
+     * @var User
+     */
     private $userModel;
 
+    /**
+     * Constructor
+     *
+     * Initializes the Users Controller with the User Model.
+     */
     public function __construct()
     {
 
@@ -18,7 +32,14 @@ class Users
     }
 
 
-
+    /**
+     * Display page from the View
+     *
+     * Renders and displays the specified page using the UserView.
+     *
+     * @param string $page The page to display.
+     * @return void
+     */
     public function GETPage($page)
     {
 
@@ -30,7 +51,13 @@ class Users
         http_response_code(200);
     }
 
-
+    /**
+     * Show All Users
+     *
+     * Retrieves all users from the model and display them through <strong>users-table.php</strong>.
+     *
+     * @return void
+     */
     public function showAllUsers()
     {
         header('Content-Type: application/json');
@@ -55,9 +82,17 @@ class Users
 
 
 
+    /**
+     * Register
+     * 
+     * Take the parameters from the _POST_ request, sanitize them and check in the database
+     * if they correspond to a user.
+     * If not, the password is hashed and all the data is sent to the Model to save it in the database.
+     *
+     * @return void
+     */
     public function register()
     {
-        //Process form
         // Sanitize email
         $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
         $fullname = trim($_POST['fullname'] ?? '');
@@ -79,8 +114,7 @@ class Users
             return;
         }
 
-        //Passed validation checks
-        //Hash password
+        //Passed validation checks so Hashing password
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
         //Register User
@@ -96,6 +130,14 @@ class Users
 
 
 
+    /**
+     * Login
+     * 
+     * Take the parameters from the _POST_ request, and check in the database if they correspond to a user.
+     * If so, a session with the user's parameters is created.
+     *
+     * @return void
+     */
     public function login()
     {
         // Sanitize email
@@ -111,7 +153,6 @@ class Users
         ];
 
         if ($this->userModel->findUserByEmail($data['email'])) {
-            //User found
             $loggerInUser = $this->userModel->login($data['email'], $data['password']);
             if ($loggerInUser) {
                 $this->createUserSession($loggerInUser);
@@ -127,6 +168,15 @@ class Users
         }
     }
 
+    /**
+     * Start the session.
+     * 
+     * Take the parameters of *$user* and put them in the session,
+     * attesting that the user is logged in.
+     *
+     * @param  mixed $user
+     * @return void
+     */
     public function createUserSession($user)
     {
         $_SESSION['id'] = $user->id;
@@ -138,6 +188,11 @@ class Users
         $_SESSION['goal'] = $user->goal;
     }
 
+    /**
+     * Remove data from the session, then destroy it.
+     *
+     * @return void
+     */
     public function logout()
     {
         unset($_SESSION['id']);
@@ -153,7 +208,14 @@ class Users
         exit;
     }
 
-    /////////////////////////// USER SETTINGS /////////////////////////////////////
+    /**
+     * Update User Details
+     *
+     * Updates user details after sainitizing them,
+     * then create a new session for the user.
+     *
+     * @return void
+     */
     public function update_user_details()
     {
 
@@ -186,6 +248,14 @@ class Users
     }
 
 
+    /**
+     * Update credentials.
+     * 
+     * Update important credentials in the database after sanitizing them,
+     * then create a new session for the user.
+     *
+     * @return void
+     */
     public function update_user_credentials()
     {
 
@@ -209,6 +279,13 @@ class Users
         }
     }
 
+    /**
+     * Update User First Login
+     *
+     * Updates user details in the database via the Model function during the first login.
+     *
+     * @return void
+     */
     public function update_user_first_login()
     {
         // Sanitize each POST field individually
