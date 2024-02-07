@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Application Entry Point
+ *
+ * Main entry point for the web application.
+ * It initializes essential settings, autoloads classes, environment variables
+ * and handles the incoming HTTP request through the router.
+ *
+ * @author gr06
+ * @version 1.0
+ */
+
 use Manger\Router;
 use Dotenv\Dotenv;
 

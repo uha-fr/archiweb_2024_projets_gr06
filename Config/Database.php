@@ -4,37 +4,37 @@ namespace Config;
 
 /**
  * PDO Database Class
- * Connect to database
- * Create prepared statements
- * Bind values
- * Return rows and results
+ * Connects to the database, creates prepared statements, binds values,
+ * and returns rows and results.
  */
-
 class Database
 {
-
-    /*
-    private $host = 'localhost:3308';
-    private $user = 'root';
-    private $pass = '';
-    private $dbname = 'ntierprojet';
-    */
-
-
-
-    // Will be the PDO object
+    /**
+     * @var \PDO The PDO object.
+     */
     private $dbh;
-    private $stmt;
-    private $error;
 
+    /**
+     * @var \PDOStatement The PDOStatement object.
+     */
+    private $stmt;
+
+    /**
+     * @var string|null Holds any error messages.
+     */
+    private $error;
+    /**
+     * Constructor
+     * Sets up the PDO connection using the environment variables found in the _.env_ file.
+     */
     public function __construct()
     {
         $host = $_ENV['DB_HOST'];
         $user = $_ENV['DB_USERNAME'];
-        $pass = $_ENV['DB_PASSWORD'];;
+        $pass = $_ENV['DB_PASSWORD'];
         $dbname = $_ENV['DB_DATABASE'];
-        // Set DSN
 
+        // Set DSN
         $dsn = 'mysql:host=' . $host . ';dbname=' . $dbname;
         $options = array(
             \PDO::ATTR_PERSISTENT => true,
@@ -50,13 +50,23 @@ class Database
         }
     }
 
-    // Prepare statement with query
+    /**
+     * Prepare statement with query
+     *
+     * @param string $sql The SQL query to prepare.
+     */
     public function query($sql)
     {
         $this->stmt = $this->dbh->prepare($sql);
     }
 
-    // Bind values to prepared statement using named parameters
+    /**
+     * Bind values to prepared statement using named parameters
+     *
+     * @param string $param The parameter name.
+     * @param mixed $value The value to bind.
+     * @param int|null $type The data type of the parameter.
+     */
     public function bind($param, $value, $type = null)
     {
         if (is_null($type)) {
@@ -77,27 +87,43 @@ class Database
         $this->stmt->bindValue($param, $value, $type);
     }
 
-    // Execute the prepared statement
+    /**
+     * Execute the prepared statement
+     *
+     * @return bool True if the execution is successful, false otherwise.
+     */
     public function execute()
     {
         return $this->stmt->execute();
     }
 
-    // Get result set as array of objects
+    /**
+     * Get result set as an array of associative arrays
+     *
+     * @return array The result set.
+     */
     public function resultSet()
     {
         $this->execute();
         return $this->stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    // Get single record as object
+    /**
+     * Get a single record as an object
+     *
+     * @return object The single record.
+     */
     public function single()
     {
         $this->execute();
         return $this->stmt->fetch(\PDO::FETCH_OBJ);
     }
 
-    // Get row count
+    /**
+     * Get the row count
+     *
+     * @return int The row count.
+     */
     public function rowCount()
     {
         return $this->stmt->rowCount();

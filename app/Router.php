@@ -53,13 +53,13 @@ class Router
                     $this->resetPasswordController->resetPassword();
                     break;
                 case 'update-user-details':
-                    $this->userController->update_user_details();
+                    $this->userController->updateUserDetails();
                     break;
                 case 'update-user-credentials':
-                    $this->userController->update_user_credentials();
+                    $this->userController->updateUserCredentials();
                     break;
                 case 'first-login':
-                    $this->userController->update_user_first_login();
+                    $this->userController->updateUserFirstLogin();
                     break;
                 case 'showAllUsers':
                     $this->userController->showAllUsers();
@@ -78,7 +78,7 @@ class Router
                 $this->userController->GETPage("login");
                 exit();
             }
-            
+
             $this->userController->GETPage($requested);
         }
     }
