@@ -32,7 +32,7 @@
             <a href=""><img src="<?= BASE_APP_DIR ?>/public/images/icons/calender.png" alt="" /></a>
           </li>
           <li>
-            <a href="recipes"><img src="<?= BASE_APP_DIR ?>/public/images/icons/market.png" alt="" /></a>
+            <a href="recipes-list"><img src="<?= BASE_APP_DIR ?>/public/images/icons/market.png" alt="" /></a>
           </li>
           <li>
             <a href="settings"><img src="<?= BASE_APP_DIR ?>/public/images/icons/user.png" alt="" /></a>
