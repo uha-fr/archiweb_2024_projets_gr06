@@ -15,7 +15,7 @@
         <img src="" alt="" />
       </a>
       <a class="logo" href="register">
-        S'inscrire
+        Register
         <img src="" alt="" />
       </a>
     </div>
