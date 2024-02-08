@@ -15,7 +15,7 @@ class RecipesModel
     {
         $sql = "SELECT * FROM recipes";
         $this->db->query($sql);
-        $row = $this->db->single();
+        $row = $this->db->resultSet();
         if ($this->db->rowCount() > 0) {
             return $row;
         } else {
@@ -26,7 +26,7 @@ class RecipesModel
     function addRecipe($donnees)
     {
 
-        $sql = "INSERT INTO  recipes(id,name,calories,image_url) VALUES (33,:name, :calories, :image_url )";
+        $sql = "INSERT INTO  recipes(name,calories,image_url) VALUES (:name, :calories, :image_url )";
         $this->db->query($sql);
         $this->db->bind(':name', $donnees['name']);
         $this->db->bind(':calories', $donnees['calories']);
