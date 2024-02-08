@@ -64,15 +64,16 @@ class Router
                 case 'first-login':
                     $this->userController->update_user_first_login();
                     break;
-                    case 'showAllRecipes':
-                        $this->recipesController ->recipesCont();
-                        break;
+                case 'showAllRecipes':
+                    $this->recipesController ->recipesCont();
+                    break;
+                case 'addRecipe':
+                    $this->recipesController ->addNewRecipe();
+                    break;
                 case 'showAllUsers':
                     $this->userController->showAllUsers();
                     break;
-                case 'addRecipe':
-                     $this->recipesController ->addNewRecipe();
-                     break;
+                
                 case 'logout':
                     $this->userController->logout();
                     break;
