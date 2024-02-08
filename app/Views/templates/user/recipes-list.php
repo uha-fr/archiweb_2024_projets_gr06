@@ -35,15 +35,16 @@
                     <div class="col-lg-6">
                     </div>
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary m1 float-right " data-toggle="modal" data-target="#addModel">Add new recipes</button>
+                        <a href="add-recipe" class="btn btn-primary m1 float-right " data-toggle="modal" data-target="#addModel">Add new recipes</a>
                     </div>
                 </div>
                 <hr class="my-1">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="table-responsive" id="RecipeList">
-                        </div>
+                 <div class="col-lg-12">
+                    <div class="row justify-content-center">
+                        <div  id="RecipeList"></div>
                     </div>
+                 </div>
                 </div>
                 </hr>
             </div>
