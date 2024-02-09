@@ -19,11 +19,7 @@ class ResetPasswordModel
         $this->db->bind(':email', $email);
 
         //Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->db->execute();
     }
 
     public function insertToken($email, $selector, $hashedToken, $expires)
@@ -36,17 +32,13 @@ class ResetPasswordModel
         $this->db->bind(':expires', $expires);
 
         //Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->db->execute();
     }
 
     public function resetPassword($selector, $currentDate)
     {
-        $this->db->query('SELECT * FROM pwdReset WHERE pwdResetSelector=:selector AND 
-        pwdResetExpires >= :currentDate');
+        $this->db->query('SELECT * FROM pwdReset WHERE pwdResetSelector=:selector AND
+            pwdResetExpires >= :currentDate');
         $this->db->bind(':selector', $selector);
         $this->db->bind(':currentDate', $currentDate);
 

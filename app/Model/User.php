@@ -4,6 +4,10 @@ namespace Manger\Model;
 
 use Config\Database;
 
+define('USER_ID',':user_id');
+define('EMAIL',':email');
+
+
 /**
  * User Class
  *
@@ -11,6 +15,7 @@ use Config\Database;
  */
 class User
 {
+    
     /**
      * @var Database The database instance.
      */
@@ -63,7 +68,7 @@ class User
         $sql = "SELECT * FROM users WHERE id = :user_id";
 
         $this->db->query($sql);
-        $this->db->bind(':user_id', $userId);
+        $this->db->bind(USER_ID, $userId);
 
         $row = $this->db->single();
 
@@ -86,7 +91,7 @@ class User
     public function findUserByEmail($email)
     {
         $this->db->query('SELECT * FROM users WHERE email = :email');
-        $this->db->bind(':email', $email);
+        $this->db->bind(EMAIL, $email);
 
         $row = $this->db->single();
 
@@ -113,14 +118,10 @@ class User
 
         $this->db->bind(':fullname', $data['fullname']);
         $this->db->bind(':password', $data['password']);
-        $this->db->bind(':email', $data['email']);
+        $this->db->bind(EMAIL, $data['email']);
 
         try {
-            if ($this->db->execute()) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->db->execute();
         } catch (\PDOException $e) {
             echo "Database error: " . $e->getMessage();
             return false;
@@ -129,10 +130,10 @@ class User
 
 
 
-    //Login user    
+    //Login user
     /**
      * Login
-     * 
+     *
      * Find the user with the $email in the database,
      * then hash $password to compare it to the hashed password of the user previously found.
      *
@@ -144,7 +145,7 @@ class User
     {
         $row = $this->findUserByEmail($email);
 
-        if ($row == false) return false;
+        if (!$row) {return false;}
 
         $hashedPassword = $row->password;
         if (password_verify($password, $hashedPassword)) {
@@ -166,19 +167,16 @@ class User
      */
     public function updateUserDetails($data)
     {
-        $this->db->query('UPDATE users SET fullname = :fullname, goal = :goal, height = :height, weight = :weight, age = :age WHERE id = :user_id');
+        $this->db->query('UPDATE users SET fullname = :fullname, goal = :goal, height = :height,
+             weight = :weight, age = :age WHERE id = :user_id');
         $this->db->bind(':fullname', $data['fullname']);
         $this->db->bind(':goal', $data['goal']);
         $this->db->bind(':height', $data['height']);
         $this->db->bind(':weight', $data['weight']);
         $this->db->bind(':age', $data['age']);
-        $this->db->bind(':user_id', $data['id']);
+        $this->db->bind(USER_ID, $data['id']);
 
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->db->execute();
     }
 
     /**
@@ -193,7 +191,7 @@ class User
     public function updateUserCredentials($data)
     {
         $this->db->query('SELECT password FROM users WHERE id = :user_id');
-        $this->db->bind(':user_id', $data['id']);
+        $this->db->bind(USER_ID, $data['id']);
         $this->db->execute();
         $currentPassword = $this->db->single()->password;
 
@@ -205,15 +203,11 @@ class User
 
         // Update credentials in the database
         $this->db->query('UPDATE users SET email = :email, password = :password WHERE id = :user_id');
-        $this->db->bind(':email', $data['email']);
+        $this->db->bind(EMAIL, $data['email']);
         $this->db->bind(':password', $hashedPassword);
-        $this->db->bind(':user_id', $data['id']);
+        $this->db->bind(USER_ID, $data['id']);
 
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->db->execute();
     }
 
     /**
@@ -227,7 +221,8 @@ class User
      */
     public function updateUserFirstLogin($data)
     {
-        $this->db->query('UPDATE users SET goal = :goal, height = :height, weight = :weight, age = :age, gender= :gender,daily_caloriegoal = :dailyCalories WHERE id = :id');
+        $this->db->query('UPDATE users SET goal = :goal, height = :height, weight = :weight, age = :age,
+            gender= :gender,daily_caloriegoal = :dailyCalories WHERE id = :id');
         $this->db->bind(':goal', $data['goal']);
         $this->db->bind(':height', $data['height']);
         $this->db->bind(':weight', $data['weight']);
@@ -237,11 +232,7 @@ class User
         $this->db->bind(':dailyCalories', $data['dailyCalories']);
 
         try {
-            if ($this->db->execute()) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->db->execute();
         } catch (\PDOException $e) {
             // Handle or log the exception
             error_log("PDOException: " . $e->getMessage()); // Exception logging
@@ -263,13 +254,9 @@ class User
     {
         $this->db->query('UPDATE users SET password=:pwd WHERE email=:email');
         $this->db->bind(':pwd', $newPwdHash);
-        $this->db->bind(':email', $tokenEmail);
+        $this->db->bind(EMAIL, $tokenEmail);
 
         //Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->db->execute();
     }
 }

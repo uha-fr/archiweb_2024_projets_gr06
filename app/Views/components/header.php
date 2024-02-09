@@ -1,4 +1,5 @@
-<header class="d-flex flex-column justify-content-between align-items-center bg-main position-fixed left-0 top-0" style="width: 180px; height: 100vh; padding: 80px 0;">
+<header class="d-flex flex-column justify-content-between align-items-center bg-main position-fixed left-0 top-0"
+        style="width: 180px; height: 100vh; padding: 80px 0;">
   <div>
     <!-- Logo -->
     <div class="logo">

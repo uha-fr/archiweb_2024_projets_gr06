@@ -31,18 +31,18 @@ class RecipesController
      * Retrieve and render recipes.
      *
      * Retrieves the list of recipes from the RecipesModel, includes the corresponding view file,
-     * and returns a JSON response with the rendered content. 
+     * and returns a JSON response with the rendered content.
      * If no recipes are found, a message indicating the response is displayed.
      *
      * @return void
      */
-    function recipesCont()
+    public function recipesCont()
     {
         header('Content-Type: application/json');
         $recipes = $this->obj->getRecipesList();
         ob_start();
 
-        require VIEWSDIR . DS . 'components' . DS . 'user' . DS . 'recipes' . DS . "recipes-table.php";
+        require_once VIEWSDIR . DS . 'components' . DS . 'user' . DS . 'recipes' . DS . "recipes-table.php";
 
         $output = ob_get_clean();
 
@@ -64,7 +64,7 @@ class RecipesController
      *
      * @return void
      */
-    function addNewRecipe()
+    public function addNewRecipe()
     {
 
         $name = filter_var(trim($_POST['name'] ?? ''), FILTER_SANITIZE_EMAIL);
@@ -84,6 +84,6 @@ class RecipesController
         } else {
             echo json_encode(['success' => false, 'message' => "there is a problem to add"]);
             exit;
-        };
+        }
     }
 }
