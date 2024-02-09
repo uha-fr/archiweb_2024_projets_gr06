@@ -4,6 +4,7 @@ namespace Manger\Controller;
 
 use Manger\Model\User;
 use Manger\Views\UserView;
+use Manger\Views\AdminView;
 
 /**
  * Controller for User-related things.
@@ -43,12 +44,26 @@ class Users
     public function GETPage($page)
     {
 
+        
+        if($page=="dashboardAdmin"){
+            $AdminView = new AdminView();
+
+            $html = $AdminView->view_page($page);
+
+          echo $html;
+           http_response_code(200);
+       
+            
+        }else{
+
+
         $UserView = new UserView();
 
         $html = $UserView->viewPage($page);
 
         echo $html;
         http_response_code(200);
+        }
     }
 
     /**
@@ -186,6 +201,9 @@ class Users
         $_SESSION['age'] = $user->age;
         $_SESSION['weight'] = $user->weight;
         $_SESSION['goal'] = $user->goal;
+        $_SESSION['role'] = $user->role;
+
+
     }
 
     /**
@@ -202,6 +220,8 @@ class Users
         unset($_SESSION['age']);
         unset($_SESSION['weight']);
         unset($_SESSION['goal']);
+        unset($_SESSION['role']);
+
 
         session_destroy();
         echo json_encode(['success' => true]);
