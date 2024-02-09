@@ -3,5 +3,3 @@ composer.lock
 .env
 doc/*
 db/*
-
-Config/Globals.php
