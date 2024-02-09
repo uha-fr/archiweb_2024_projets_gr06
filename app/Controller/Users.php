@@ -44,7 +44,18 @@ class Users
      * @return void
      */
     public function GETPage($page)
-    {
+    {  
+        if($page=="dashboardAdmin"){
+            $adminView = new AdminView();
+
+            $html = $adminView->view_page($page);
+
+          echo $html;
+           http_response_code(200);
+       
+            
+        }else{
+
 
         $userView = new UserView();
 
@@ -52,6 +63,7 @@ class Users
 
         echo $html;
         http_response_code(200);
+        }
     }
 
     /**
@@ -191,6 +203,9 @@ class Users
         $_SESSION['age'] = $user->age;
         $_SESSION['weight'] = $user->weight;
         $_SESSION['goal'] = $user->goal;
+        $_SESSION['role'] = $user->role;
+
+
     }
 
     /**
@@ -207,6 +222,8 @@ class Users
         unset($_SESSION['age']);
         unset($_SESSION['weight']);
         unset($_SESSION['goal']);
+        unset($_SESSION['role']);
+
 
         session_destroy();
         echo json_encode(['success' => true]);
