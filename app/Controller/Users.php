@@ -66,34 +66,7 @@ class Users
         }
     }
 
-    /**
-     * Show All Users
-     *
-     * Retrieves all users from the model and display them through <strong>users-table.php</strong>.
-     *
-     * @return void
-     */
-    public function showAllUsers()
-    {
-        header('Content-Type: application/json');
-        $data = $this->userModel->getAllUsers();
-
-        // Start output buffering
-        ob_start();
-        // Include the view file, the $data variable will be used there
-        require VIEWSDIR . DS . 'components' . DS . 'admin' . DS . 'users-table.php';
-        // Store the buffer content into a variable
-        $output = ob_get_clean();
-
-        // Return JSON
-        if ($data) {
-            echo json_encode(['message' => $output]);
-            exit;
-        } else {
-            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">:( No users present in the database!</h3>']);
-            exit;
-        }
-    }
+   
 
 
 

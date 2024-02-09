@@ -20,6 +20,7 @@ class AdminController
      * @var User
      */
     private $adminModel;
+    
 
     /**
      * Constructor
