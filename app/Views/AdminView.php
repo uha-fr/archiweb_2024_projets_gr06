@@ -7,7 +7,7 @@ class AdminView
 
     function view_page($page)
     {
-        start_stream();
+        startStream();
 
         $filePath = TEMPLATESDIR . DS . 'admin' . DS . $page . '.php';
 
@@ -16,6 +16,6 @@ class AdminView
         } else {
             include TEMPLATESDIR . DS . 'user' . DS . 'login.php';
         }
-        return end_stream();
+        return endStream();
     }
 }

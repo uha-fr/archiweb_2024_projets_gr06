@@ -4,7 +4,6 @@ if (isset($_SESSION['id']) ) {
   header('Location: home');
   exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
