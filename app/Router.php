@@ -2,6 +2,7 @@
 
 namespace Manger;
 
+use Manger\Controller\RecipesController;
 use Manger\Controller\Users;
 use Manger\Controller\AdminController;
 use Manger\Controller\ResetPasswords;
@@ -13,6 +14,7 @@ class Router
     private $adminController;
 
     private $resetPasswordController;
+    private $recipesController;
 
     public function __construct()
     {
@@ -20,6 +22,7 @@ class Router
         $this->adminController = new AdminController();
 
         $this->resetPasswordController = new ResetPasswords();
+        $this->recipesController = new RecipesController();
     }
 
 
@@ -66,9 +69,16 @@ class Router
                 case 'first-login':
                     $this->userController->updateUserFirstLogin();
                     break;
+                case 'showAllRecipes':
+                    $this->recipesController ->recipesCont();
+                    break;
+                case 'addRecipe':
+                    $this->recipesController ->addNewRecipe();
+                    break;
                 case 'showAllUsers':
                     $this->adminController->showAllUsers();
                     break;
+                
                 case 'logout':
                     $this->userController->logout();
                     break;
