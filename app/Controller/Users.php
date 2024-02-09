@@ -48,7 +48,7 @@ class Users
         if($page=="dashboardAdmin"){
             $adminView = new AdminView();
 
-            $html = $adminView->view_page($page);
+            $html = $adminView->viewPage($page);
 
           echo $html;
            http_response_code(200);

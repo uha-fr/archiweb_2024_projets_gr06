@@ -20,7 +20,7 @@ class AdminView
      * @param mixed $page The page to be displayed.
      * @return string The captured content from the output buffer.
      */
-    public function view_page($page)
+    public function viewPage($page)
     {
         startStream();
 
