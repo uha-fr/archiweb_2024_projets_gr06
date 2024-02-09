@@ -35,3 +35,13 @@
   background-color: var(--accent-color);
   color: black;
 }
+.list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+} 
+
+.item {
+  width: 30%;
+}
+
