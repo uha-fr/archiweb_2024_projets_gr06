@@ -29,15 +29,15 @@
           <input type="text" name="name" placeholder="Ex: Burger" class="py-3 px-4 rounded mt-2" required />
         </div>
         <div class="flex flex-column mt-4">
-          <label class="font-bold text-white">hhhhh</label>
+          <label class="font-bold text-white">calories number</label>
           <input type="number" name="calories" placeholder="Ex:300 " class="py-3 px-4 rounded mt-2" required />
         </div>
         <div class="flex flex-column mt-4">
-          <label class="font-bold text-white">Password</label>
+          <label class="font-bold text-white">image-url</label>
           <input type="text" id="image_url" name="image_url" placeholder="url temp" class="py-3 px-4 rounded mt-2" required />
         </div>
         <div class="flex flex-column mt-4">
-          <input type="submit" class="py-3 px-4 bg-[#d6ff92] rounded w-full" name="addRecipe" id="addRecipe" value="addRecipe">
+          <input type="submit" class="py-3 px-4 bg-[#d6ff92] rounded w-full" name="addRecipe" id="addRecipe" value="Add recipe">
         </div>
       </form>
     </div>
