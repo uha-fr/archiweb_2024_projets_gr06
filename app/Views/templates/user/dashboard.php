@@ -9,7 +9,6 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
     />
     <link rel="stylesheet" href="/calorie-tracker-php/public/css/colors.css" />
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="/calorie-tracker-php/public/css/global.css" />
@@ -24,8 +23,9 @@
 
     <!-- BELL NOTIFICATIONS ICON -->
     <div class="position-absolute" style="right: 20px; top: 20px">
-      <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;">0</div>
-      <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" />
+      <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" 
+      style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;">0</div>
+      <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="Image of a bell"/>
     </div>
 
     <!-- REST OF THE PAGE CONTENT -->
@@ -58,7 +58,8 @@
                 ?>
 
                 <div class="d-flex flex-column justify-content-center bg-bg p-4 rounded" style="width: fit-content; width: 250px" >
-                    <img style="width: 60px; height: 60px; object-fit: cover; border-radius: 100%; margin-left: 50%; transform: translateX(-50%);" src="<?= BASE_APP_DIR ?>/public/images/icons/plus.png"/>
+                    <img style="width: 60px; height: 60px; object-fit: cover; border-radius: 100%; margin-left: 50%; transform: translateX(-50%);" 
+                      src="<?= BASE_APP_DIR ?>/public/images/icons/plus.png" alt="Icon of a plus"/>
                     <p class="fw-bold text-main text-center" style="font-size: 20px; padding-top: 0px;">Add new Item</p>
                 </div>
               </div>

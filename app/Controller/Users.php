@@ -4,7 +4,10 @@ namespace Manger\Controller;
 
 use Manger\Model\User;
 use Manger\Views\UserView;
+use Manger\Views\AdminView;
 
+
+define('APPJSON','Content-Type: application/json');
 /**
  * Controller for User-related things.
  * 
@@ -43,9 +46,9 @@ class Users
     public function GETPage($page)
     {
 
-        $UserView = new UserView();
+        $userView = new UserView();
 
-        $html = $UserView->viewPage($page);
+        $html = $userView->viewPage($page);
 
         echo $html;
         http_response_code(200);
@@ -60,13 +63,14 @@ class Users
      */
     public function showAllUsers()
     {
-        header('Content-Type: application/json');
+        $adminView = new AdminView();
+        header(APPJSON);
         $data = $this->userModel->getAllUsers();
 
         // Start output buffering
         ob_start();
-        // Include the view file, the $data variable will be used there
-        require VIEWSDIR . DS . 'components' . DS . 'admin' . DS . 'users-table.php';
+        // Include the view file, the $data variable will be used there <- A modifier
+        $adminView->renderUserTable($data);
         // Store the buffer content into a variable
         $output = ob_get_clean();
 
@@ -75,7 +79,9 @@ class Users
             echo json_encode(['message' => $output]);
             exit;
         } else {
-            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">:( No users present in the database!</h3>']);
+            echo json_encode([
+                'message' => '<h3 class="text-center text-secondary mt-5">:( No users present in the database!</h3>'
+            ]);
             exit;
         }
     }
@@ -84,7 +90,7 @@ class Users
 
     /**
      * Register
-     * 
+     *
      * Take the parameters from the _POST_ request, sanitize them and check in the database
      * if they correspond to a user.
      * If not, the password is hashed and all the data is sent to the Model to save it in the database.
@@ -108,8 +114,7 @@ class Users
 
         //User with the same email already exists
         if ($this->userModel->findUserByEmail($data['email'])) {
-            header('Content-Type: application/json');
-            //  http_response_code(400); 
+            header(APPJSON);
             echo json_encode(['success' => false, 'message' => 'Email already exists']);
             return;
         }
@@ -118,7 +123,7 @@ class Users
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
         //Register User
-        header('Content-Type: application/json');
+        header(APPJSON);
         if ($this->userModel->register($data)) {
             echo json_encode(['success' => true, 'redirect' => 'login.php']);
             exit;
@@ -132,7 +137,7 @@ class Users
 
     /**
      * Login
-     * 
+     *
      * Take the parameters from the _POST_ request, and check in the database if they correspond to a user.
      * If so, a session with the user's parameters is created.
      *
@@ -170,7 +175,7 @@ class Users
 
     /**
      * Start the session.
-     * 
+     *
      * Take the parameters of *$user* and put them in the session,
      * attesting that the user is logged in.
      *
@@ -250,7 +255,7 @@ class Users
 
     /**
      * Update credentials.
-     * 
+     *
      * Update important credentials in the database after sanitizing them,
      * then create a new session for the user.
      *

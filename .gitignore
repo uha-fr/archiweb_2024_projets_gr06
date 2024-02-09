@@ -4,4 +4,4 @@ composer.lock
 doc/*
 db/*
 
-Config/Globals.php
+

@@ -66,7 +66,8 @@ class ResetPasswords
             // Generate reset link
             $selector = bin2hex(random_bytes(8));
             $token = random_bytes(32);
-            $url = 'http://localhost/calorie-tracker-php/calorie-tracker-php/create-new-password&selector=' . $selector . '&validator=' . bin2hex($token);
+            $url = 'http://localhost/calorie-tracker-php/calorie-tracker-php/create-new-password&selector='
+                . $selector . '&validator=' . bin2hex($token);
             $expires = date("U") + 1800;
 
             // Delete any existing entry for this email
@@ -125,6 +126,7 @@ class ResetPasswords
             'password' => $password
         ];
 
+        //Url jamais utilisée ?
         $url = '../create-new-password.php?selector=' . $data['selector'] . '&validator=' . $data['validator'];
         $currentDate = date("U");
 
