@@ -112,7 +112,8 @@ CREATE TABLE `recipes` (
   `image_url` varchar(255) DEFAULT NULL,
   `visibility` tinyint(1) DEFAULT NULL,
   `creation_date` datetime DEFAULT NULL,
-  `creator` int(11) DEFAULT NULL
+  `creator` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)  -- Define `id` as the primary key
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -229,7 +230,6 @@ ALTER TABLE `pwdreset`
 -- Index pour la table `recipes`
 --
 ALTER TABLE `recipes`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `creator` (`creator`);
 
 --

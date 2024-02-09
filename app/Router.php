@@ -76,7 +76,7 @@ class Router
                     $this->recipesController ->addNewRecipe();
                     break;
                 case 'showAllUsers':
-                    $this->userController->showAllUsers();
+                    $this->adminController->showAllUsers();
                     break;
                 
                 case 'logout':
@@ -101,6 +101,9 @@ class Router
             case 'countRegularUsers':
                 // Assuming you have an adminController or similar for handling admin-related actions
                 $this->adminController->countRegularUsers();
+                break;
+            case 'countNutritionistUsers':
+                $this->adminController->countNutritionistUsers();
                 break;
             // Add other GET actions here
             default:

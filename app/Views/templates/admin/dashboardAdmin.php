@@ -100,17 +100,17 @@
         </span>
       </li>
       <li>
-        <i class='bx bx-show-alt'></i>
+        <i class='bx bxs-face'></i>
         <span class="info">
-          <h3>3,944</h3>
-          <p>Site Visit</p>
+          <h3 id="nutritionistNumber">0</h3>
+          <p>Number nutritionist</p>
         </span>
       </li>
       <li>
-        <i class='bx bx-note'></i>
+        <i class='bx bxs-pizza'></i>
         <span class="info">
           <h3>14,721</h3>
-          <p>Searches</p>
+          <p>Number recipes</p>
         </span>
       </li>
       <li>
@@ -232,7 +232,16 @@
           "",
           ""
         );
+        performAjaxRequest(
+          "GET",
+          "countNutritionistUsers",
+          "",
+          "",
+          ""
+        );
      });
+
+     
     
   </script>
 
