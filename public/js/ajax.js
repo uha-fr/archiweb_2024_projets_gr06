@@ -19,6 +19,9 @@ function handleAjaxResponse(action, response, successTitle, successMessage, logo
     case 'update':
       redirectHref = "update"
       break;
+      case 'addRecipe':
+      redirectHref = "recipes-list"
+      break;
     default:
       redirectHref = "login"
       break;
