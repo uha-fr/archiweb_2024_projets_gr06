@@ -1,7 +1,7 @@
 <?php
 //app/Views/user/settings.php
 
-require_once CLASSDIR . DS . 'Helpers/Session_helper.php';
+require_once CLASSDIR . DS . 'Helpers/SessionHelper.php';
 
 
 $tab = $_GET['tab'] ?? 'my-details'; // Default to 'my-details' if no tab is set

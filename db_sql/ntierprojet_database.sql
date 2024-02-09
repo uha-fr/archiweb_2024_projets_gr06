@@ -105,7 +105,7 @@ INSERT INTO `pwdreset` (`pwdResetId`, `pwdResetEmail`, `pwdResetSelector`, `pwdR
 --
 
 CREATE TABLE `recipes` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `calories` float DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
@@ -155,7 +155,7 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `active` int(10) NOT NULL,
-  `creation_date` date NOT NULL DEFAULT current_timestamp(),
+  `creation_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `age` int(11) DEFAULT NULL,
   `role` varchar(250) NOT NULL DEFAULT 'Regular',
   `height` int(11) DEFAULT NULL,

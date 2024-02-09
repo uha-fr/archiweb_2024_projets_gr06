@@ -3,25 +3,42 @@
 namespace Manger\Controller;
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\Exception\Exception;
-use PHPMailer\PHPMailer\SMTP;
-
 use Manger\Model\ResetPasswordModel;
 use Manger\Model\User;
-use Manger\Helpers\Session_helper;
 
+/**
+ * Controller used to reset password
+ *
+ * Handles the logic for resetting passwords, including sending reset emails and processing password reset requests.
+ */
 class ResetPasswords
 {
+    /**
+     * @var ResetPasswordModel $resetModel An instance of the ResetPasswordModel class for accessing reset password data.
+     */
     private $resetModel;
+
+    /**
+     * @var User $userModel An instance of the User class for accessing user data.
+     */
     private $userModel;
+
+    /**
+     * @var PHPMailer $mail An instance of the PHPMailer class for sending emails.
+     */
     private $mail;
 
+    /**
+     * ResetPasswords constructor.
+     *
+     * Initializes a new instance of the ResetPasswords class with associated ResetPasswordModel, User, and PHPMailer instances.
+     */
     public function __construct()
     {
         $this->resetModel = new ResetPasswordModel();
         $this->userModel = new User();
 
-        //Setup PHPMailer
+        // Setup PHPMailer
         $this->mail = new PHPMailer();
         $this->mail->isSMTP();
         $this->mail->Host = 'sandbox.smtp.mailtrap.io';
@@ -31,26 +48,29 @@ class ResetPasswords
         $this->mail->Password = '8d600ff75fa3af';
     }
 
+    /**
+     * Send password reset email.
+     *
+     * This method initiates the process of sending a password reset email to a user.
+     * It sanitizes the provided email address via the corresponding Model, checks if the user exists,
+     * generates a secure reset link, and sends an email with the reset instructions.  
+     *
+     * @return void
+     */
     public function sendEmail()
     {
-        //Sanitize POST data
+        // Sanitize POST data
         $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
 
-
-
         if ($this->userModel->findUserByEmail($email)) {
-
-
-            //Will be used to query the user from the database
+            // Generate reset link
             $selector = bin2hex(random_bytes(8));
-            //Will be used for confirmation once the database entry has been matched
             $token = random_bytes(32);
-            $url = 'http://localhost/calorie-tracker-php/calorie-tracker-php/create-new-password&selector=' . $selector . '&validator=' . bin2hex($token);
-
-
-            //Expiration date will last for half an hour
+            $url = 'http://localhost/calorie-tracker-php/calorie-tracker-php/create-new-password&selector='
+                . $selector . '&validator=' . bin2hex($token);
             $expires = date("U") + 1800;
 
+            // Delete any existing entry for this email
             if (!$this->resetModel->deleteEmail($email)) {
                 echo json_encode(['success' => false, 'message' => 'There was an error 1']);
                 exit;
@@ -62,10 +82,10 @@ class ResetPasswords
                 exit;
             }
 
-            //Can send Email Now 
+            // Send Email
             $subject = "Reset your password";
-            $message = "<p>We recieved a password reset request.</p>";
-            $message .= "<p>Here is your password reset link : </p>";
+            $message = "<p>We received a password reset request.</p>";
+            $message .= "<p>Here is your password reset link:</p>";
             $message .= "<a href='" . $url . "'>" . $url . "</a>";
 
             $this->mail->setFrom('mr.smoke2015@gmail.com');
@@ -84,30 +104,33 @@ class ResetPasswords
         }
     }
 
+    /**
+     * Reset user password.
+     *
+     * Resets the user's password based on the provided *POST* request.
+     * This function processes the password reset request by going through the corresponding Model,
+     * validates the provided link, and updates the user's password if the link is valid.
+     *
+     * @return void
+     */
     public function resetPassword()
     {
-        //Sanitize POST data
-        // Sanitize each POST field individually
+        // Sanitize POST data
         $selector = filter_var(trim($_POST['selector'] ?? ''), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $validator = filter_var(trim($_POST['validator'] ?? ''), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $password = trim($_POST['password'] ?? ''); // Passwords should generally not be altered, just trimmed.
 
-        // Initialize data
         $data = [
             'selector' => $selector,
             'validator' => $validator,
             'password' => $password
         ];
 
-
-
-        $url = '../create-new-password.php?selector=' . $data['selector'] . '&validator='
-            . $data['validator'];
-
+        //Url jamais utilisée ?
+        $url = '../create-new-password.php?selector=' . $data['selector'] . '&validator=' . $data['validator'];
         $currentDate = date("U");
 
         if (!$row = $this->resetModel->resetPassword($data['selector'], $currentDate)) {
-
             echo json_encode(['success' => false, 'message' => 'Sorry. The link is no longer valid']);
             exit;
         }
@@ -115,8 +138,7 @@ class ResetPasswords
         $tokenBin = hex2bin($data['validator']);
         $tokenCheck = password_verify($tokenBin, $row->pwdResetToken);
         if (!$tokenCheck) {
-
-            echo json_encode(['success' => false, 'message' => 'You need to re-Submit your reset request']);
+            echo json_encode(['success' => false, 'message' => 'You need to re-submit your reset request']);
             exit;
         }
 
@@ -124,13 +146,11 @@ class ResetPasswords
 
         $newPwdHash = password_hash($data['password'], PASSWORD_DEFAULT);
         if (!$this->userModel->resetPassword($newPwdHash, $tokenEmail)) {
-
             echo json_encode(['success' => false, 'message' => 'There was an error ']);
             exit;
         }
 
         if (!$this->resetModel->deleteEmail($tokenEmail)) {
-
             echo json_encode(['success' => false, 'message' => 'There was an error deleting email']);
             exit;
         }

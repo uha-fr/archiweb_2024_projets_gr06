@@ -2,6 +2,7 @@
 
 
     <table class="table table-striped table-sm table-bordered">
+        <caption> Table of all the users </caption>
         <thead>
             <tr class="text-center">
                 <th>ID</th>

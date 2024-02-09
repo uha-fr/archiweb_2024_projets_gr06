@@ -4,18 +4,23 @@ namespace Manger;
 
 use Manger\Controller\RecipesController;
 use Manger\Controller\Users;
+use Manger\Controller\AdminController;
 use Manger\Controller\ResetPasswords;
 
 
 class Router
 {
     private $userController;
+    private $adminController;
+
     private $resetPasswordController;
     private $recipesController;
 
     public function __construct()
     {
         $this->userController = new Users();
+        $this->adminController = new AdminController();
+
         $this->resetPasswordController = new ResetPasswords();
         $this->recipesController = new RecipesController();
     }
@@ -56,13 +61,13 @@ class Router
                     $this->resetPasswordController->resetPassword();
                     break;
                 case 'update-user-details':
-                    $this->userController->update_user_details();
+                    $this->userController->updateUserDetails();
                     break;
                 case 'update-user-credentials':
-                    $this->userController->update_user_credentials();
+                    $this->userController->updateUserCredentials();
                     break;
                 case 'first-login':
-                    $this->userController->update_user_first_login();
+                    $this->userController->updateUserFirstLogin();
                     break;
                 case 'showAllRecipes':
                     $this->recipesController ->recipesCont();
@@ -84,12 +89,29 @@ class Router
         } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 
-            if (!isset($_SESSION['id']) && !in_array($requested, $no_redirect_pages)) {
-                $this->userController->GETPage("login");
-                exit();
-            }
-            
-            $this->userController->GETPage($requested);
+            // Check if the session exists, and redirect if necessary
+    if (!isset($_SESSION['id']) && !in_array($requested, $no_redirect_pages)) {
+        $this->userController->GETPage("login");
+        exit();
+    }
+
+    // Check for specific actions in the GET request
+    if (isset($_GET['action'])) {
+        switch ($_GET['action']) {
+            case 'countRegularUsers':
+                // Assuming you have an adminController or similar for handling admin-related actions
+                $this->adminController->countRegularUsers();
+                break;
+            // Add other GET actions here
+            default:
+                // If no specific action, fallback to generic page handling
+                $this->userController->GETPage($requested);
+                break;
+        }
+    } else {
+        // No action specified, handle as a page request
+        $this->userController->GETPage($requested);
+    }
         }
     }
 }

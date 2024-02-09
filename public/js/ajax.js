@@ -66,6 +66,8 @@ function performAjaxRequest(
     data: $("#form-data").serialize() + "&action=" + action + additionalData,
     dataType: "json",
     success: function (response) {
+      console.log("action: 1111  " + action);
+
       if (action == "showAllRecipes") {
         $("#RecipeList").html(response.message);
         $("table").DataTable({ order: [2, "desc"] });
@@ -73,9 +75,10 @@ function performAjaxRequest(
       else if (action == "showAllUsers") {
         $("#showUser").html(response.message);
         $("table").DataTable({ order: [0, "desc"] });
-      }
-      else {
-        console.log("action: " + action)
+      } else if(action == "countRegularUsers"){
+        $("#usersNumber").html(response.count);
+      } else {
+        console.log("action: " + action);
         handleAjaxResponse(action, response, successTitle, successMessage, action == "logout");
       }
     },
