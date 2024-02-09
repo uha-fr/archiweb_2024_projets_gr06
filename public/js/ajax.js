@@ -74,7 +74,9 @@ function performAjaxRequest(
         $("table").DataTable({ order: [0, "desc"] });
       } else if(action == "countRegularUsers"){
         $("#usersNumber").html(response.count);
-      } else {
+      } else if(action == "countNutritionistUsers"){
+        $("#nutritionistNumber").html(response.count);
+      }else {
         console.log("action: " + action);
         handleAjaxResponse(action, response, successTitle, successMessage, action == "logout");
       }

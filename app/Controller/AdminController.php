@@ -5,6 +5,7 @@ namespace Manger\Controller;
 use Manger\Model\AdminModel;
 use Manger\Views\UserView;
 use Manger\Views\AdminView;
+use PDOException;
 
 /**
  * Controller for Admin-related things.
@@ -43,7 +44,7 @@ class AdminController
     public function showAllUsers()
     {
         header('Content-Type: application/json');
-        $data = $this->userModel->getAllUsers();
+        $data = $this->adminModel->getAllUsers();
 
         // Start output buffering
         ob_start();
@@ -77,7 +78,27 @@ class AdminController
 
             // Assuming the count is successfully retrieved, send a JSON response
             echo json_encode(['success' => true, 'count' => $regularUsersCount]);
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
+            // If an error occurs, send a JSON response with the error message
+            echo json_encode(['success' => false, 'message' => 'An error occurred while fetching the user count.']);
+        }
+        exit; // Ensure no further script execution
+    }
+    /**
+     * Count Regular Users
+     * 
+     * Retrieves and returns the count of users with a role of 'regular'.
+     *
+     * @return void
+     */
+    public function countNutritionistUsers()
+    {
+        try {
+            $nutritionistCount = $this->adminModel->getNutritionistCount();
+            
+            // Assuming the count is successfully retrieved, send a JSON response
+            echo json_encode(['success' => true, 'count' => $nutritionistCount]);
+        } catch (PDOException $e) {
             // If an error occurs, send a JSON response with the error message
             echo json_encode(['success' => false, 'message' => 'An error occurred while fetching the user count.']);
         }

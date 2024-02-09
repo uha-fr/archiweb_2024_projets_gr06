@@ -72,5 +72,28 @@ public function getRegularUsersCount()
         return 0; // In case of no users or an error
     }
 }
+/**
+ * Get Count of Nutritionist Users
+ *
+ * Returns the number of users with the role of 'nutritionist'.
+ *
+ * @return int The count of nutritionist users.
+ */
+public function getNutritionistCount()
+{
+    $sql = "SELECT COUNT(*) AS regularCount FROM users WHERE role = :role";
+
+    $this->db->query($sql);
+    $this->db->bind(':role', 'Nutritionist');
+    $this->db->execute();
+    
+    $row = $this->db->single(); // Assuming single() fetches a single record as an object
+    
+    if ($row) {
+        return $row->regularCount;
+    } else {
+        return 0; // In case of no users or an error
+    }
+}
 
 }

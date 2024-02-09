@@ -67,7 +67,7 @@ class Router
                     $this->userController->updateUserFirstLogin();
                     break;
                 case 'showAllUsers':
-                    $this->userController->showAllUsers();
+                    $this->adminController->showAllUsers();
                     break;
                 case 'logout':
                     $this->userController->logout();
@@ -91,6 +91,9 @@ class Router
             case 'countRegularUsers':
                 // Assuming you have an adminController or similar for handling admin-related actions
                 $this->adminController->countRegularUsers();
+                break;
+            case 'countNutritionistUsers':
+                $this->adminController->countNutritionistUsers();
                 break;
             // Add other GET actions here
             default:
