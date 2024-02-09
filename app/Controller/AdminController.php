@@ -17,7 +17,7 @@ class AdminController
     /**
      * adminModel
      *
-     * @var User
+     * @var AdminModel
      */
     private $adminModel;
     
