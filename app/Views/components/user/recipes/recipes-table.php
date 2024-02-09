@@ -1,5 +1,6 @@
 <!-- component to show recipes list -->
 <table class="table table-striped table-sm table-bordered">
+    <caption>Table of recipes</caption>
 <thead>
             <tr class="text-center">
             <th>Recipe ID</th>
@@ -15,7 +16,7 @@
                 <td><?= $recipe->id ?></td>
                 <td><?= $recipe->name?></td>
                 <td><?= $recipe->calories?></td>
-                <td><?= $recipe->image_url?></td>   
+                <td><?= $recipe->image_url?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
