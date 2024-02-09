@@ -95,8 +95,8 @@
       <li>
         <i class='bx bx-user'></i>
         <span class="info">
-          <h3>1,074</h3>
-          <p>Paid Order</p>
+          <h3 id="usersNumber">0</h3>
+          <p>Number users</p>
         </span>
       </li>
       <li>
@@ -218,6 +218,23 @@
 
 
   <script src="<?= BASE_APP_DIR ?>/public/js/adminDashboard.js"></script>
+
+  <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
+
+
+  <script type="text/javascript">
+     $(document).ready(function(){
+
+      performAjaxRequest(
+          "GET",
+          "countRegularUsers",
+          "",
+          "",
+          ""
+        );
+     });
+    
+  </script>
 
 
 </body>

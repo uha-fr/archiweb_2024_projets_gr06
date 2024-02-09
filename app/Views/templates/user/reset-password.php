@@ -1,3 +1,10 @@
+<?php
+if (isset($_SESSION['id']) ) {
+  // Redirect to home.php
+  header('Location: home');
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
