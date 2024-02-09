@@ -1,3 +1,12 @@
+<?php
+if (isset($_SESSION['id']) ) {
+  // Redirect to home.php
+  header('Location: home');
+  exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +25,11 @@
 <body>
   <!-- HEADER -->
   <?php
+
   include_once VIEWSDIR . DS . 'components' . DS . 'header.php';
+
+
+  
 
 
 
