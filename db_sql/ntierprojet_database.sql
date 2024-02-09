@@ -155,7 +155,7 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `active` int(10) NOT NULL,
-  `creation_date` date NOT NULL DEFAULT current_timestamp(),
+  `creation_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `age` int(11) DEFAULT NULL,
   `role` varchar(250) NOT NULL DEFAULT 'Regular',
   `height` int(11) DEFAULT NULL,
