@@ -32,8 +32,12 @@ function handleAjaxResponse(action, response, successTitle, successMessage, logo
       text: successMessage,
       icon: "success",
     }).then(function () {
-      if (redirectHref != "update") {
+      if (redirectHref != "update" && redirectHref != "recipes-list") {
         window.location.href = redirectHref;
+      }
+      else if (redirectHref == "recipes-list")
+      {
+        window.parent.rafraichirPage();
       }
       else {
         window.location.reload(true);
@@ -69,8 +73,7 @@ function performAjaxRequest(
       console.log("action: 1111  " + action);
 
       if (action == "showAllRecipes") {
-        $("#RecipeList").html(response.message);
-        $("table").DataTable({ order: [2, "desc"] });
+        $("#RecipeList").html(response.message); 
       }
       else if (action == "showAllUsers") {
         $("#showUser").html(response.message);
