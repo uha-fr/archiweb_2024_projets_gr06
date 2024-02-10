@@ -1,5 +1,5 @@
 <?php
-if (isset($_SESSION['id']) ) {
+if (isset($_SESSION['id'])) {
   // Redirect to home.php
   header('Location: home');
   exit();
@@ -28,36 +28,27 @@ if (isset($_SESSION['id']) ) {
 
   include_once VIEWSDIR . DS . 'components' . DS . 'header.php';
 
-
-  
-
-
-
   ?>
   <!-- BODY -->
   <div class="container-fluid bg-bg" style="padding-left: 180px; min-height: 100vh;">
     <!-- Login Form-->
     <div class="container-fluid align-items-center flex-column d-flex" style="min-height: 100vh; padding-top: 140px;">
       <h1 class="fw-bold">Login</h1>
-      <form class="bg-gray rounded" style="width: 500px; min-height: 400px; margin-top: 40px; padding: 32px;"
-        id="form-data" action="" method="post">
+      <form class="bg-gray rounded" style="width: 500px; min-height: 400px; margin-top: 40px; padding: 32px;" id="form-data" action="" method="post">
 
         <div class="d-flex flex-column mt-4">
           <label class="font-bold text-white">Email</label>
-          <input type="email" name="email" placeholder="Ex:john.doe@gmail.com" class="py-3 px-4 rounded mt-2"
-          style="border: 0;" required />
+          <input type="email" name="email" placeholder="Ex:john.doe@gmail.com" class="py-3 px-4 rounded mt-2" style="border: 0;" required />
         </div>
         <div class="d-flex flex-column mt-4">
           <label class="font-bold text-white">Password</label>
-          <input type="password" id="password" name="password" placeholder="Password" class="py-3 px-4 rounded mt-2"
-          style="border: 0;" required />
+          <input type="password" id="password" name="password" placeholder="Password" class="py-3 px-4 rounded mt-2" style="border: 0;" required />
         </div>
 
 
 
         <div class="d-flex flex-column mt-4">
-          <input type="submit" class="py-3 px-4 rounded w-full" 
-            style="background-color: #d6ff92; border: 0; margin-bottom: 12px;" name="login" id="login" value="Login">
+          <input type="submit" class="py-3 px-4 rounded w-full" style="background-color: #d6ff92; border: 0; margin-bottom: 12px;" name="login" id="login" value="Login">
         </div>
         <a class="logo self-end" href="reset-password">
           Reset password </br>

@@ -2,7 +2,7 @@
 
 namespace Manger\Controller;
 
-use Manger\Model\RecipesModel; // fonctionnel
+use Manger\Model\RecipesModel;
 
 class RecipesController
 {
@@ -13,7 +13,13 @@ class RecipesController
     {
         $this->obj = new RecipesModel();
     }
-    //-----------------Get All Recipes-----------------------
+    /**
+     * Display recipes
+     * 
+     * Get the recipes from RecipesModel, then display a view with them
+     *
+     * @return void
+     */
     function recipesCont()
     {
         header('Content-Type: application/json');
@@ -36,7 +42,13 @@ class RecipesController
         }
     }
 
-    //---------------Add New Recipes---------------------
+    /**
+     * Add a new recipe
+     * 
+     * Use the parameters from the POST request to create an object to send to RecipesModel, before going to the database
+     * 
+     * @return void
+     */
     function addNewRecipe()
     {
 

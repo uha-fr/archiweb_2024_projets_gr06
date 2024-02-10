@@ -11,7 +11,7 @@ echo '<div class="list-container">';
 foreach ($recipeGroups as $group) {
     // Open a row div for each group of items
     echo '<div class="row">';
-    
+
     // Loop through each recipe in the group
     foreach ($group as $recipe) {
         // Display the recipe item
@@ -27,11 +27,10 @@ foreach ($recipeGroups as $group) {
         echo '</div>';
         echo '</div>';
     }
-    
+
     // Close the row div for the group
     echo '</div>';
 }
 
 // Close the container div for the list
 echo '</div>';
-?>

@@ -28,33 +28,33 @@
 
     <div class="w-full min-h-screen pl-[180px] bg-bg">
         <!-- Recipes Form-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="text-5xl font-bold"> Recipes list </h1>
-                    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="text-5xl font-bold"> Recipes list </h1>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                    </div>
-                    <div class="col-lg-6">
-                    <button  class="btn btn-success btn-lg float-right" data-toggle="modal" data-target="#addModel" onclick="toggleIframe()">Add New Recipe <i class="bi bi-plus bi-3X"></i></button>
-                    </div>
-                </div>
-                <hr class="my-1">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="row justify-content-center">
-
-                            <!-- iframe à cacher/afficher -->
-                            <iframe id="myIframe" src="add-recipe"  height="700" class="hidden"></iframe>
-                            <div id="RecipeList"></div>
-                        </div>
-                    </div>
-                </div>
-                </hr>
             </div>
+            <div class="row">
+                <div class="col-lg-6">
+                </div>
+                <div class="col-lg-6">
+                    <button class="btn btn-success btn-lg float-right" data-toggle="modal" data-target="#addModel" onclick="toggleIframe()">Add New Recipe <i class="bi bi-plus bi-3X"></i></button>
+                </div>
+            </div>
+            <hr class="my-1">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row justify-content-center">
+
+                        <!-- iframe à cacher/afficher -->
+                        <iframe id="myIframe" src="add-recipe" height="700" class="hidden"></iframe>
+                        <div id="RecipeList"></div>
+                    </div>
+                </div>
+            </div>
+            </hr>
         </div>
+    </div>
     </div>
     </div>
     </div>
