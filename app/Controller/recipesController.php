@@ -2,50 +2,31 @@
 
 namespace Manger\Controller;
 
-use Manger\Model\RecipesModel;
+use Manger\Model\RecipesModel; // fonctionnel
 
-/**
- * RecipesController Class
- *
- * Handles the control logic for recipes-related actions, such as retrieving recipes and adding new recipes.
- */
 class RecipesController
 {
 
-    /**
-     * @var RecipesModel $obj An instance of the RecipesModel class for accessing recipe data.
-     */
     private $obj;
 
-    /**
-     * RecipesController constructor.
-     *
-     * Initializes a new instance of the RecipesController with an associated RecipesModel instance.
-     */
     public function __construct()
     {
         $this->obj = new RecipesModel();
     }
-
-    /**
-     * Retrieve and render recipes.
-     *
-     * Retrieves the list of recipes from the RecipesModel, includes the corresponding view file,
-     * and returns a JSON response with the rendered content.
-     * If no recipes are found, a message indicating the response is displayed.
-     *
-     * @return void
-     */
-    public function recipesCont()
+    //-----------------Get All Recipes-----------------------
+    function recipesCont()
     {
         header('Content-Type: application/json');
         $recipes = $this->obj->getRecipesList();
+        // Start output buffering
         ob_start();
+        // Include the view file, the $data variable will be used there
+        require VIEWSDIR . DS . 'components' . DS . 'user' . DS . 'recipes' . DS . "recipes-table.php";
 
-        require_once VIEWSDIR . DS . 'components' . DS . 'user' . DS . 'recipes' . DS . "recipes-table.php";
-
+        // Store the buffer content into ¨$output variable
         $output = ob_get_clean();
 
+        // Return JSON
         if ($recipes) {
             echo json_encode(['message' => $output]);
             exit;
@@ -55,16 +36,8 @@ class RecipesController
         }
     }
 
-    /**
-     * Create a new recipe.
-     *
-     * Handles the addition of a new recipe based on the data received through a *POST* request.
-     * Validates and sanitizes input data, then calls the addRecipe method of the RecipesModel to add the recipe.
-     * Display a JSON response indicating the success or failure of the operation.
-     *
-     * @return void
-     */
-    public function addNewRecipe()
+    //---------------Add New Recipes---------------------
+    function addNewRecipe()
     {
 
         $name = filter_var(trim($_POST['name'] ?? ''), FILTER_SANITIZE_EMAIL);
@@ -82,8 +55,8 @@ class RecipesController
             echo json_encode(['success' => true]);
             exit;
         } else {
-            echo json_encode(['success' => false, 'message' => "there is a problem to add"]);
+            echo json_encode(['success' => false, 'message' => "there is a probleme to add"]);
             exit;
-        }
+        };
     }
 }
