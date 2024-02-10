@@ -2,7 +2,7 @@
 // Assuming $recipes is an array containing the items retrieved from the database
 
 // Divide recipes into groups of 5
-$recipeGroups = array_chunk($recipes, 5);
+$recipeGroups = array_chunk($recipes, 4);
 
 // Open the container div for the list
 echo '<div class="list-container">';
@@ -15,7 +15,7 @@ foreach ($recipeGroups as $group) {
     // Loop through each recipe in the group
     foreach ($group as $recipe) {
         // Display the recipe item
-        echo '<div class="col-lg-2">'; // Adjust column width as needed
+        echo '<div class="col-lg-3">'; // Adjust column width as needed
         echo '<div class="flex flex-column justify-content-start bg-bg p-4 rounded" style="width: fit-content; min-width: 250px">';
         echo '<img style="width: 200px; height: 200px; object-fit: cover; border-radius: 100%;" src="https://www.allrecipes.com/thmb/5SdUVhHTMs-rta5sOblJESXThEE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11691-tomato-and-garlic-pasta-ddmfs-3x4-1-bf607984a23541f4ad936b33b22c9074.jpg" />';
 
