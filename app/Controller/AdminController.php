@@ -110,7 +110,7 @@ class AdminController
       /**
      * Count Recipes
      * 
-     * Retrieves and returns the count of users with a role of 'regular'.
+     * Retrieves and returns the count of Recipes.
      *
      * @return void
      */
@@ -118,7 +118,7 @@ class AdminController
     {
         try {
             $recipesCount = $this->adminModel->getRecipesCount();
-            
+
             
             // Assuming the count is successfully retrieved, send a JSON response
             echo json_encode(['success' => true, 'count' => $recipesCount]);

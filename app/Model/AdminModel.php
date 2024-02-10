@@ -115,6 +115,7 @@ public function getRecipesCount()
     
     $row = $this->db->single(); // Assuming single() fetches a single record as an object
     
+    
     if ($row) {
         return $row->recipeCount;
     } else {
