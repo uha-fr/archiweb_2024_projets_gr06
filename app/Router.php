@@ -50,7 +50,7 @@ class Router
             switch ($_POST['action']) {
                 case 'register':
                     $this->userController->register();
-                    break;
+                       break;
                 case 'login':
                     $this->userController->login();
                     break;

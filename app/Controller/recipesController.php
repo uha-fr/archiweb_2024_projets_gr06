@@ -42,21 +42,36 @@ class RecipesController
 
         $name = filter_var(trim($_POST['name'] ?? ''), FILTER_SANITIZE_EMAIL);
         $calories = trim($_POST['calories'] ?? '');
-        $image_url = trim($_POST['image_url'] ?? '');
+        $file = $_FILES['img_url'];
+        
+            echo '<script>';
+            echo 'console.log("eee' . $file . '");'; // Imprime le message dans la console du navigateur
+            echo '</script>';
+            // Check if file was uploaded without errors
+            if ($file['error'] == UPLOAD_ERR_OK) {
+                // File is in $file['tmp_name']
+                $tempFilePath = $file['tmp_name'];
 
-        // Initialize data.............
-        $data = [
-            'name' => $name,
-            'calories' => $calories,
-            'image_url' => $image_url
-        ];
+                // You can move the uploaded file to a permanent location
+                $destination = BASE_APP_DIR+'public/images/recipesImages/'.basename($file['name']);
+                move_uploaded_file($tempFilePath, $destination);
 
-        if ($this->obj->addRecipe($data)) {
-            echo json_encode(['success' => true]);
-            exit;
-        } else {
-            echo json_encode(['success' => false, 'message' => "there is a probleme to add"]);
-            exit;
-        };
+                // Initialize data.............
+                $data = [
+                    'name' => $name,
+                    'calories' => $calories,
+                    'image_url' => $file
+
+                ];
+
+                if ($this->obj->addRecipe($data)) {
+                    echo json_encode(['success' => true]);
+                    exit;
+                } else {
+                    echo json_encode(['success' => false, 'message' => "there is a probleme to add"]);
+                    exit;
+                };
+            }
+       
     }
 }
