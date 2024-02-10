@@ -109,7 +109,7 @@
       <li>
         <i class='bx bxs-pizza'></i>
         <span class="info">
-          <h3>14,721</h3>
+          <h3 id="countRecipes">0</h3>
           <p>Number recipes</p>
         </span>
       </li>
@@ -235,6 +235,13 @@
         performAjaxRequest(
           "GET",
           "countNutritionistUsers",
+          "",
+          "",
+          ""
+        );
+        performAjaxRequest(
+          "GET",
+          "countRecipes",
           "",
           "",
           ""

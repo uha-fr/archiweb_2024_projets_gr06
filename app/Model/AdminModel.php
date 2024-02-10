@@ -81,7 +81,7 @@ public function getRegularUsersCount()
  */
 public function getNutritionistCount()
 {
-    $sql = "SELECT COUNT(*) AS regularCount FROM users WHERE role = :role";
+    $sql = "SELECT COUNT(*) AS nutritionistCount FROM users WHERE role = :role";
 
     $this->db->query($sql);
     $this->db->bind(':role', 'Nutritionist');
@@ -90,10 +90,35 @@ public function getNutritionistCount()
     $row = $this->db->single(); // Assuming single() fetches a single record as an object
     
     if ($row) {
-        return $row->regularCount;
+        return $row->nutritionistCount;
     } else {
         return 0; // In case of no users or an error
     }
 }
 
+
+
+
+/**
+ * Get Count of Recipes
+ *
+ * Returns the number of Recipes.
+ *
+ * @return int The count of Recipes.
+ */
+public function getRecipesCount()
+{
+    $sql = "SELECT COUNT(*) AS recipeCount FROM recipes";
+
+    $this->db->query($sql);
+    $this->db->execute();
+    
+    $row = $this->db->single(); // Assuming single() fetches a single record as an object
+    
+    if ($row) {
+        return $row->recipeCount;
+    } else {
+        return 0; // In case of no users or an error
+    }
+}
 }

@@ -79,6 +79,8 @@ function performAjaxRequest(
         $("#usersNumber").html(response.count);
       } else if(action == "countNutritionistUsers"){
         $("#nutritionistNumber").html(response.count);
+      }else if(action == "countRecipes"){
+        $("#countRecipes").html(response.count);
       }else {
         console.log("action: " + action);
         handleAjaxResponse(action, response, successTitle, successMessage, action == "logout");
