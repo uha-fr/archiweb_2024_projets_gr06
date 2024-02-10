@@ -21,7 +21,7 @@ class RecipesController
         // Start output buffering
         if ($recipes==false)
         {
-            echo json_encode(['message' => '<h1 class="text-center text-secondary mt-5">No recipe found!!</h1>']);
+            echo json_encode(['message' => '<h1 class="text-center text-secondary mt-5 display-3">No recipe found!!</h1>']);
             exit;
         }
         else{
