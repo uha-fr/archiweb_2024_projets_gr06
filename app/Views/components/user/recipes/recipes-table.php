@@ -41,4 +41,4 @@ foreach ($recipeGroups as $group) {
 
 // Close the container div for the list
 echo '</div>';
-?>
+
