@@ -28,9 +28,7 @@ foreach ($recipeGroups as $group) {
         echo '</div>';
     }
 
-    // Close the row div for the group
     echo '</div>';
 }
 
-// Close the container div for the list
 echo '</div>';
