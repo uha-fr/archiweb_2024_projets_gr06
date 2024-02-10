@@ -19,6 +19,12 @@ class RecipesController
         header('Content-Type: application/json');
         $recipes = $this->obj->getRecipesList();
         // Start output buffering
+        if ($recipes==false)
+        {
+            echo json_encode(['message' => '<h1 class="text-center text-secondary mt-5 display-3">No recipe found!!</h1>']);
+            exit;
+        }
+        else{
         ob_start();
         // Include the view file, the $data variable will be used there
         require VIEWSDIR . DS . 'components' . DS . 'user' . DS . 'recipes' . DS . "recipes-table.php";
@@ -30,10 +36,8 @@ class RecipesController
         if ($recipes) {
             echo json_encode(['message' => $output]);
             exit;
-        } else {
-            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">No recipe found!!</h3>']);
-            exit;
-        }
+        } 
+    }
     }
 
     //---------------Add New Recipes---------------------
