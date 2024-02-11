@@ -19,7 +19,7 @@ function handleAjaxResponse(action, response, successTitle, successMessage, logo
     case 'update':
       redirectHref = "update"
       break;
-      case 'addRecipe':
+    case 'addRecipe':
       redirectHref = "recipes-list"
       break;
     default:
@@ -35,8 +35,7 @@ function handleAjaxResponse(action, response, successTitle, successMessage, logo
       if (redirectHref != "update" && redirectHref != "recipes-list") {
         window.location.href = redirectHref;
       }
-      else if (redirectHref == "recipes-list")
-      {
+      else if (redirectHref == "recipes-list") {
         window.parent.rafraichirPage();
       }
       else {
@@ -73,16 +72,16 @@ function performAjaxRequest(
       console.log("action: 1111  " + action);
 
       if (action == "showAllRecipes") {
-        $("#RecipeList").html(response.message); 
+        $("#RecipeList").html(response.message);
       }
       else if (action == "showAllUsers") {
         $("#showUser").html(response.message);
         $("table").DataTable({ order: [0, "desc"] });
-      } else if(action == "countRegularUsers"){
+      } else if (action == "countRegularUsers") {
         $("#usersNumber").html(response.count);
-      } else if(action == "countNutritionistUsers"){
+      } else if (action == "countNutritionistUsers") {
         $("#nutritionistNumber").html(response.count);
-      }else {
+      } else {
         console.log("action: " + action);
         handleAjaxResponse(action, response, successTitle, successMessage, action == "logout");
       }
@@ -91,4 +90,43 @@ function performAjaxRequest(
       handleAjaxError(jqXHR, textStatus, errorThrown);
     },
   });
+}
+
+
+function performAjaxRequestWithImg(
+  requestType,
+  action,
+  additionalData,
+  successTitle,
+  successMessage
+) {
+  // creation FormData() object
+  var formData = new FormData();
+  var fileInput = document.getElementById('image_url');
+  var name = document.getElementById('name');
+  var calories = document.getElementById('calories');
+
+  if (fileInput.files.length > 0) {
+    formData.append('name', name.value);
+    formData.append('calories', calories.value);
+    formData.append('action', action);
+    formData.append('file', fileInput.files[0]);
+    formData.append('additionalData', additionalData);
+  }
+  $.ajax(
+    {
+      url: 'index.php',
+      type: requestType,
+      data: formData,
+      processData: false,
+      contentType: false,
+      dataType: "JSON",
+      success: function (response) {
+        console.log("action: 1111  " + action);
+        handleAjaxResponse(action, response, successTitle, successMessage, action);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        handleAjaxError(jqXHR, textStatus, errorThrown);
+      },
+    });
 }
