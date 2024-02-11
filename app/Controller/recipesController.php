@@ -6,7 +6,6 @@ use Manger\Model\RecipesModel; // fonctionnel
 
 class RecipesController
 {
-
     private $obj;
 
     public function __construct()
@@ -33,11 +32,9 @@ class RecipesController
             exit;
         }
     }
-
     //---------------Add New Recipes---------------------
     function addNewRecipe()
     {
-
         $name = $_POST['name'];
         $calories = $_POST['calories'];
         $File = $_FILES['file'];
@@ -52,15 +49,12 @@ class RecipesController
             }
             $destination = $destinationDirectory . $_FILES['file']['name']; // Chemin de destination complet
             move_uploaded_file($tempFilePath, $destination);
-
             // Initialize data.............
             $data = [
                 'name' => $name,
                 'calories' => $calories,
                 'image_url' => $_FILES['file']['name']//nom de l'image
-
             ];
-
             if ($this->obj->addRecipe($data)) {
                 echo json_encode(['success' => true]);
                 exit;
