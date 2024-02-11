@@ -38,6 +38,7 @@
                     <div class="col-lg-6">
                     </div>
                     <div class="col-lg-6">
+                        
                     <button  class="btn btn-success btn-lg float-right" data-toggle="modal" data-target="#addModel" onclick="toggleIframe()">Add New Recipe <i class="bi bi-plus bi-3X"></i></button>
                     </div>
                 </div>
