@@ -26,6 +26,17 @@ class Router
     }
 
 
+    /**
+     * Handles incoming HTTP requests and routes to appropriate controllers.
+     *
+     * This function is the main function of the project's router, adhering to
+     * the MVC (Model-View-Controller) architecture. It analyzes the URL of the request,
+     * determines the controller to use based on URL segments, and then calls
+     * appropriate controller methods based on the request method (GET or POST) and
+     * request parameters.
+     *
+     * @return void
+     */
     public function manageRequest()
     {
 
@@ -70,15 +81,15 @@ class Router
                     $this->userController->updateUserFirstLogin();
                     break;
                 case 'showAllRecipes':
-                    $this->recipesController ->recipesCont();
+                    $this->recipesController->recipesCont();
                     break;
                 case 'addRecipe':
-                    $this->recipesController ->addNewRecipe();
+                    $this->recipesController->addNewRecipe();
                     break;
                 case 'showAllUsers':
                     $this->adminController->showAllUsers();
                     break;
-                
+
                 case 'logout':
                     $this->userController->logout();
                     break;
@@ -90,31 +101,31 @@ class Router
 
 
             // Check if the session exists, and redirect if necessary
-    if (!isset($_SESSION['id']) && !in_array($requested, $no_redirect_pages)) {
-        $this->userController->GETPage("login");
-        exit();
-    }
+            if (!isset($_SESSION['id']) && !in_array($requested, $no_redirect_pages)) {
+                $this->userController->GETPage("login");
+                exit();
+            }
 
-    // Check for specific actions in the GET request
-    if (isset($_GET['action'])) {
-        switch ($_GET['action']) {
-            case 'countRegularUsers':
-                // Assuming you have an adminController or similar for handling admin-related actions
-                $this->adminController->countRegularUsers();
-                break;
-            case 'countNutritionistUsers':
-                $this->adminController->countNutritionistUsers();
-                break;
-            // Add other GET actions here
-            default:
-                // If no specific action, fallback to generic page handling
+            // Check for specific actions in the GET request
+            if (isset($_GET['action'])) {
+                switch ($_GET['action']) {
+                    case 'countRegularUsers':
+                        // Assuming you have an adminController or similar for handling admin-related actions
+                        $this->adminController->countRegularUsers();
+                        break;
+                    case 'countNutritionistUsers':
+                        $this->adminController->countNutritionistUsers();
+                        break;
+                        // Add other GET actions here
+                    default:
+                        // If no specific action, fallback to generic page handling
+                        $this->userController->GETPage($requested);
+                        break;
+                }
+            } else {
+                // No action specified, handle as a page request
                 $this->userController->GETPage($requested);
-                break;
-        }
-    } else {
-        // No action specified, handle as a page request
-        $this->userController->GETPage($requested);
-    }
+            }
         }
     }
 }

@@ -102,21 +102,21 @@ function performAjaxRequestWithImg(
 ) {
   // creation FormData() object
   var formData = new FormData();
-  var fileInput = document.getElementById('image_url'); 
-  var name = document.getElementById('name'); 
-  var calories = document.getElementById('calories'); 
+  var fileInput = document.getElementById('image_url');
+  var name = document.getElementById('name');
+  var calories = document.getElementById('calories');
 
   if (fileInput.files.length > 0) {
-    formData.append('name',name.value);
-    formData.append('calories',calories.value);
+    formData.append('name', name.value);
+    formData.append('calories', calories.value);
     formData.append('action', action);
     formData.append('file', fileInput.files[0]);
     formData.append('additionalData', additionalData);
   }
   $.ajax(
     {
-      url:'index.php',
-      type:requestType,
+      url: 'index.php',
+      type: requestType,
       data: formData,
       processData: false,
       contentType: false,

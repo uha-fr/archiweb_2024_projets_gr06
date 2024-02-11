@@ -11,7 +11,7 @@ echo '<div class="list-container">';
 foreach ($recipeGroups as $group) {
     // Open a row div for each group of items
     echo '<div class="row">';
-    
+
     // Loop through each recipe in the group
     foreach ($group as $recipe) {
         // Display the recipe item
@@ -19,7 +19,7 @@ foreach ($recipeGroups as $group) {
         echo '<div class="flex flex-column justify-content-start bg-bg p-4 rounded" style="width: fit-content; min-width: 250px">';
         $imageUrl = 'public/images/recipesImages/' . $recipe->image_url;
         $defaultImageUrl = 'https://www.allrecipes.com/thmb/5SdUVhHTMs-rta5sOblJESXThEE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11691-tomato-and-garlic-pasta-ddmfs-3x4-1-bf607984a23541f4ad936b33b22c9074.jpg'; // Spécifiez le chemin de votre image par défaut
-        
+
         // Vérifie si l'image existe dans le dossier
         if (file_exists($imageUrl)) {
             echo '<img style="width: 200px; height: 200px; object-fit: cover; border-radius: 100%;" src="' . $imageUrl . '" />';
@@ -34,11 +34,8 @@ foreach ($recipeGroups as $group) {
         echo '</div>';
         echo '</div>';
     }
-    
-    // Close the row div for the group
+
     echo '</div>';
 }
 
-// Close the container div for the list
 echo '</div>';
-

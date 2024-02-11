@@ -12,7 +12,13 @@ class RecipesController
     {
         $this->obj = new RecipesModel();
     }
-    //-----------------Get All Recipes-----------------------
+    /**
+     * Display recipes
+     * 
+     * Get the recipes from RecipesModel, then display a view with them
+     *
+     * @return void
+     */
     function recipesCont()
     {
         header('Content-Type: application/json');
@@ -31,7 +37,16 @@ class RecipesController
             exit;
         }
     }
-    //---------------Add New Recipes---------------------
+
+    /**
+     * Add a new recipe
+     * 
+     * Use the parameters from the POST request to create an object to send to RecipesModel,
+     * then allow the user to choose an image from their directory to display with the recipe
+     * , and put them all in the database
+     * 
+     * @return void
+     */
     function addNewRecipe()
     {
         $name = $_POST['name'];
