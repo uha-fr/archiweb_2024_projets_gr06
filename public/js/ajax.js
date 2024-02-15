@@ -14,7 +14,7 @@ function handleAjaxResponse(action, response, successTitle, successMessage, logo
       redirectHref = "first-login"
       break;
     case 'first-login':
-      redirectHref = "home"
+      redirectHref = "dashboard"
       break;
     case 'update':
       redirectHref = "update"
