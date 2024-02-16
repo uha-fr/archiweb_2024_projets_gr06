@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/colors.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/global.css" />
+  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/globals.css" />
 </head>
 
 <body>
