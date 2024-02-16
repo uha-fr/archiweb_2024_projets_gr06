@@ -1,0 +1,107 @@
+div {
+  box-sizing: border-box;
+}
+.form-group {
+  display: flex;
+  height: 84px;
+  padding: 32px;
+  border-bottom: 1px solid rgb(190, 190, 190);
+  width: 100%;
+  align-items: center;
+}
+.form-group .selector {
+  margin-left: auto;
+}
+.form-group:last-child {
+  border-bottom: none;
+}
+.radio-container {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  margin: 0 auto;
+  border-radius: 3px;
+  /* background: var(--main-color); */
+}
+.radio-container h3 {
+  font-size: 14px;
+  font-weight: normal;
+  margin: 2px 0;
+}
+.radio-container p {
+  font-size: 12px;
+  color: #ced7e2;
+  margin: 2px 0;
+}
+.selector {
+  display: flex;
+  height: 36px;
+  width: 360px;
+  align-items: center;
+  justify-content: center;
+}
+.selector .selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  margin-left: -1px;
+  background-clip: border-box;
+  transform: scale3d(1, 1, 1);
+  background: rgba(32, 45, 59, 0.2);
+  border: 1px solid #485769;
+  color: #ced7e2;
+  transition: 0.15s ease-in-out background-color;
+}
+.selector .selection.selected {
+  background: rgba(91, 150, 213, 0.2) !important;
+  border-color: #bdc79e4f;
+  color: #fff !important;
+  z-index: 2;
+  cursor: text;
+}
+.selector .selection:hover {
+  color: hsl(0, 0%, 100%);
+  background: rgba(95, 213, 91, 0.3);
+}
+.selector .selection:first-child {
+  margin-left: 0;
+  border-radius: 3px 0 0 3px;
+}
+.selector .selection:last-child {
+  border-radius: 0 3px 3px 0;
+}
+.selector.width-per-item {
+  width: auto;
+}
+.selector.width-per-item .selection {
+  min-width: 135px;
+  max-width: 135px;
+  width: 135px;
+}
+.sci-fi .selector .selection {
+  transition: all 0.2s ease-in-out;
+}
+.sci-fi .selector .selection:hover {
+  box-shadow: 0 0 10px 0px rgba(91, 150, 213, 0.2);
+}
+.sci-fi .selector .selection.red:hover {
+  background: rgba(194, 50, 50, 0.15);
+  box-shadow: 0 0 10px 0px rgba(194, 50, 50, 0.2);
+  color: #dd7d7d;
+}
+.sci-fi .selector .selection.red.selected {
+  background: rgba(194, 50, 50, 0.2) !important;
+  border-color: #c23232 !important;
+}
+.sci-fi .selector .selection.yellow:hover {
+  background: rgba(224, 187, 56, 0.15);
+  box-shadow: 0 0 10px 0px rgba(224, 187, 56, 0.2);
+  color: #eed990;
+}
+.sci-fi .selector .selection.yellow.selected {
+  background: rgba(224, 187, 56, 0.2) !important;
+  border-color: #e0bb38 !important;
+}
