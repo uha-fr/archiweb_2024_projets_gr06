@@ -96,8 +96,32 @@ class AdminController
         try {
             $nutritionistCount = $this->adminModel->getNutritionistCount();
             
+            
             // Assuming the count is successfully retrieved, send a JSON response
             echo json_encode(['success' => true, 'count' => $nutritionistCount]);
+        } catch (PDOException $e) {
+            // If an error occurs, send a JSON response with the error message
+            echo json_encode(['success' => false, 'message' => 'An error occurred while fetching the user count.']);
+        }
+        exit; // Ensure no further script execution
+    }
+    
+
+      /**
+     * Count Recipes
+     * 
+     * Retrieves and returns the count of Recipes.
+     *
+     * @return void
+     */
+    public function countRecipes()
+    {
+        try {
+            $recipesCount = $this->adminModel->getRecipesCount();
+
+            
+            // Assuming the count is successfully retrieved, send a JSON response
+            echo json_encode(['success' => true, 'count' => $recipesCount]);
         } catch (PDOException $e) {
             // If an error occurs, send a JSON response with the error message
             echo json_encode(['success' => false, 'message' => 'An error occurred while fetching the user count.']);
