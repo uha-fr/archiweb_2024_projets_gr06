@@ -1,16 +1,28 @@
 <?php
+
 namespace Manger\Model;
+
 use Config\Database;
+
 class RecipesModel
 {
+    /**
+     * Instance of Database
+     *
+     * @var Database
+     */
     private $db;
     public function __construct()
     {
 
         $this->db = new Database();
     }
-    //-----------------------get recipes list from DataBase--------------------
 
+    /**
+     * get all recipes
+     *
+     * @return array|bool
+     */
     function getRecipesList()
     {
         $sql = "SELECT * FROM recipes";
@@ -22,7 +34,14 @@ class RecipesModel
             return false;
         }
     }
-    //-----------------------add New recipe To DataBase--------------------
+    /**
+     * add Recipe
+     * 
+     * Add recipe from the parameters, in the database
+     *
+     * @param  mixed $donnees
+     * @return bool
+     */
     function addRecipe($donnees)
     {
 

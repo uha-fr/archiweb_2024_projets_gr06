@@ -42,6 +42,9 @@
 } 
 
 .item {
-  width: 30%;
+  width: 20%;
 }
-
+ /* Style pour cacher l'iframe */
+ .hidden {
+  display: none;
+}

@@ -1,3 +1,23 @@
+<?php
+
+
+if ($_SESSION['role'] != "Admin") {
+  header('Location: dashboard'); // Redirect to dashboard
+  exit();
+} 
+
+$tab = $_GET['tab'] ?? 'dashboardAdmin'; 
+
+function generateTabLink($currentTab, $tabName, $label, $iconClass)
+{
+  $isActive = ($currentTab === $tabName) ? 'active' : '';
+  echo "<li class='$isActive' ><a  href='?tab=$tabName'><i class='$iconClass'></i>$label</a></li>";
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +30,7 @@
     <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/adminDashboardStyle.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/global.css" />
+  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/globals.css" />
   
 
   <link href="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.css" rel="stylesheet">
@@ -25,22 +45,31 @@
 
      
 
-             <!-- Sidebar -->
+ <!-- Sidebar -->
  <div class="sidebar" style="display:flex; flex-direction:column; justify-content:space-around;" >
   <div>
     <!-- Logo -->
     <div class="logo" style="margin-left: 80px;">
       <img src="<?= BASE_APP_DIR ?>/public/images/logo.png" alt="" />
     </div>
-    <ul class="side-menu">
-    <li><a href="#"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
-    <li><a href="#"><i class='bx bx-group'></i>Users list</a></li>
-    <li class="active"><a href="#"><i class='bx bx-analyse'></i>Recipes list</a></li>
+  <!--  <ul class="side-menu">
+    <li class=""><a href="?section=dashboardAdmin"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
+    <li class=""><a href="?section=users"><i class='bx bx-group'></i>Users list</a></li>
+    <li class="><a href="?section=recipes"><i class='bx bx-analyse'></i>Recipes list</a></li>
     
-   <!-- <li><a href="#"><i class='bx bx-message-square-dots'></i>Tickets</a></li>
+    <li><a href="#"><i class='bx bx-message-square-dots'></i>Tickets</a></li>
     <li><a href="#"><i class='bx bx-group'></i>Users</a></li>
-    <li><a href="#"><i class='bx bx-cog'></i>Settings</a></li>-->
-  </ul>
+    <li><a href="#"><i class='bx bx-cog'></i>Settings</a></li>
+  </ul>-->
+  <ul class="side-menu">
+    <?php
+    $tab = $_GET['tab'] ?? 'dashboardAdmin'; // Default to 'dashboardAdmin' if no tab is set
+    generateTabLink($tab, 'dashboardAdmin', 'Dashboard', 'bx bxs-dashboard');
+    generateTabLink($tab, 'usersList', 'Users list', 'bx bx-group');
+    generateTabLink($tab, 'recipesList', 'Recipes list', 'bx bx-analyse');
+    ?>
+</ul>
+
   </div>
  
   <ul class="side-menu" >
@@ -73,133 +102,29 @@
     </a>-->
   </nav>
   <!-- End of Navbar -->
-  
-  <main>
-    <div class="header">
-      <div class="left">
-        <h1>Dashboard</h1>
-        <ul class="breadcrumb">
-          <li><a href="#">Analytics</a></li>
-          /
-          <li><a href="#" class="active">Shop</a></li>
-        </ul>
-      </div>
-      <a href="#" class="report">
-        <i class='bx bx-cloud-download'></i>
-        <span>Download CSV</span>
-      </a>
-    </div>
+  <?php
+switch ($tab) {
+  case 'dashboardAdmin':
+    include_once VIEWSDIR . DS . '/components/admin/mainDashboard.php';
+    break;
+  case 'usersList':
+    include_once VIEWSDIR . DS . '/components/admin/usersList.php';
+    break;
+  case 'recipesList':
+    include_once VIEWSDIR . DS . '/components/admin/recipesList.php';
+    break;
+  default:
+    include_once VIEWSDIR . DS . '/components/admin/mainDashboard.php';
+    break;
+}
 
-    <!-- Insights -->
-    <ul class="insights">
-      <li>
-        <i class='bx bx-user'></i>
-        <span class="info">
-          <h3 id="usersNumber">0</h3>
-          <p>Number users</p>
-        </span>
-      </li>
-      <li>
-        <i class='bx bxs-face'></i>
-        <span class="info">
-          <h3 id="nutritionistNumber">0</h3>
-          <p>Number nutritionist</p>
-        </span>
-      </li>
-      <li>
-        <i class='bx bxs-pizza'></i>
-        <span class="info">
-          <h3 id="countRecipes">0</h3>
-          <p>Number recipes</p>
-        </span>
-      </li>
-      <li>
-        <i class='bx bx-dollar-circle'></i>
-        <span class="info">
-          <h3>$6,742</h3>
-          <p>Total Sales</p>
-        </span>
-      </li>
-    </ul>
-    <!-- End of Insights -->
+?>
 
-    <div class="bottom-data">
-      <!-- Orders -->
-      <div class="orders">
-        <div class="header">
-          <i class='bx bx-receipt'></i>
-          <h3>Recent Orders</h3>
-          <i class='bx bx-filter'></i>
-          <i class='bx bx-search'></i>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Order Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <img src="<?= BASE_APP_DIR ?>/public/images/profile-1.jpg" alt="">
-                <p>John Doe</p>
-              </td>
-              <td>14-08-2023</td>
-              <td><span class="status completed">Completed</span></td>
-            </tr>
-            <tr>
-              <td>
-                <img src="<?= BASE_APP_DIR ?>/public/images/profile-1.jpg" alt="">
-                <p>John Doe</p>
-              </td>
-              <td>14-08-2023</td>
-              <td><span class="status pending">Processing</span></td>
-            </tr>
-            <tr>
-              <td>
-                <img src="<?= BASE_APP_DIR ?>/public/images/profile-1.jpg" alt="">
-                <p>John Doe</p>
-              </td>
-              <td>14-08-2023</td>
-              <td><span class="status deleted">Deleted</span></td>
-            </tr>
-            <!-- More rows -->
-          </tbody>
-        </table>
-      </div>
-      <!-- End of Orders -->
 
-      <!-- Reminders -->
-      <div class="reminders">
-        <div class="header">
-          <i class='bx bx-note'></i>
-          <h3>Remiders</h3>
-          <i class='bx bx-filter'></i>
-          <i class='bx bx-plus'></i>
-        </div>
-        <ul class="task-list">
-          <li class="completed">
-            <div class="task-title">
-              <i class='bx bx-check-circle'></i>
-              <p>Start Our Meeting</p>
-            </div>
-            <i class='bx bx-dots-vertical-rounded'></i>
-          </li>
-          <!-- More tasks -->
-        </ul>
-      </div>
-      <!-- End of Reminders -->
-    </div>
-  </main>
 </div>
 <!-- End of Main Content -->
 
 
-
-
-  
   <!-- Correct Order and Single Version of jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
@@ -218,40 +143,6 @@
 
 
   <script src="<?= BASE_APP_DIR ?>/public/js/adminDashboard.js"></script>
-
-  <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
-
-
-  <script type="text/javascript">
-     $(document).ready(function(){
-
-      performAjaxRequest(
-          "GET",
-          "countRegularUsers",
-          "",
-          "",
-          ""
-        );
-        performAjaxRequest(
-          "GET",
-          "countNutritionistUsers",
-          "",
-          "",
-          ""
-        );
-        performAjaxRequest(
-          "GET",
-          "countRecipes",
-          "",
-          "",
-          ""
-        );
-     });
-
-     
-    
-  </script>
-
 
 </body>
 

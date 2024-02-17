@@ -35,9 +35,8 @@ class AdminView
         return endStream();
     }
 
-    public function renderUserTable($data){
+    public function renderUserTable($data)
+    {
         require VIEWSDIR . DS . 'components' . DS . 'admin' . DS . 'users-table.php';
     }
-
-    
 }

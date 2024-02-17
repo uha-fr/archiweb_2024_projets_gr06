@@ -7,23 +7,29 @@ function handleAjaxError(jqXHR, textStatus, errorThrown) {
   });
 }
 
-function handleAjaxResponse(action, response, successTitle, successMessage, logout) {
+function handleAjaxResponse(
+  action,
+  response,
+  successTitle,
+  successMessage,
+  logout
+) {
   switch (action) {
-    case 'login':
-      console.log("on va vers first-login")
-      redirectHref = "first-login"
+    case "login":
+      console.log("on va vers first-login");
+      redirectHref = "first-login";
       break;
-    case 'first-login':
-      redirectHref = "home"
+    case "first-login":
+      redirectHref = "dashboard";
       break;
-    case 'update':
-      redirectHref = "update"
+    case "update":
+      redirectHref = "update";
       break;
-      case 'addRecipe':
-      redirectHref = "recipes-list"
+    case "addRecipe":
+      redirectHref = "recipes-list";
       break;
     default:
-      redirectHref = "login"
+      redirectHref = "login";
       break;
   }
   if (response.success) {
@@ -32,10 +38,11 @@ function handleAjaxResponse(action, response, successTitle, successMessage, logo
       text: successMessage,
       icon: "success",
     }).then(function () {
-      if (redirectHref != "update") {
+      if (redirectHref != "update" && redirectHref != "recipes-list") {
         window.location.href = redirectHref;
-      }
-      else {
+      } else if (redirectHref == "recipes-list") {
+        window.parent.rafraichirPage();
+      } else {
         window.location.reload(true);
       }
     });
@@ -50,8 +57,6 @@ function handleAjaxResponse(action, response, successTitle, successMessage, logo
     });
   }
 }
-
-
 
 function performAjaxRequest(
   requestType,
@@ -70,21 +75,68 @@ function performAjaxRequest(
 
       if (action == "showAllRecipes") {
         $("#RecipeList").html(response.message);
-        $("table").DataTable({ order: [2, "desc"] });
-      }
-      else if (action == "showAllUsers") {
+      } else if (action == "showAllUsers") {
         $("#showUser").html(response.message);
         $("table").DataTable({ order: [0, "desc"] });
-      } else if(action == "countRegularUsers"){
+      } else if (action == "countRegularUsers") {
         $("#usersNumber").html(response.count);
-      } else if(action == "countNutritionistUsers"){
+      } else if (action == "countNutritionistUsers") {
         $("#nutritionistNumber").html(response.count);
       }else if(action == "countRecipes"){
         $("#countRecipes").html(response.count);
       }else {
         console.log("action: " + action);
-        handleAjaxResponse(action, response, successTitle, successMessage, action == "logout");
+        handleAjaxResponse(
+          action,
+          response,
+          successTitle,
+          successMessage,
+          action == "logout"
+        );
       }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      handleAjaxError(jqXHR, textStatus, errorThrown);
+    },
+  });
+}
+
+function performAjaxRequestWithImg(
+  requestType,
+  action,
+  additionalData,
+  successTitle,
+  successMessage
+) {
+  // creation FormData() object
+  var formData = new FormData();
+  var fileInput = document.getElementById("image_url");
+  var name = document.getElementById("name");
+  var calories = document.getElementById("calories");
+
+  if (fileInput.files.length > 0) {
+    formData.append("name", name.value);
+    formData.append("calories", calories.value);
+    formData.append("action", action);
+    formData.append("file", fileInput.files[0]);
+    formData.append("additionalData", additionalData);
+  }
+  $.ajax({
+    url: "index.php",
+    type: requestType,
+    data: formData,
+    processData: false,
+    contentType: false,
+    dataType: "JSON",
+    success: function (response) {
+      console.log("action: 1111  " + action);
+      handleAjaxResponse(
+        action,
+        response,
+        successTitle,
+        successMessage,
+        action
+      );
     },
     error: function (jqXHR, textStatus, errorThrown) {
       handleAjaxError(jqXHR, textStatus, errorThrown);

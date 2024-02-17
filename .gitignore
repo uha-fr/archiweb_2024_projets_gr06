@@ -1,5 +1,3 @@
 /vendor/*
 composer.lock
 .env
-doc/*
-db/*
