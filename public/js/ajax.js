@@ -141,3 +141,19 @@ function performAjaxRequestWithImg(
     },
   });
 }
+
+// DEBOUNCE (for search bars mainly, it only runs functions when a value is no longer being changed after X time)
+function debounce(func, wait) {
+  var timeout;
+
+  return function () {
+    var context = this,
+      args = arguments;
+    var later = function () {
+      timeout = null;
+      func.apply(context, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
