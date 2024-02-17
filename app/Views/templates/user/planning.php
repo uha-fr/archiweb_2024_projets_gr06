@@ -114,12 +114,7 @@ $duration = $_GET["duration"] ?? 30;
     <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('.selector > .selection').click(function (e) {
-                $(this).siblings().removeClass('selected');
-                $(this).addClass('selected');
-            });
-        });
+
 
     </script>
 
