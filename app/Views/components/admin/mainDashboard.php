@@ -33,7 +33,7 @@
       <li>
         <i class='bx bxs-pizza'></i>
         <span class="info">
-          <h3>14,721</h3>
+          <h3 id="countRecipes">0</h3>
           <p>Number recipes</p>
         </span>
       </li>
@@ -121,25 +121,32 @@
   <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 
 
-<script type="text/javascript">
-   $(document).ready(function(){
+  <script type="text/javascript">
+     $(document).ready(function(){
 
-    performAjaxRequest(
-        "GET",
-        "countRegularUsers",
-        "",
-        "",
-        ""
-      );
       performAjaxRequest(
-        "GET",
-        "countNutritionistUsers",
-        "",
-        "",
-        ""
-      );
-   });
+          "GET",
+          "countRegularUsers",
+          "",
+          "",
+          ""
+        );
+        performAjaxRequest(
+          "GET",
+          "countNutritionistUsers",
+          "",
+          "",
+          ""
+        );
+        performAjaxRequest(
+          "GET",
+          "countRecipes",
+          "",
+          "",
+          ""
+        );
+     });
 
-   
-  
-</script>
+     
+    
+  </script>
