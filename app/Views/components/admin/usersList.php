@@ -1,17 +1,10 @@
 <main>
     <div class="header">
       <div class="left">
-        <h1>Dashboard</h1>
-        <ul class="breadcrumb">
-          <li><a href="#">Analytics</a></li>
-          /
-          <li><a href="#" class="active">Shop</a></li>
-        </ul>
+        <h1>Users list</h1>
+        
       </div>
-      <a href="#" class="report">
-        <i class='bx bx-cloud-download'></i>
-        <span>Download CSV</span>
-      </a>
+     
     </div>
 
     <!-- End of Insights -->
@@ -31,6 +24,7 @@
               <th>User</th>
               <th>Order Date</th>
               <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -41,6 +35,11 @@
               </td>
               <td>14-08-2023</td>
               <td><span class="status completed">Completed</span></td>
+              <td>
+                <a href=""><i class='bx bxs-edit'></i></a>
+                        <!-- Delete User Icon -->
+                <a href="" style="color: var(--danger)"><i class='bx bxs-trash'></i></a>
+              </td>
             </tr>
             <tr>
               <td>

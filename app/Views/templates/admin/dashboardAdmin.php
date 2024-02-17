@@ -15,9 +15,6 @@ function generateTabLink($currentTab, $tabName, $label, $iconClass)
 }
 
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,13 +28,8 @@ function generateTabLink($currentTab, $tabName, $label, $iconClass)
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/globals.css" />
-  
-
   <link href="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
-
-  
-
 </head>
 
 <body>
