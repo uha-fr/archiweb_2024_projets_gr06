@@ -53,7 +53,7 @@
                     </div>
                   </div>
                   <div class="project-box-content-header">
-                    <p class="box-content-header">Keto Diet Plan</p>
+                    <p class="box-content-header" style="font-size: 22px">Keto Diet Plan</p>
                     <p class="box-content-subheader">Caloric Tracker</p>
                   </div>
                   <div class="box-progress-wrapper">
