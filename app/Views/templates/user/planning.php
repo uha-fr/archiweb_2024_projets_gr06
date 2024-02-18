@@ -47,9 +47,13 @@ $duration = $_GET["duration"] ?? 30;
 
 
                 <!-- Search bar -->
-                <form action="" id="plan-recipe-search">
-                    <input type="text" class="form-control" id="plan-recipe-search" placeholder="Search for recipe">
-                </form>
+                <input type="text" class="form-control" name="plan-recipe-search" id="plan-recipe-search"
+                    placeholder="Search for recipe">
+
+                <!-- Results -->
+                <div id="plan-recipe-results">
+
+                </div>
             </div>
         </div>
         <!-- Planning Params -->
@@ -114,6 +118,28 @@ $duration = $_GET["duration"] ?? 30;
     <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 
     <script type="text/javascript">
+
+        $(document).ready(function () {
+            // Debounced because its a search bar
+            var debouncedSearch = debounce(function () {
+                var inputValue = $('#plan-recipe-search').val();
+
+                performAjaxRequest(
+                    "GET",
+                    "planSearchForRecipe",
+                    "&searchValue=" + inputValue,
+                    "",
+                    ""
+                );
+
+            }, 700); // 500 ms delay
+
+            // Listening for changes in the input field
+            $('#plan-recipe-search').on('input', function () {
+                debouncedSearch();
+
+            });
+        });
 
 
     </script>

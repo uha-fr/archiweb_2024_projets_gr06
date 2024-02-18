@@ -116,7 +116,10 @@ class Router
                     case 'countNutritionistUsers':
                         $this->adminController->countNutritionistUsers();
                         break;
-                        // Add other GET actions here
+                    // Add other GET actions here
+                    case 'planSearchForRecipe':
+                        $this->userController->getRecipesByName();
+                        break;
                     default:
                         // If no specific action, fallback to generic page handling
                         $this->userController->GETPage($requested);

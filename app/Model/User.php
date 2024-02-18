@@ -4,8 +4,8 @@ namespace Manger\Model;
 
 use Config\Database;
 
-define('USER_ID',':user_id');
-define('EMAIL',':email');
+define('USER_ID', ':user_id');
+define('EMAIL', ':email');
 
 
 /**
@@ -15,7 +15,7 @@ define('EMAIL',':email');
  */
 class User
 {
-    
+
     /**
      * @var Database The database instance.
      */
@@ -145,7 +145,9 @@ class User
     {
         $row = $this->findUserByEmail($email);
 
-        if (!$row) {return false;}
+        if (!$row) {
+            return false;
+        }
 
         $hashedPassword = $row->password;
         if (password_verify($password, $hashedPassword)) {
@@ -259,4 +261,24 @@ class User
         //Execute
         return $this->db->execute();
     }
+
+    // PLANNING - RECIPES
+    public function getRecipesByName($searchValue)
+    {
+        $sql = "SELECT * FROM recipes WHERE name LIKE :searchValue";
+
+        $this->db->query($sql);
+        $this->db->bind(':searchValue', "%$searchValue%");
+
+        $results = $this->db->resultSet();
+
+        if ($this->db->rowCount() > 0) {
+            return $results;
+        } else {
+            return false;
+        }
+    }
+
 }
+
+

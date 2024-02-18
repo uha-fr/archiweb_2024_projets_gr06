@@ -82,6 +82,10 @@ function performAjaxRequest(
         $("#usersNumber").html(response.count);
       } else if (action == "countNutritionistUsers") {
         $("#nutritionistNumber").html(response.count);
+      } else if (action == "planSearchForRecipe") {
+        var data = response.data;
+        console.log(data);
+        $("#plan-recipe-results").html(data);
       } else {
         console.log("action: " + action);
         handleAjaxResponse(
