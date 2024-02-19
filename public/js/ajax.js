@@ -72,7 +72,7 @@ function performAjaxRequest(
     data: $("#form-data").serialize() + "&action=" + action + additionalData,
     dataType: "json",
     success: function (response) {
-      console.log("action: 1111  " + action);
+      console.log("action:  " + action);
 
       switch (action) {
         case "showAllRecipes":
@@ -94,6 +94,10 @@ function performAjaxRequest(
     
         case "countRecipes":
           $("#countRecipes").html(response.count);
+          break;
+        case "planSearchForRecipe":
+          var data = response.data;
+          $("#plan-recipe-results").html(data);
           break;
     
         case "getUserDetails":
@@ -172,4 +176,20 @@ function performAjaxRequestWithImg(
       handleAjaxError(jqXHR, textStatus, errorThrown);
     },
   });
+}
+
+// DEBOUNCE (for search bars mainly, it only runs functions when a value is no longer being changed after X time)
+function debounce(func, wait) {
+  var timeout;
+
+  return function () {
+    var context = this,
+      args = arguments;
+    var later = function () {
+      timeout = null;
+      func.apply(context, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 }

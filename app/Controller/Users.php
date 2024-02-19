@@ -7,7 +7,7 @@ use Manger\Views\UserView;
 use Manger\Views\AdminView;
 
 
-define('APPJSON','Content-Type: application/json');
+define('APPJSON', 'Content-Type: application/json');
 /**
  * Controller for User-related things.
  * 
@@ -44,29 +44,29 @@ class Users
      * @return void
      */
     public function GETPage($page)
-    {  
-        if($page=="dashboardAdmin"){
+    {
+        if ($page == "dashboardAdmin") {
             $adminView = new AdminView();
 
             $html = $adminView->viewPage($page);
 
-          echo $html;
-           http_response_code(200);
-       
-            
-        }else{
+            echo $html;
+            http_response_code(200);
 
 
-        $userView = new UserView();
+        } else {
 
-        $html = $userView->viewPage($page);
 
-        echo $html;
-        http_response_code(200);
+            $userView = new UserView();
+
+            $html = $userView->viewPage($page);
+
+            echo $html;
+            http_response_code(200);
         }
     }
 
-   
+
 
 
 
@@ -313,4 +313,30 @@ class Users
             exit;
         }
     }
+
+
+
+    public function getRecipesByName()
+    {
+        header('Content-Type: application/json');
+        $searchValue = isset($_GET['searchValue']) ? $_GET['searchValue'] : '';
+
+        if (!empty($searchValue)) {
+            $data = $this->userModel->getRecipesByName($searchValue);
+
+            if ($data) {
+                ob_start();
+                include VIEWSDIR . DS . 'components' . DS . 'user' . DS . 'planning' . DS . 'searchResults.php';
+                $output = ob_get_clean();
+
+                echo json_encode(['success' => true, 'data' => $output]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'No recipes found.']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'No search value provided.']);
+        }
+        exit;
+    }
+
 }

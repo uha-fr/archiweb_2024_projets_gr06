@@ -122,6 +122,9 @@ class Router
                 break;
             case 'getUserDetails':
                 $this->adminController->getUserDetails();
+            case 'planSearchForRecipe':
+                        $this->userController->getRecipesByName();
+                        break;
             // Add other GET actions here
 
             default:
