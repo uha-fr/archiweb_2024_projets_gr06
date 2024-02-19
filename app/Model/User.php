@@ -265,10 +265,15 @@ class User
     // PLANNING - RECIPES
     public function getRecipesByName($searchValue)
     {
-        $sql = "SELECT * FROM recipes WHERE name LIKE :searchValue";
+        // session_start();
+
+        $userId = $_SESSION['id'];
+
+        $sql = "SELECT * FROM recipes WHERE name LIKE :searchValue AND (creator = :userId OR creator = 42)";
 
         $this->db->query($sql);
         $this->db->bind(':searchValue', "%$searchValue%");
+        $this->db->bind(':userId', $userId);
 
         $results = $this->db->resultSet();
 
@@ -278,6 +283,7 @@ class User
             return false;
         }
     }
+
 
 }
 

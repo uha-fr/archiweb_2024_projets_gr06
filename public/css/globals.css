@@ -49,6 +49,16 @@
   display: none;
 }
 
+.hoverscale {
+  transition: all 200ms ease-in-out;
+}
+
+.hoverscale:hover {
+  scale: 0.96;
+  transition: all 200ms ease-in-out;
+  opacity: 0.8;
+}
+
 /* MODAL */
 
 .modal-window {

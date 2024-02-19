@@ -51,7 +51,7 @@ $duration = $_GET["duration"] ?? 30;
                     placeholder="Search for recipe">
 
                 <!-- Results -->
-                <div id="plan-recipe-results">
+                <div id="plan-recipe-results" class="pt-4" style="max-height:350px; overflow:scroll;">
 
                 </div>
             </div>
