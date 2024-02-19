@@ -78,7 +78,7 @@ $duration = $_GET["duration"] ?? 30;
                     <h3 class="text-white">Duration</h3>
                     <p>The number of total days of the plan</p>
                 </div>
-                <div class="selector">
+                <div class="selector width-per-item">
                     <a href="?period=<?= $period ?>&duration=7"
                         class="text-decoration-none selection <?= $duration == 7 ? 'selected' : '' ?>">7 Days</a>
                     <a href="?period=<?= $period ?>&duration=14"
@@ -87,6 +87,17 @@ $duration = $_GET["duration"] ?? 30;
                         class="text-decoration-none selection <?= $duration == 30 ? 'selected' : '' ?>">30 Days</a>
                     <a href="?period=<?= $period ?>&duration=60"
                         class="text-decoration-none selection <?= $duration == 60 ? 'selected' : '' ?>">60 Days</a>
+                </div>
+            </div>
+            <!-- Name of Plan (ONLY SHOWN IF USER HAS NO PLAN) -->
+            <div class="form-group">
+                <div class="selector-label">
+                    <h3 class="text-white">Name of the Plan</h3>
+                    <p>Add a name to your Plan</p>
+                </div>
+                <div class="selector width-per-item">
+                    <input type="text" name="plan-name" id="plan-name" class="bg-bg rounded p-1 px-2"
+                        style="width:300px; border:0" placeholder="Plan Name">
                 </div>
             </div>
         </div>
