@@ -50,6 +50,53 @@ class AdminModel
     }
 
     /**
+     * Deletes a user by their ID.
+     *
+     * This method executes a DELETE SQL statement to remove a user from the database.
+     * It uses prepared statements to prevent SQL injection attacks.
+     *
+     * @param int $id The unique identifier of the user to be deleted.
+     * @return bool Returns true if the operation was successful, false otherwise.
+     */
+    public function deleteUserById($id) {
+        $sql = "DELETE FROM users WHERE id = :id";
+        $this->db->query($sql);
+        $this->db->bind(':id', $id);
+    
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+
+    /**
+ * Fetch a single user by ID.
+ *
+ * Retrieves a user from the database based on the provided ID and returns it.
+ * If the user is found, their data is returned. Otherwise, false is returned.
+ *
+ * @param int $userId The ID of the user to retrieve.
+ * @return mixed The user data as an object if found, otherwise false.
+ */
+    public function getUserById($userId)
+    {
+        $sql = "SELECT * from users where id = :id";
+
+        $this->db->query($sql);
+        $this->db->bind(':id', $userId);
+
+       $row = $this->db->single();
+
+        if ($row) {
+            return $row;
+        } else {
+            return false;
+        }
+    }
+
+    /**
  * Get Count of Regular Users
  *
  * Returns the number of users with the role of 'regular'.
@@ -81,7 +128,7 @@ public function getRegularUsersCount()
  */
 public function getNutritionistCount()
 {
-    $sql = "SELECT COUNT(*) AS regularCount FROM users WHERE role = :role";
+    $sql = "SELECT COUNT(*) AS nutritionistCount FROM users WHERE role = :role";
 
     $this->db->query($sql);
     $this->db->bind(':role', 'Nutritionist');
@@ -90,10 +137,36 @@ public function getNutritionistCount()
     $row = $this->db->single(); // Assuming single() fetches a single record as an object
     
     if ($row) {
-        return $row->regularCount;
+        return $row->nutritionistCount;
     } else {
         return 0; // In case of no users or an error
     }
 }
 
+
+
+
+/**
+ * Get Count of Recipes
+ *
+ * Returns the number of Recipes.
+ *
+ * @return int The count of Recipes.
+ */
+public function getRecipesCount()
+{
+    $sql = "SELECT COUNT(*) AS recipeCount FROM recipes";
+
+    $this->db->query($sql);
+    $this->db->execute();
+    
+    $row = $this->db->single(); // Assuming single() fetches a single record as an object
+    
+    
+    if ($row) {
+        return $row->recipeCount;
+    } else {
+        return 0; // In case of no users or an error
+    }
+}
 }
