@@ -107,11 +107,11 @@ $duration = $_GET["duration"] ?? 30;
             <?php for ($day = 1; $day <= $period; $day++): ?>
                 <div>
                     <p class="p-3 text-white fw-bold" style="">Day
-                        <?php echo $day ?>:
+                        <?= $day ?>:
                     </p>
-                    <div class="bg-dark-gray rounded p-2 d-flex flex-wrap flex-row gap-4 container-fluid"
-                        style="width: 95%">
-                        <a href="#open-modal"
+                    <div class="bg-dark-gray rounded p-2 d-flex flex-wrap flex-row gap-4 container-fluid" style="width: 95%"
+                        id="day-<?php echo $day ?>">
+                        <a href="?period=<?= $period ?>&duration=<?= $duration ?>&selectedDay=<?= $day ?>#open-modal"
                             class="d-flex flex-column justify-content-center bg-bg p-4 rounded text-decoration-none"
                             style="min-height: 300px;width: fit-content; width: 250px">
                             <img style="width: 60px; height: 60px; object-fit: cover; border-radius: 100%; margin-left: 50%; transform: translateX(-50%);"
@@ -129,7 +129,7 @@ $duration = $_GET["duration"] ?? 30;
     <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 
     <script type="text/javascript">
-
+        // HANDLE SEARCH
         $(document).ready(function () {
             // Debounced because its a search bar
             var debouncedSearch = debounce(function () {
@@ -151,6 +151,39 @@ $duration = $_GET["duration"] ?? 30;
 
             });
         });
+
+        // HANDLE SELECT RECIPE:
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var recipes = [];
+
+            // to get the selected Day from the queryParams
+            function getSelectedDay() {
+                var queryParams = new URLSearchParams(window.location.search);
+                return queryParams.get('selectedDay');
+            }
+
+            // Now we attach the event listener to a parent element, such as 'document' or a specific container that exists on page load
+            var recipesParent = document.getElementById("plan-recipe-results");
+            document.addEventListener('click', function (event) {
+                var target = event.target.closest('.recipe-item');
+                if (target) {
+                    var recipeId = target.dataset.recipeId;
+                    var recipeName = target.dataset.recipeName;
+                    var selectedDay = getSelectedDay();
+
+                    var recipeData = {
+                        id: recipeId,
+                        name: recipeName,
+                        day: selectedDay
+                    };
+
+                    recipes.push(recipeData);
+                    console.log(recipes);
+                }
+            });
+        });
+
+
 
 
     </script>
