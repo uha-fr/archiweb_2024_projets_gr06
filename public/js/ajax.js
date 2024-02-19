@@ -38,15 +38,16 @@ function handleAjaxResponse(
       text: successMessage,
       icon: "success",
     }).then(function () {
-      if (redirectHref != "update" && redirectHref != "recipes-list") {
+      if (redirectHref != "update" && redirectHref != "recipes-list" && action!='deleteUser') {
         window.location.href = redirectHref;
       } else if (redirectHref == "recipes-list") {
         window.parent.rafraichirPage();
       } else {
+        console.log("refresh");
         window.location.reload(true);
       }
     });
-    if (!logout) {
+    if (!logout && action!='deleteUser') {
       $("#form-data")[0].reset();
     }
   } else {
@@ -73,27 +74,56 @@ function performAjaxRequest(
     success: function (response) {
       console.log("action: 1111  " + action);
 
-      if (action == "showAllRecipes") {
-        $("#RecipeList").html(response.message);
-      } else if (action == "showAllUsers") {
-        $("#showUser").html(response.message);
-        $("table").DataTable({ order: [0, "desc"] });
-      } else if (action == "countRegularUsers") {
-        $("#usersNumber").html(response.count);
-      } else if (action == "countNutritionistUsers") {
-        $("#nutritionistNumber").html(response.count);
-      }else if(action == "countRecipes"){
-        $("#countRecipes").html(response.count);
-      }else {
-        console.log("action: " + action);
-        handleAjaxResponse(
-          action,
-          response,
-          successTitle,
-          successMessage,
-          action == "logout"
-        );
+      switch (action) {
+        case "showAllRecipes":
+          $("#RecipeList").html(response.message);
+          break;
+    
+        case "getAllUsers":
+          $("#showUser").html(response.message);
+          $("table").DataTable({ order: [0, "desc"] });
+          break;
+    
+        case "countRegularUsers":
+          $("#usersNumber").html(response.count);
+          break;
+    
+        case "countNutritionistUsers":
+          $("#nutritionistNumber").html(response.count);
+          break;
+    
+        case "countRecipes":
+          $("#countRecipes").html(response.count);
+          break;
+    
+        case "getUserDetails":
+          Swal.fire({
+            title: `<strong>User Info: ID(${response.data.id})</strong>`,
+            icon: 'info',
+            html: `
+              <div style="text-align: left;">
+                <b>Full Name:</b> ${response.data.fullname}<br>
+                <b>Email:</b> ${response.data.email}<br>
+                <b>Gender:</b> ${response.data.gender}<br>
+                <b>Creation Date:</b> ${response.data.creation_date}<br>
+                <b>Goal:</b> ${response.data.goal}<br>
+                <b>Age:</b> ${response.data.age}<br>
+                <b>Role:</b> ${response.data.role}<br>
+                <b>Height:</b> ${response.data.height} cm<br>
+                <b>Weight:</b> ${response.data.weight} kg<br>
+                <b>Daily Calorie Goal:</b> ${response.data.daily_caloriegoal} calories
+              </div>
+            `,
+            showCancelButton: true,
+          });
+          break;
+    
+        default:
+          console.log("Unhandled action: " + action);
+          handleAjaxResponse(action, response, successTitle, successMessage);
+          break;
       }
+     
     },
     error: function (jqXHR, textStatus, errorThrown) {
       handleAjaxError(jqXHR, textStatus, errorThrown);
@@ -129,7 +159,7 @@ function performAjaxRequestWithImg(
     contentType: false,
     dataType: "JSON",
     success: function (response) {
-      console.log("action: 1111  " + action);
+      console.log("action:  " + action);
       handleAjaxResponse(
         action,
         response,

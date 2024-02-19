@@ -41,27 +41,77 @@ class AdminController
      *
      * @return void
      */
-    public function showAllUsers()
-    {
-        header('Content-Type: application/json');
-        $data = $this->adminModel->getAllUsers();
-
-        // Start output buffering
+    public function getAllUsers()
+{
+    header('Content-Type: application/json');
+    $data = $this->adminModel->getAllUsers();
+    
+    if ($data) {
+        // Output buffering to capture the included file's content
         ob_start();
-        // Include the view file, the $data variable will be used there
-        require VIEWSDIR . DS . 'components' . DS . 'admin' . DS . 'users-table.php';
-        // Store the buffer content into a variable
+        include VIEWSDIR . DS . 'components' . DS . 'admin' . DS . 'users-table.php';
         $output = ob_get_clean();
-
-        // Return JSON
-        if ($data) {
-            echo json_encode(['message' => $output]);
-            exit;
-        } else {
-            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">:( No users present in the database!</h3>']);
-            exit;
-        }
+        
+        // Echo the content captured, which now includes $data being used in usersList.php
+        echo json_encode(['message' => $output]);
+    } else {
+        echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">:( No users present in the database!</h3>']);
     }
+    exit;
+}
+
+/**
+ * Fetch and display user information by ID.
+ *
+ * Responds to an AJAX request by fetching a user's details based on the provided ID.
+ * The user's information is returned as a JSON object for use in the frontend.
+ *
+ * @return void Outputs the user data in JSON format.
+ */
+public function getUserDetails()
+{
+    header('Content-Type: application/json');
+    $userId = isset($_GET['info_id']) ? $_GET['info_id'] : '';
+
+    if (!empty($userId)) {
+        $data = $this->adminModel->getUserById($userId);
+
+        if ($data) {
+            echo json_encode(['success' => true, 'data' => $data]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'User not found.']);
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'No user ID provided.']);
+    }
+    exit;
+}
+
+/**
+ * Handles the deletion of a user.
+ *
+ * This method is called when a request to delete a user is received.
+ * It retrieves the user ID from the POST data, calls the model to delete the user,
+ * and then returns a JSON response indicating the success or failure of the operation.
+ *
+ * @return void Outputs a JSON response with the operation result.
+ */
+public function deleteUser() {
+    if (isset($_POST['del_id'])) {
+        $del_id = $_POST['del_id'];
+        $result = $this->adminModel->deleteUserById($del_id);
+
+        if ($result) {
+            echo json_encode(['success' => true, 'message' => 'User deleted successfully!']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to delete user.']);
+        }
+        exit;
+    }
+}
+
+
+
 
 
     /**
@@ -107,7 +157,7 @@ class AdminController
     }
     
 
-      /**
+    /**
      * Count Recipes
      * 
      * Retrieves and returns the count of Recipes.

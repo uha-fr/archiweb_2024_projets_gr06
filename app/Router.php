@@ -86,13 +86,11 @@ class Router
                 case 'addRecipe':
                     $this->recipesController->addNewRecipe();
                     break;
-                case 'showAllUsers':
-                    $this->adminController->showAllUsers();
-                    break;
-
                 case 'logout':
                     $this->userController->logout();
                     break;
+                case 'deleteUser':
+                    $this->adminController->deleteUser();
                 default:
                     include __DIR__ . '/../Views/login.php';
                     exit;
@@ -118,7 +116,14 @@ class Router
                 break;
             case 'countRecipes':
                 $this->adminController->countRecipes();
+                break;
+            case 'getAllUsers':
+                $this->adminController->getAllUsers();
+                break;
+            case 'getUserDetails':
+                $this->adminController->getUserDetails();
             // Add other GET actions here
+
             default:
                 // If no specific action, fallback to generic page handling
                 $this->userController->GETPage($requested);
