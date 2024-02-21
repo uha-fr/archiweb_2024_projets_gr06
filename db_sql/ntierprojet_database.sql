@@ -155,7 +155,7 @@ CREATE TABLE `users` (
   `fullname` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `active` int(10) NOT NULL,
+  `active` int(11) NOT NULL,
   `creation_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `age` int(11) DEFAULT NULL,
   `role` varchar(250) NOT NULL DEFAULT 'Regular',
@@ -196,13 +196,11 @@ CREATE TABLE `user_plan` (
 
 
 CREATE TABLE `notifications` (
-    `notif_id` int(10) ,
-    `sender_id` int(10),
-    `receiver_id` int(10),
+    `notif_id` int(11),
+    `sender_id` int(11),
+    `receiver_id` int(11),
     `type` int(11),
-    `creation_date` DATETIME,
-    FOREIGN KEY fk_sender(`sender_id`) REFERENCES `users`(`id`),
-    FOREIGN KEY fk_receiver(`receiver_id`) REFERENCES `users`(`id`)
+    `creation_date` DATETIME
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -275,7 +273,7 @@ ALTER TABLE `user_plan`
 -- AUTO_INCREMENT pour les tables déchargées
 --
 ALTER TABLE `notifications`
-  MODIFY `notif_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `pwdreset`
 --
@@ -286,11 +284,19 @@ ALTER TABLE `pwdreset`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table notifications
+--
+
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notifications_ibfk1` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `notifications_ibfk2` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `nutritionist_client`

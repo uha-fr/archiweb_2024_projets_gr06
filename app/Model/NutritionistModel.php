@@ -47,4 +47,35 @@ class NutritionistModel
             return false;
         }
     }
+
+    /**
+     * checkNotifThenSend
+     * 
+     * Fetch the email of the user clicked on, then send them a notification through the database
+     *
+     * @param  mixed $receiverID
+     * @param  mixed $senderID
+     * @return bool|mixed return the user clicked on on success, to send them an email
+     */
+    public function checkNotifThenSend($receiverID, $senderID)
+    {
+        $sql = "SELECT * FROM users WHERE id=:receiverID;";
+        $this->db->query($sql);
+        $this->db->bind(':receiverID', $receiverID);
+
+
+        $result = $this->db->single();
+
+        if (!empty($result)) {
+            $addQuery = "INSERT INTO notifications (`receiver_id`,`sender_id`,`type`) VALUES (:receiverID,:senderID,1)";
+            $this->db->query($addQuery);
+            $this->db->bind(':receiverID', $receiverID);
+            $this->db->bind(':senderID', $senderID);
+            if ($this->db->execute()) { // si les 2 requêtes se sont bien passées on renvoit les données de l'user cliqué
+                return $result;
+            }
+        }
+
+        return false;
+    }
 }

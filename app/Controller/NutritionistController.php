@@ -58,4 +58,23 @@ class NutritionistController
         }
         exit;
     }
+
+    public function sendNotification()
+    {
+        header('Content-Type: application/json');
+        $idReceiver = isset($_POST['receiverID']) ? $_POST['receiverID'] : '';
+
+        if (!empty($idReceiver)) {
+            $data = $this->nutriModel->checkNotifThenSend($idReceiver, $_SESSION['id']);
+
+            if ($data) {
+                // envoi du mail avec $data['email']
+                echo json_encode(['success' => true, 'data' => $data]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'User not found.']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'No user ID provided.']);
+        }
+    }
 }

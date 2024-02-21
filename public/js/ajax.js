@@ -103,6 +103,11 @@ function performAjaxRequest(
           var data = response.data;
           $("#client-list-results").html(data);
           break;
+        case "sendNotification":
+          console.log(response.data);
+          console.log("notification envoyée");
+          // faire quelque chose éventuellement
+          break;
 
         case "getUserDetails":
           Swal.fire({

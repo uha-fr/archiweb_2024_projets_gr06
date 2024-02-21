@@ -9,6 +9,7 @@
         <p style="width: 10%; margin: 15px 0">
             <?= htmlspecialchars($row->age) ?> ans
         </p>
+
     </div>
 
 <?php endforeach; ?>

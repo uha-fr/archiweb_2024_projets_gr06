@@ -100,6 +100,13 @@
     $('#client-list-results').on('click', '.client-user', function() {
       const userId = $(this).data('user-id');
       console.log(userId);
+      performAjaxRequest(
+        "POST",
+        "sendNotification",
+        "&receiverId=" + userId,
+        "",
+        ""
+      );
     });
 
     // pour effectuer une recherche

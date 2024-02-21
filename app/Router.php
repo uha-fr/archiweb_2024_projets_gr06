@@ -94,6 +94,10 @@ class Router
                     break;
                 case 'deleteUser':
                     $this->adminController->deleteUser();
+                    break;
+                case 'sendNotification':
+                    $this->nutriController->sendNotification();
+                    break;
                 default:
                     include __DIR__ . '/../Views/login.php';
                     exit;
