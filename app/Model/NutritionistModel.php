@@ -31,11 +31,13 @@ class NutritionistModel
      *
      * @return array|false An array of user data if users are found, or false if no users are present.
      */
-    public function getUserByFullname($namePart)
+    public function getUserByFullname($namePart, $userType)
     {
-        $sql = "SELECT * FROM users WHERE fullname LIKE CONCAT('%', :namePart, '%');";
+        $sql = "SELECT * FROM users WHERE fullname LIKE CONCAT('%', :namePart, '%') AND role=:userType;";
         $this->db->query($sql);
         $this->db->bind(':namePart', $namePart);
+        $this->db->bind(':userType', $userType);
+
 
         $results = $this->db->resultSet();
 

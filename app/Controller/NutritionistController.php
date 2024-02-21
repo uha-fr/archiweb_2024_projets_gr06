@@ -3,7 +3,6 @@
 namespace Manger\Controller;
 
 use Manger\Model\NutritionistModel;
-use PDOException;
 
 /**
  * Controller for Admin-related things.
@@ -44,7 +43,7 @@ class NutritionistController
         $searchValue = isset($_GET['searchValue']) ? $_GET['searchValue'] : '';
 
         if (!empty($searchValue)) {
-            $data = $this->nutriModel->getUserByFullname($searchValue);
+            $data = $this->nutriModel->getUserByFullname($searchValue, "Regular");
 
             if ($data) {
                 ob_start();
