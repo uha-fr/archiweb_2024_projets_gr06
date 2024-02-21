@@ -72,7 +72,7 @@ class NutritionistModel
             $this->db->bind(':receiverID', $receiverID);
             $this->db->bind(':senderID', $senderID);
             if ($this->db->execute()) { // si les 2 requêtes se sont bien passées on renvoit les données de l'user cliqué
-                return $result;
+                return $result->email;
             }
         }
 
