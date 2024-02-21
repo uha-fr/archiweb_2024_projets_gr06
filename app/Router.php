@@ -5,6 +5,7 @@ namespace Manger;
 use Manger\Controller\RecipesController;
 use Manger\Controller\Users;
 use Manger\Controller\AdminController;
+use Manger\Controller\NutritionistController;
 use Manger\Controller\ResetPasswords;
 
 
@@ -15,6 +16,7 @@ class Router
 
     private $resetPasswordController;
     private $recipesController;
+    private $nutriController;
 
     public function __construct()
     {
@@ -23,6 +25,7 @@ class Router
 
         $this->resetPasswordController = new ResetPasswords();
         $this->recipesController = new RecipesController();
+        $this->nutriController = new NutritionistController();
     }
 
 
@@ -122,9 +125,12 @@ class Router
                         break;
                     case 'getUserDetails':
                         $this->adminController->getUserDetails();
+                        break;
                     case 'planSearchForRecipe':
                         $this->userController->getRecipesByName();
                         break;
+                    case 'clientSearch':
+                        $this->nutriController->getClientList();
                         // Add other GET actions here
 
                     default:

@@ -4,6 +4,9 @@ namespace Manger\Controller;
 
 use Manger\Model\RecipesModel;
 
+/**
+ * RecipesController
+ */
 class RecipesController
 {
     private $obj;
