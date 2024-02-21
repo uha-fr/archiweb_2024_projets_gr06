@@ -135,6 +135,9 @@ class Router
                         break;
                     case 'clientSearch':
                         $this->nutriController->getClientList();
+                        break;
+                    case "countNotification":
+                        $this->userController->countNotification();
                         // Add other GET actions here
 
                     default:

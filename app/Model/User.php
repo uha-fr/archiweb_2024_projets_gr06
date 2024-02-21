@@ -284,7 +284,30 @@ class User
         }
     }
 
+    /**
+     * getNotifsById
+     * 
+     * Returns the number of notifications the connected user has, and put them in the session.
+     *
+     * @param  mixed $userId
+     * @return int|bool
+     */
+    public function getNotifsById($userId)
+    {
+        $sql = "SELECT * FROM notifications WHERE receiver_id=:userId";
 
+        $this->db->query($sql);
+        $this->db->bind(':userId', $userId);
+        $rows = $this->db->resultSet();
+
+        if ($this->db->rowCount() > 0) {
+            foreach ($rows as $row) {
+                $data[] = $row;
+            }
+            $_SESSION['notifications'] = $data;
+            return $this->db->rowCount();
+        } else {
+            return false;
+        }
+    }
 }
-
-

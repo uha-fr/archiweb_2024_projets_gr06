@@ -333,4 +333,26 @@ class Users
         }
         exit;
     }
+
+    /**
+     * countNotification
+     * 
+     * Calls the Model to count the number of notifications the user has received
+     *
+     * @return void
+     */
+    public function countNotification()
+    {
+        header('APPJSON');
+
+        $data = $this->userModel->getNotifsById($_SESSION['id']);
+
+        if ($data) {
+            echo json_encode(['success' => true, 'data' => $data]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'No row found.']);
+        }
+
+        exit;
+    }
 }

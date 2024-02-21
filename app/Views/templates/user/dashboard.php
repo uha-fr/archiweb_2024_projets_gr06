@@ -41,7 +41,7 @@
     <!-- BELL NOTIFICATIONS ICON -->
     <div class="position-absolute" style="right: 20px; top: 20px">
       <a href="#open-modal">
-        <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;">0</div>
+        <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" id="notif-displayer" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;">0</div>
         <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="Image of a bell" />
       </a>
     </div>
@@ -108,6 +108,19 @@
         ""
       );
     });
+
+    function getNotif() {
+      performAjaxRequest(
+        "GET",
+        "countNotification",
+        "",
+        "",
+        ""
+      );
+      $("#notif-displayer").html(1);
+    }
+
+    getNotif();
 
     // pour effectuer une recherche
     function performSearch() {

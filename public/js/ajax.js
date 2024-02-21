@@ -117,7 +117,9 @@ function performAjaxRequest(
           setTimeout(function () {
             userDiv.removeClass('temp-bg-color');
           }, 2000);
-
+          break;
+        case "countNotification":
+          $("#notif-displayer").html(response.data);
           break;
 
         case "getUserDetails":
