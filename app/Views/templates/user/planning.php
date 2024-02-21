@@ -107,11 +107,15 @@ $duration = $_GET["duration"] ?? 30;
             <?php for ($day = 1; $day <= $period; $day++): ?>
                 <div>
                     <p class="p-3 text-white fw-bold" style="">Day
-                        <?php echo $day ?>:
+                        <?= $day ?>:
                     </p>
                     <div class="bg-dark-gray rounded p-2 d-flex flex-wrap flex-row gap-4 container-fluid"
                         style="width: 95%">
-                        <a href="#open-modal"
+                        <div class="rounded d-flex flex-wrap flex-row gap-4" style="width: fit-content"
+                            id="day-<?php echo $day ?>">
+
+                        </div>
+                        <a href="?period=<?= $period ?>&duration=<?= $duration ?>&selectedDay=<?= $day ?>#open-modal"
                             class="d-flex flex-column justify-content-center bg-bg p-4 rounded text-decoration-none"
                             style="min-height: 300px;width: fit-content; width: 250px">
                             <img style="width: 60px; height: 60px; object-fit: cover; border-radius: 100%; margin-left: 50%; transform: translateX(-50%);"
@@ -129,7 +133,7 @@ $duration = $_GET["duration"] ?? 30;
     <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 
     <script type="text/javascript">
-
+        // HANDLE SEARCH
         $(document).ready(function () {
             // Debounced because its a search bar
             var debouncedSearch = debounce(function () {
@@ -151,6 +155,89 @@ $duration = $_GET["duration"] ?? 30;
 
             });
         });
+
+        // HANDLE SELECT RECIPE:
+        document.addEventListener('DOMContentLoaded', (event) => {
+
+            var recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+
+            renderRecipes();
+
+            // Function to save recipes to localStorage
+            function saveRecipes() {
+                localStorage.setItem('recipes', JSON.stringify(recipes));
+            }
+
+            // Function to get the selected Day from the queryParams
+            function getSelectedDay() {
+                var queryParams = new URLSearchParams(window.location.search);
+                return queryParams.get('selectedDay'); // Ensure 'selectedDay' is the correct query parameter name
+            }
+
+            // Function to handle rendering recipes to the correct div
+            function renderRecipes() {
+                // Find all day divs and clear them
+                document.querySelectorAll('[id^="day-"]').forEach(dayDiv => {
+                    dayDiv.innerHTML = ''; // Clear the div
+                });
+
+                // Go through each recipe and append it to the correct day div
+                recipes.forEach(recipe => {
+                    var dayDiv = document.getElementById(`day-${recipe.day}`);
+                    if (dayDiv) {
+                        // Create a new element to hold the recipe information as a meal card
+                        var recipeElement = document.createElement('div');
+                        recipeElement.className = 'flex flex-column justify-content-start bg-bg p-4 rounded';
+                        recipeElement.style = 'width: fit-content; max-width: 250px; min-width: 250px; align-items:center';
+                        recipeElement.innerHTML = `
+                <img style="width: 200px; height: 200px; object-fit: cover; border-radius: 100%;"
+                    src="${recipe.image ?? "https://www.allrecipes.com/thmb/5SdUVhHTMs-rta5sOblJESXThEE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11691-tomato-and-garlic-pasta-ddmfs-3x4-1-bf607984a23541f4ad936b33b22c9074.jpg"}" />
+                <div class="mt-4">
+                    <p style="margin: 0;">
+                        ${recipe.calories ?? "400"} Cal
+                    </p>
+                    <p class="fw-bold" style="font-size: 20px; padding-top: 0px">
+                        ${recipe.name ?? "Default Recipe Name"}
+                    </p>
+                </div>
+            `;
+                        // Append the new element to the day div
+                        dayDiv.appendChild(recipeElement);
+                    }
+                });
+            }
+
+            function handleRecipeClick() {
+                var recipeId = this.dataset.recipeId;
+                var recipeName = this.dataset.recipeName;
+                var selectedDay = getSelectedDay();
+
+                var recipeData = {
+                    id: recipeId,
+                    name: recipeName,
+                    day: selectedDay
+                };
+
+                // Add the clicked recipe's data to the recipes array
+                recipes.push(recipeData);
+
+                saveRecipes();
+
+                // After updating recipes array, re-render the recipes
+                renderRecipes();
+            }
+
+            // Attach event listener to the parent container or document
+            document.addEventListener('click', function (event) {
+                var recipeItem = event.target.closest('.recipe-item');
+                if (recipeItem) {
+                    handleRecipeClick.call(recipeItem);
+                }
+            });
+        });
+
+
+
 
 
     </script>
