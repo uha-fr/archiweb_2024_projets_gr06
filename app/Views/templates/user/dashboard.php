@@ -94,26 +94,33 @@
 </html>
 <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 <script type="text/javascript">
-  // HANDLE SEARCH
   $(document).ready(function() {
-    // Debounced because its a search bar
-    var debouncedSearch = debounce(function() {
+
+    // on doit attacher l'évènement au parent, car les enfants ne sont pas encore créés
+    $('#client-list-results').on('click', '.client-user', function() {
+      const userId = $(this).data('user-id');
+      console.log(userId);
+    });
+
+    // pour effectuer une recherche
+    function performSearch() {
       var inputValue = $('#client-list-search').val();
       console.log(inputValue);
       performAjaxRequest(
         "GET",
         "clientSearch",
         "&searchValue=" + inputValue,
-        "",
+        function(data) {
+          $("#client-list-results").html(data);
+        },
         ""
       );
+    }
 
-    }, 700); // 500 ms delay
+    var debouncedSearch = debounce(performSearch, 700);
 
-    // Listening for changes in the input field
     $('#client-list-search').on('input', function() {
       debouncedSearch();
-
     });
   });
 </script>

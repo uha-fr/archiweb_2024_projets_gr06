@@ -48,7 +48,7 @@ class NutritionistController
 
             if ($data) {
                 ob_start();
-                include VIEWSDIR . DS . 'components' . DS . 'user' . DS . 'planning' . DS . 'searchResults2.php';
+                include VIEWSDIR . DS . 'components' . DS . 'user' . DS . 'planning' . DS . 'searchResultsUser.php';
                 $output = ob_get_clean();
                 echo json_encode(['success' => true, 'data' => $output]);
             } else {
