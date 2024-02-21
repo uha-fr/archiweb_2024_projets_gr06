@@ -5,9 +5,9 @@ namespace Manger\Controller;
 use Manger\Model\NutritionistModel;
 
 /**
- * Controller for Admin-related things.
+ * Controller for Nutritionist-related things.
  * 
- * Handle actions such as registration, login, logout, and all modifications of attributes.
+ * Handle actions such as adding clients, sending them notifications.
  */
 class NutritionistController
 {
@@ -23,7 +23,7 @@ class NutritionistController
     /**
      * Constructor
      *
-     * Initializes the Admins Controller with the Admin Model.
+     * Initializes the Nutritionists Controller with the Nutritionist Model.
      */
     public function __construct()
     {
@@ -39,7 +39,7 @@ class NutritionistController
      */
     public function getClientList()
     {
-        header('Content-Type: application/json');
+        header('APPJSON');
         $searchValue = isset($_GET['searchValue']) ? $_GET['searchValue'] : '';
 
         if (!empty($searchValue)) {
@@ -59,9 +59,16 @@ class NutritionistController
         exit;
     }
 
+    /**
+     * sendNotification
+     * 
+     * Check if there's an ID in the POST request. If so, send it with the session ID so the Model can use them with the database
+     *
+     * @return void
+     */
     public function sendNotification()
     {
-        header('Content-Type: application/json');
+        header('APPJSON');
         $idReceiver = isset($_POST['receiverId']) ? $_POST['receiverId'] : '';
 
         if (!empty($idReceiver)) {

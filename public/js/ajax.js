@@ -106,7 +106,6 @@ function performAjaxRequest(
         case "sendNotification":
           console.log(response.data);
           console.log("notification envoyée");
-          // faire quelque chose éventuellement
           break;
 
         case "getUserDetails":

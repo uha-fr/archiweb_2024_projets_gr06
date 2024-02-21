@@ -6,6 +6,8 @@ use Manger\Model\RecipesModel;
 
 /**
  * RecipesController
+ * 
+ * Handles all recipes-related things, such as adding a new one,or displaying them all
  */
 class RecipesController
 {
@@ -24,7 +26,7 @@ class RecipesController
      */
     function recipesCont()
     {
-        header('Content-Type: application/json');
+        header('APPJSON');
         $recipes = $this->obj->getRecipesList();
         // Start output buffering
         if ($recipes == false) {
