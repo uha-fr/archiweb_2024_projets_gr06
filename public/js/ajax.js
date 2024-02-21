@@ -106,6 +106,18 @@ function performAjaxRequest(
         case "sendNotification":
           console.log(response.data);
           console.log("notification envoyée");
+
+          var divID = additionalData.replace('&searchValue=', '');
+          var divID = additionalData.replace('&receiverId=', '');
+
+          console.log(divID);
+          var userDiv = $("#user-" + divID);
+          userDiv.addClass('temp-bg-color');
+
+          setTimeout(function () {
+            userDiv.removeClass('temp-bg-color');
+          }, 2000);
+
           break;
 
         case "getUserDetails":

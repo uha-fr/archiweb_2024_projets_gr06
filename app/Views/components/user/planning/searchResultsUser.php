@@ -11,5 +11,10 @@
         </p>
 
     </div>
+    <style>
+        .temp-bg-color {
+            background-color: #28E0B2;
+        }
+    </style>
 
 <?php endforeach; ?>
