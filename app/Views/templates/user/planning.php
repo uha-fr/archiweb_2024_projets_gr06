@@ -124,6 +124,7 @@ $duration = $_GET["duration"] ?? 30;
             // Debounced because its a search bar
             var debouncedSearch = debounce(function() {
                 var inputValue = $('#plan-recipe-search').val();
+                console.log(inputValue);
 
                 performAjaxRequest(
                     "GET",

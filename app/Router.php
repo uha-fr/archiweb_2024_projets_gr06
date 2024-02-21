@@ -104,38 +104,38 @@ class Router
                 exit();
             }
 
-    // Check for specific actions in the GET request
-    if (isset($_GET['action'])) {
-        switch ($_GET['action']) {
-            case 'countRegularUsers':
-                // Assuming you have an adminController or similar for handling admin-related actions
-                $this->adminController->countRegularUsers();
-                break;
-            case 'countNutritionistUsers':
-                $this->adminController->countNutritionistUsers();
-                break;
-            case 'countRecipes':
-                $this->adminController->countRecipes();
-                break;
-            case 'getAllUsers':
-                $this->adminController->getAllUsers();
-                break;
-            case 'getUserDetails':
-                $this->adminController->getUserDetails();
-            case 'planSearchForRecipe':
+            // Check for specific actions in the GET request
+            if (isset($_GET['action'])) {
+                switch ($_GET['action']) {
+                    case 'countRegularUsers':
+                        // Assuming you have an adminController or similar for handling admin-related actions
+                        $this->adminController->countRegularUsers();
+                        break;
+                    case 'countNutritionistUsers':
+                        $this->adminController->countNutritionistUsers();
+                        break;
+                    case 'countRecipes':
+                        $this->adminController->countRecipes();
+                        break;
+                    case 'getAllUsers':
+                        $this->adminController->getAllUsers();
+                        break;
+                    case 'getUserDetails':
+                        $this->adminController->getUserDetails();
+                    case 'planSearchForRecipe':
                         $this->userController->getRecipesByName();
                         break;
-            // Add other GET actions here
+                        // Add other GET actions here
 
-            default:
-                // If no specific action, fallback to generic page handling
+                    default:
+                        // If no specific action, fallback to generic page handling
+                        $this->userController->GETPage($requested);
+                        break;
+                }
+            } else {
+                // No action specified, handle as a page request
                 $this->userController->GETPage($requested);
-                break;
-        }
-    } else {
-        // No action specified, handle as a page request
-        $this->userController->GETPage($requested);
-    }
+            }
         }
     }
 }

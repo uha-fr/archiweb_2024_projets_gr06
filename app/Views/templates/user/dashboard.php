@@ -20,10 +20,30 @@
   <!-- BODY -->
   <div class="bg-bg" style="min-height: 100vh; padding-left: 180px">
 
+    <div id="open-modal" class="modal-window">
+      <div>
+        <a href="#" title="Close" class="modal-close">Close</a>
+        <h1>Client list</h1>
+        <div>Search any client.</div>
+        <br>
+
+
+        <!-- Search bar -->
+        <input type="text" class="form-control" name="client-list-search" id="client-list-search" placeholder="Search for client">
+
+        <!-- Results -->
+        <div id="client-list-results" class="pt-4" style="max-height:350px; overflow:scroll;">
+
+        </div>
+      </div>
+    </div>
+
     <!-- BELL NOTIFICATIONS ICON -->
     <div class="position-absolute" style="right: 20px; top: 20px">
-      <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;">0</div>
-      <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="Image of a bell" />
+      <a href="#open-modal">
+        <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;">0</div>
+        <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="Image of a bell" />
+      </a>
     </div>
 
     <!-- REST OF THE PAGE CONTENT -->
@@ -72,3 +92,28 @@
 </body>
 
 </html>
+<script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
+<script type="text/javascript">
+  // HANDLE SEARCH
+  $(document).ready(function() {
+    // Debounced because its a search bar
+    var debouncedSearch = debounce(function() {
+      var inputValue = $('#client-list-search').val();
+      console.log(inputValue);
+      performAjaxRequest(
+        "GET",
+        "clientSearch",
+        "&searchValue=" + inputValue,
+        "",
+        ""
+      );
+
+    }, 700); // 500 ms delay
+
+    // Listening for changes in the input field
+    $('#client-list-search').on('input', function() {
+      debouncedSearch();
+
+    });
+  });
+</script>
