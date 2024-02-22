@@ -43,12 +43,6 @@
         <h1>Notifications</h1>
         <div>You can accept your requests here.</div>
         <br>
-        <div>Search for a specific notification using the search bar below.</div>
-
-
-
-        <!-- Search bar -->
-        <input type="text" class="form-control" name="client-list-search" id="client-list-search" placeholder="Search for client">
 
         <!-- Results -->
         <div id="sender-notif-list" class="pt-4" style="max-height:350px; overflow:scroll;">
@@ -62,7 +56,7 @@
       <a href="#open-modal">
         <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" id="notif-displayer" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;"></div>
       </a>
-      <a href="#open-modal-notifs">
+      <a href="#open-modal-notifs" id="click-to-show-notif">
         <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="Image of a bell" />
       </a>
 
@@ -131,8 +125,8 @@
       );
     });
 
-    // pour récupérer les notifications 
-    $('#open-modal-notifs').on('click', function() {
+    // pour récupérer les users ayant envoyé des notifications 
+    $('#click-to-show-notif').on('click', function() {
       performAjaxRequest(
         "GET",
         "getUsersFromNotifications",
@@ -140,8 +134,6 @@
         "",
         ""
       );
-      // Ajoutez la phrase au code HTML du modal
-      $('#open-modal-notifs').append('<p><?php echo "valeur test" ?></p>');
     });
 
     function getNotif() {

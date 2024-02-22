@@ -4,10 +4,10 @@
             <?= htmlspecialchars($row->fullname) ?>
         </p>
         <p style="width: 26%; margin: 15px 0">
-            <?= htmlspecialchars($row->email) ?>
+            Accept
         </p>
         <p style="width: 10%; margin: 15px 0">
-            <?= htmlspecialchars($row->age) ?> accepter
+            Decline
         </p>
 
     </div>

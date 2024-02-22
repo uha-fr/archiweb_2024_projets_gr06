@@ -128,7 +128,6 @@ function performAjaxRequest(
           break;
         case "getUsersFromNotifications":
           $("#sender-notif-list").html(response.data);
-          console.log("les users: " + response.data);
           break;
 
         case "getUserDetails":
