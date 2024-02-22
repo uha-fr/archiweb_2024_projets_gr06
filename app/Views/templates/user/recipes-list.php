@@ -17,6 +17,8 @@
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <script src="<?= BASE_APP_DIR ?>/public/js/recipes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </head>
 
@@ -37,39 +39,47 @@
             <div class="row">
                 <div class="col-lg-6">
                 </div>
-                <div class="col-lg-6">
-                    <button class="btn btn-success btn-lg float-right" data-toggle="modal" data-target="#addModel" onclick="toggleIframe()">Add New Recipe <i class="bi bi-plus bi-3X"></i></button>
+                <div class="d-flex align-items-center justify-content-end">
+                    <button class="btn btn-lg btn-main-color text-white"
+                        style="background-color: #678e48; border: 0; margin-bottom: 12px;" data-toggle="modal"
+                        data-target="#addRecipeModal">
+                        <span class="me-2" style="font-size: 1.2em;">Add New Recipe</span>
+                        <i class="fas fa-plus-circle fa-lg" style="font-size: 1.2em;"></i>
+                    </button>
+                    
                 </div>
+              
             </div>
-            <hr class="my-1">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="row justify-content-center">
+            <div class="row justify-content-center">
 
-                        <!-- iframe à cacher/afficher -->
-                        <iframe id="myIframe" src="add-recipe" height="700" class="hidden"></iframe>
+            
+
+
+                <div class="row">
+                    <div class="container-fluid bg-main rounded-3 pb-4 d-flex justify-content-center align-items-center p-4"" style="
+                        min-height: 300px;">
                         <div id="RecipeList"></div>
                     </div>
                 </div>
             </div>
-            </hr>
         </div>
+        </hr>
     </div>
     </div>
     </div>
     </div>
-
+    </div>
     <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            performAjaxRequest(
-                "POST",
-                "showAllRecipes",
-                "",
-                "",
-                ""
-            );
-        });
+    $(document).ready(function() {
+        performAjaxRequest(
+            "POST",
+            "showAllRecipes",
+            "",
+            "",
+            ""
+        );
+    });
     </script>
 </body>
 
