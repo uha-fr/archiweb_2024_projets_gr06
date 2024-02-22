@@ -84,4 +84,41 @@ class NutritionistController
             echo json_encode(['success' => false, 'message' => 'No user ID provided for notification.']);
         }
     }
+
+
+        /**
+         * Show All Cients for a Nutritionist
+         *
+         * Retrieves all clients for a given nutritionist from the model and display them through <strong>clients-table.php</strong>.
+         *
+         * @param int $nutritionistId The ID of the nutritionist
+         * @return void
+         */
+        public function getUsersForNutritionist()
+        {
+            header('APPJSON');
+            $nutritionistId = isset($_GET['nutri_id']) ? $_GET['nutri_id'] : '';
+
+            // Call the model method to get users for the nutritionist
+            $data = $this->nutriModel->getUsersForNutritionist($nutritionistId);
+
+            if ($data) {
+                // Output buffering to capture the included file's content
+                ob_start();
+                include VIEWSDIR . DS . 'components' . DS . 'nutritionist' . DS . 'list-client-element.php';
+                $output = ob_get_clean();
+
+                // Echo the content captured, which now includes $data being used in usersList.php
+                echo json_encode(['message' => $output]);
+            } else {
+                echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">:( No clients present for this nutritionist!</h3>']);
+            }
+            exit;
+        }
+
+
+
+
+
+
 }

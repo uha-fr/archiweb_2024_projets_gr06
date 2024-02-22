@@ -44,6 +44,12 @@
         <img src="" alt="" />
       </a>
           <?php endif; ?>
+          <?php if ($_SESSION['role'] === "Nutritionist") : ?>
+            <a class="logo" href="nutritionist-dashboard">
+         Nutritionist 
+        <img src="" alt="" />
+      </a>
+          <?php endif; ?>
 
         </ul>
       </nav>
