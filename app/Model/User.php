@@ -342,4 +342,63 @@ class User
         }
         return false;
     }
+
+    /**
+     * updateNotificationState
+     * 
+     * Modify the notification in the table, depending of if it was declined or accepted,
+     * then add the connection between the nutritionist and the regular user in the nutritionist_client table
+     *
+     * @return array
+     */
+    public function updateNotificationState()
+    {
+
+        $notifState = $_POST['notifState'];
+        $senderId = $_POST['senderId'];
+        $userRole = $_SESSION['role'];
+        $userId = $_SESSION['id'];
+
+        if ($notifState == "Accept") {
+            $newNotifState = 2;
+        } else if ($notifState == "Decline") {
+            $newNotifState = 0;
+        } else {
+            $returnMessage = "Parameter not allowed: " . $notifState;
+            return array(false, $returnMessage);
+        }
+
+
+        $this->db->query('UPDATE notifications SET type=:newState WHERE sender_id=:senderId AND receiver_id=:userId');
+        $this->db->bind(':newState', $newNotifState);
+        $this->db->bind(':senderId', $senderId);
+        $this->db->bind(':userId', $userId);
+
+        if (!$this->db->execute()) {
+            $returnMessage = "Couldn't update notification table";
+            return array(false, $returnMessage);
+        }
+
+        if ($userRole == "Nutritionist") {
+            $addQuery = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:senderId, :userId)";
+        } else if ($userRole == "Regular") {
+            $addQuery = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:userId, :senderId)";
+        } else {
+            $returnMessage = "Neither client nor nutritionist";
+            return array(false, $returnMessage);
+        }
+
+        // Exécuter la requête d'insertion
+        $this->db->query($addQuery);
+        $this->db->bind(':senderId', $senderId);
+        $this->db->bind(':userId', $userId);
+        if (!$this->db->execute()) {
+            $returnMessage = "Couldn't update nutritionist_client table";
+            return array(false, $returnMessage);
+        }
+
+
+
+        return array(true, "All good");
+    }
 }

@@ -387,4 +387,25 @@ class Users
             echo json_encode(['success' => false, 'message' => 'Users from notification query failed.']);
         }
     }
+
+    /**
+     * updateNotificationState
+     * 
+     * Asks the Model to update the notification, meaning either decline or accept it,
+     * based on the content of the POST request
+     *
+     * @return void
+     */
+    public function updateNotificationState()
+    {
+        header('APPJSON');
+
+        $data = $this->userModel->updateNotificationState();
+
+        if ($data[0]) {
+            echo json_encode(['success' => true, 'data' => $data[1]]);
+        } else {
+            echo json_encode(['success' => false, 'message' => $data[1]]);
+        }
+    }
 }

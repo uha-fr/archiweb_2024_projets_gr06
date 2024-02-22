@@ -97,6 +97,9 @@ class Router
                 case 'sendNotification':
                     $this->nutriController->sendNotification();
                     break;
+                case 'updateNotification':
+                    $this->userController->updateNotificationState();
+                    break;
                 default:
                     include __DIR__ . '/../Views/login.php';
                     exit;

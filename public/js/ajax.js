@@ -129,6 +129,9 @@ function performAjaxRequest(
         case "getUsersFromNotifications":
           $("#sender-notif-list").html(response.data);
           break;
+        case "updateNotification":
+          console.log("réponse de la requête: " + response.data);
+          break;
 
         case "getUserDetails":
           Swal.fire({
@@ -151,6 +154,7 @@ function performAjaxRequest(
             showCancelButton: true,
           });
           break;
+
 
         default:
           console.log("Unhandled action: " + action);
