@@ -51,9 +51,7 @@ class Users
 
             echo $html;
             http_response_code(200);
-
-
-        } else if ($page == "nutritionist-dashboard" ) {
+        } else if ($page == "nutritionist-dashboard") {
 
             $nutritionistView = new nutritionistView();
 
@@ -61,7 +59,6 @@ class Users
 
             echo $html;
             http_response_code(200);
-
         } else {
 
 
@@ -358,10 +355,10 @@ class Users
 
         $data = $this->userModel->getNotifsById($_SESSION['id']);
 
-        if ($data) {
+        if ($data < 0) {
             echo json_encode(['success' => true, 'data' => $data]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'No row found.']);
+            echo json_encode(['success' => false, 'message' => 'Notification query failed.']);
         }
 
         exit;

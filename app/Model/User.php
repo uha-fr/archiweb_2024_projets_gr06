@@ -300,7 +300,7 @@ class User
         $this->db->bind(':userId', $userId);
         $rows = $this->db->resultSet();
 
-        if ($this->db->rowCount() > 0) {
+        if ($this->db->rowCount() >= 0) {
             foreach ($rows as $row) {
                 $data[] = $row;
             }

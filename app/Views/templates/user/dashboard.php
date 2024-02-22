@@ -117,7 +117,6 @@
         "",
         ""
       );
-      $("#notif-displayer").html(1);
     }
 
     getNotif();
