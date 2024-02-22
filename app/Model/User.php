@@ -130,7 +130,6 @@ class User
 
 
 
-    //Login user
     /**
      * Login
      *
@@ -301,14 +300,16 @@ class User
         $rows = $this->db->resultSet();
         $nbrRows = $this->db->rowCount();
 
+        $data = [];
+
         if ($nbrRows >= 0) {
 
             if ($nbrRows > 0) {
                 foreach ($rows as $row) {
                     $data[] = $row;
                 }
-                $_SESSION['notifications'] = $data;
             }
+            $_SESSION['notifications'] = $data;
             return $nbrRows;
         } else {
             return 0;

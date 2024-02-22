@@ -150,7 +150,6 @@
     // pour effectuer une recherche
     function performSearch() {
       var inputValue = $('#client-list-search').val();
-      console.log(inputValue);
       performAjaxRequest(
         "GET",
         "clientSearch",

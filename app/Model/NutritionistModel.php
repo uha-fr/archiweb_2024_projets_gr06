@@ -56,6 +56,24 @@ class NutritionistModel
     }
 
     /**
+     * checkIfWaitingNotification
+     * 
+     * Check if a notification already exists with the given receiver and sender ids and type 1
+     *
+     * @param int $receiverID
+     * @param int $senderID
+     * @return bool
+     */
+    private function checkIfWaitingNotification($receiverID, $senderID)
+    {
+        $this->db->query("SELECT * FROM notifications WHERE receiver_id = :receiverID AND sender_id = :senderID AND type = 1");
+        $this->db->bind(':receiverID', $receiverID);
+        $this->db->bind(':senderID', $senderID);
+        return $this->db->rowCount() > 0;
+    }
+
+
+    /**
      * checkNotifThenSend
      * 
      * Fetch the email of the user clicked on, then send them a notification through the database
@@ -73,7 +91,8 @@ class NutritionistModel
 
         $result = $this->db->single();
 
-        if (!empty($result)) {
+        if (!empty($result && !$this->checkIfWaitingNotification($receiverID, $senderID))) {
+            //  si utilisateur existe, et si pas de notif déjà en attente d'accept/decline
             $addQuery = "INSERT INTO notifications (`receiver_id`,`sender_id`,`type`) VALUES (:receiverID,:senderID,1)";
             $this->db->query($addQuery);
             $this->db->bind(':receiverID', $receiverID);
