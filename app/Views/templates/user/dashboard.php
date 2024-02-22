@@ -41,15 +41,17 @@
       <div>
         <a href="#" title="Close" class="modal-close">Close</a>
         <h1>Notifications</h1>
-        <div>gneur.</div>
+        <div>You can accept your requests here.</div>
         <br>
+        <div>Search for a specific notification using the search bar below.</div>
+
 
 
         <!-- Search bar -->
         <input type="text" class="form-control" name="client-list-search" id="client-list-search" placeholder="Search for client">
 
         <!-- Results -->
-        <div id="client-list-results" class="pt-4" style="max-height:350px; overflow:scroll;">
+        <div id="sender-notif-list" class="pt-4" style="max-height:350px; overflow:scroll;">
 
         </div>
       </div>
@@ -129,6 +131,19 @@
       );
     });
 
+    // pour récupérer les notifications 
+    $('#open-modal-notifs').on('click', function() {
+      performAjaxRequest(
+        "GET",
+        "getUsersFromNotifications",
+        "",
+        "",
+        ""
+      );
+      // Ajoutez la phrase au code HTML du modal
+      $('#open-modal-notifs').append('<p><?php echo "valeur test" ?></p>');
+    });
+
     function getNotif() {
       performAjaxRequest(
         "GET",
@@ -137,9 +152,7 @@
         "",
         ""
       );
-
     }
-
     getNotif();
 
     // pour effectuer une recherche

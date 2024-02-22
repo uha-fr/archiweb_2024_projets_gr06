@@ -13,7 +13,6 @@ class Router
 {
     private $userController;
     private $adminController;
-
     private $resetPasswordController;
     private $recipesController;
     private $nutriController;
@@ -138,9 +137,13 @@ class Router
                         break;
                     case "countNotification":
                         $this->userController->countNotification();
+                        break;
                         // Add other GET actions here
                     case "getNutriClients":
                         $this->nutriController->getUsersForNutritionist();
+                        break;
+                    case "getUsersFromNotifications":
+                        $this->userController->getUsersFromNotifications();
                         break;
 
                     default:

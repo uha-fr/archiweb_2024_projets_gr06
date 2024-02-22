@@ -299,18 +299,47 @@ class User
         $this->db->query($sql);
         $this->db->bind(':userId', $userId);
         $rows = $this->db->resultSet();
+        $nbrRows = $this->db->rowCount();
 
-        if ($this->db->rowCount() >= 0) {
-            foreach ($rows as $row) {
-                $data[] = $row;
+        if ($nbrRows >= 0) {
+
+            if ($nbrRows > 0) {
+                foreach ($rows as $row) {
+                    $data[] = $row;
+                }
+                $_SESSION['notifications'] = $data;
             }
-            if ($data == null) {
-                $data = 0;
-            }
-            $_SESSION['notifications'] = $data;
-            return $this->db->rowCount();
+            return $nbrRows;
         } else {
-            return false;
+            return 0;
         }
+    }
+
+    /**
+     * getUsersByNotifs
+     * 
+     * Use the list of notifications in the dataabse to get access to all users who sent notifications
+     * to the current connected user, then put their data in an array and return it
+     *
+     * @return bool|object[]
+     */
+    public function getUsersByNotifs()
+    {
+        $notifList = $_SESSION['notifications'];
+
+        if ($notifList != NULL) {
+            foreach ($notifList as $notif) {
+                $sql = "SELECT * FROM users WHERE id=:senderId";
+                $this->db->query($sql);
+                $this->db->bind(':senderId', $notif->sender_id);
+                $sender = $this->db->single();
+
+                if ($sender) {
+                    $senderList[] = $sender;
+                }
+            }
+            return $senderList;
+        }
+        return false;
     }
 }
