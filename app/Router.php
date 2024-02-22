@@ -5,6 +5,7 @@ namespace Manger;
 use Manger\Controller\RecipesController;
 use Manger\Controller\Users;
 use Manger\Controller\AdminController;
+use Manger\Controller\NutritionistController;
 use Manger\Controller\ResetPasswords;
 
 
@@ -15,6 +16,7 @@ class Router
 
     private $resetPasswordController;
     private $recipesController;
+    private $nutriController;
 
     public function __construct()
     {
@@ -23,6 +25,7 @@ class Router
 
         $this->resetPasswordController = new ResetPasswords();
         $this->recipesController = new RecipesController();
+        $this->nutriController = new NutritionistController();
     }
 
 
@@ -91,6 +94,10 @@ class Router
                     break;
                 case 'deleteUser':
                     $this->adminController->deleteUser();
+                    break;
+                case 'sendNotification':
+                    $this->nutriController->sendNotification();
+                    break;
                 default:
                     include __DIR__ . '/../Views/login.php';
                     exit;
@@ -104,38 +111,44 @@ class Router
                 exit();
             }
 
-    // Check for specific actions in the GET request
-    if (isset($_GET['action'])) {
-        switch ($_GET['action']) {
-            case 'countRegularUsers':
-                // Assuming you have an adminController or similar for handling admin-related actions
-                $this->adminController->countRegularUsers();
-                break;
-            case 'countNutritionistUsers':
-                $this->adminController->countNutritionistUsers();
-                break;
-            case 'countRecipes':
-                $this->adminController->countRecipes();
-                break;
-            case 'getAllUsers':
-                $this->adminController->getAllUsers();
-                break;
-            case 'getUserDetails':
-                $this->adminController->getUserDetails();
-            case 'planSearchForRecipe':
+            // Check for specific actions in the GET request
+            if (isset($_GET['action'])) {
+                switch ($_GET['action']) {
+                    case 'countRegularUsers':
+                        // Assuming you have an adminController or similar for handling admin-related actions
+                        $this->adminController->countRegularUsers();
+                        break;
+                    case 'countNutritionistUsers':
+                        $this->adminController->countNutritionistUsers();
+                        break;
+                    case 'countRecipes':
+                        $this->adminController->countRecipes();
+                        break;
+                    case 'getAllUsers':
+                        $this->adminController->getAllUsers();
+                        break;
+                    case 'getUserDetails':
+                        $this->adminController->getUserDetails();
+                        break;
+                    case 'planSearchForRecipe':
                         $this->userController->getRecipesByName();
                         break;
-            // Add other GET actions here
+                    case 'clientSearch':
+                        $this->nutriController->getClientList();
+                        break;
+                    case "countNotification":
+                        $this->userController->countNotification();
+                        // Add other GET actions here
 
-            default:
-                // If no specific action, fallback to generic page handling
+                    default:
+                        // If no specific action, fallback to generic page handling
+                        $this->userController->GETPage($requested);
+                        break;
+                }
+            } else {
+                // No action specified, handle as a page request
                 $this->userController->GETPage($requested);
-                break;
-        }
-    } else {
-        // No action specified, handle as a page request
-        $this->userController->GETPage($requested);
-    }
+            }
         }
     }
 }

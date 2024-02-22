@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  
+
   <!-- BODY -->
   <div class="bg-bg">
     <!-- ADD RECIPE Form-->
@@ -41,8 +41,7 @@
 
   <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 
-  <script >
-
+  <script>
     $("#addRecipe").click(function(e) {
       console.log("dans ADD RECIPE");
       if ($("#form-data")[0].checkValidity()) {
@@ -54,11 +53,9 @@
           "Recipe added successfully!",
           ""
         );
-        
+
       }
     });
- 
-    
   </script>
 </body>
 
