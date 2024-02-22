@@ -344,6 +344,23 @@ class User
     }
 
     /**
+     * checkIfConnectionExists
+     * 
+     * Check if a connection between a client and a nutritionist already exists in the nutritionist_client table
+     *
+     * @param int $clientId
+     * @param int $nutritionistId
+     * @return bool
+     */
+    private function checkIfConnectionExists($clientId, $nutritionistId)
+    {
+        $this->db->query("SELECT * FROM nutritionist_client WHERE client_id = :clientId AND nutritionist_id = :nutritionistId");
+        $this->db->bind(':clientId', $clientId);
+        $this->db->bind(':nutritionistId', $nutritionistId);
+        return $this->db->rowCount() > 0;
+    }
+
+    /**
      * updateNotificationState
      * 
      * Modify the notification in the table, depending of if it was declined or accepted,
@@ -379,25 +396,28 @@ class User
             return array(false, $returnMessage);
         }
 
-        if ($userRole == "Nutritionist") {
-            $addQuery = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:senderId, :userId)";
-        } else if ($userRole == "Regular") {
-            $addQuery = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:userId, :senderId)";
-        } else {
-            $returnMessage = "Neither client nor nutritionist";
-            return array(false, $returnMessage);
+        if ($newNotifState == 2) { // If Accept -> insertion
+            if (!$this->checkIfConnectionExists($userId, $senderId)) {
+                if ($userRole == "Nutritionist") {
+                    $addQuery = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:senderId, :userId)";
+                } else if ($userRole == "Regular") {
+                    $addQuery = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:userId, :senderId)";
+                } else {
+                    $returnMessage = "Neither client nor nutritionist";
+                    return array(false, $returnMessage);
+                }
+
+                // Exécuter la requête d'insertion
+                $this->db->query($addQuery);
+                $this->db->bind(':senderId', $senderId);
+                $this->db->bind(':userId', $userId);
+                if (!$this->db->execute()) {
+                    $returnMessage = "Couldn't update nutritionist_client table";
+                    return array(false, $returnMessage);
+                }
+            }
+            return array(false, "Connection already exists;");
         }
-
-        // Exécuter la requête d'insertion
-        $this->db->query($addQuery);
-        $this->db->bind(':senderId', $senderId);
-        $this->db->bind(':userId', $userId);
-        if (!$this->db->execute()) {
-            $returnMessage = "Couldn't update nutritionist_client table";
-            return array(false, $returnMessage);
-        }
-
-
 
         return array(true, "All good");
     }
