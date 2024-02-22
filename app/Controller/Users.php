@@ -5,7 +5,7 @@ namespace Manger\Controller;
 use Manger\Model\User;
 use Manger\Views\UserView;
 use Manger\Views\AdminView;
-
+use Manger\Views\NutritionistView;
 
 define('APPJSON', 'Content-Type: application/json');
 /**
@@ -54,6 +54,14 @@ class Users
             http_response_code(200);
 
 
+        } else if ($page == "nutritionist-dashboard" ) {
+
+            $nutritionistView = new nutritionistView();
+
+            $html = $nutritionistView->viewPage($page);
+
+            echo $html;
+            http_response_code(200);
         } else {
 
 
