@@ -9,10 +9,7 @@
     } else {
         $statusText = 'Unknown'; // cas où la valeur de $row->notification_type n'est pas prévue
     }
-    $disableOptions = ''; // Par défaut, les options ne sont pas désactivées
-    if ($row->notification_type != 1) {
-        $disableOptions = 'disabled'; // Si le type n'est pas égal à 1 (Waiting), désactive les options
-    }
+
 ?> <div class="d-flex container-fluid bg-dark-gray align-items-center text-white hoverscale client-user" style="width: 100%; justify-content: space-between; border-radius: 10px; cursor: pointer; <?= $style ?>" id="user-<?= $row->id ?>" data-user-id="<?= $row->id ?>" data-user-name="<?= $row->fullname ?>">
         <p style="width: 20%; margin: 10px 0">
             <?= htmlspecialchars($row->fullname) ?>

@@ -320,7 +320,7 @@ class User
     /**
      * getUsersByNotifs
      * 
-     * Use the list of notifications in the dataabse to get access to all users who sent notifications
+     * Use the list of notifications in the database to get access to all users who sent notifications
      * to the current connected user, then put their data in an array and return it
      *
      * @return bool|object[]

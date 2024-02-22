@@ -66,10 +66,13 @@ class NutritionistModel
      */
     private function checkIfWaitingNotification($receiverID, $senderID)
     {
-        $this->db->query("SELECT * FROM notifications WHERE receiver_id = :receiverID AND sender_id = :senderID AND type = 1");
+        $this->db->query("SELECT COUNT(*) FROM notifications WHERE receiver_id = :receiverID AND sender_id = :senderID AND type = 1");
         $this->db->bind(':receiverID', $receiverID);
         $this->db->bind(':senderID', $senderID);
-        return $this->db->rowCount() > 0;
+        $this->db->execute();
+        $count = $this->db->fetchCount(); // Récupérer le résultat COUNT(*)
+
+        return $count > 0;
     }
 
 
@@ -78,8 +81,8 @@ class NutritionistModel
      * 
      * Fetch the email of the user clicked on, then send them a notification through the database
      *
-     * @param  mixed $receiverID
-     * @param  mixed $senderID
+     * @param  mixed $receiverID Id clicked on
+     * @param  mixed $senderID Own Id, stocked in the session
      * @return bool|mixed return the user clicked on on success, to send them an email
      */
     public function checkNotifThenSend($receiverID, $senderID)
@@ -90,8 +93,8 @@ class NutritionistModel
 
 
         $result = $this->db->single();
+        if (!empty($result) && !$this->checkIfWaitingNotification($receiverID, $senderID)) {
 
-        if (!empty($result && !$this->checkIfWaitingNotification($receiverID, $senderID))) {
             //  si utilisateur existe, et si pas de notif déjà en attente d'accept/decline
             $addQuery = "INSERT INTO notifications (`receiver_id`,`sender_id`,`type`) VALUES (:receiverID,:senderID,1)";
             $this->db->query($addQuery);

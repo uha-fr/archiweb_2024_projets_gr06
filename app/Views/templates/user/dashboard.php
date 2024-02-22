@@ -125,15 +125,8 @@
       );
     });
 
-    // pour récupérer les users ayant envoyé des notifications 
-    performAjaxRequest(
-      "GET",
-      "getUsersFromNotifications",
-      "",
-      "",
-      ""
-    );
 
+    // pour récupérer le nombre de notif, et les mettre en session
     function getNotif() {
       performAjaxRequest(
         "GET",
@@ -143,7 +136,20 @@
         ""
       );
     }
+
+    // pour récupérer les users ayant envoyé des notifications 
+    function getUserFromNotif() {
+      performAjaxRequest(
+        "GET",
+        "getUsersFromNotifications",
+        "",
+        "",
+        ""
+      );
+    }
+
     getNotif();
+    getUserFromNotif();
 
     // pour effectuer une recherche
     function performSearch() {
