@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ingredient`
+-- Structure de la table `ingredients`
 --
 
-CREATE TABLE `ingredient` (
+CREATE TABLE `ingredients` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `calorie_per_serving` float DEFAULT NULL,
@@ -151,11 +151,11 @@ CREATE TABLE `recipe_ingredient` (
 --
 
 CREATE TABLE `users` (
-  `id` int(10) NOT NULL,
+  `id` int(11) NOT NULL,
   `fullname` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `active` int(10) NOT NULL,
+  `active` int(11) NOT NULL,
   `creation_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `age` int(11) DEFAULT NULL,
   `role` varchar(250) NOT NULL DEFAULT 'Regular',
@@ -166,6 +166,11 @@ CREATE TABLE `users` (
   `goal` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Index pour la table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
 --
 -- Déchargement des données de la table `users`
 --
@@ -189,14 +194,27 @@ CREATE TABLE `user_plan` (
   `managed_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+CREATE TABLE `notifications` (
+    `notif_id` int(11),
+    `sender_id` int(11),
+    `receiver_id` int(11),
+    `type` int(11),
+    `creation_date` DATETIME
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 --
 -- Index pour les tables déchargées
 --
 
+ALTER TABLE `notifications` 
+  ADD PRIMARY KEY (`notif_id`);
+
 --
--- Index pour la table `ingredient`
+-- Index pour la table `ingredients`
 --
-ALTER TABLE `ingredient`
+ALTER TABLE `ingredients`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -240,11 +258,7 @@ ALTER TABLE `recipe_ingredient`
   ADD KEY `recipe_id` (`recipe_id`),
   ADD KEY `ingredient_id` (`ingredient_id`);
 
---
--- Index pour la table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+
 
 --
 -- Index pour la table `user_plan`
@@ -258,7 +272,8 @@ ALTER TABLE `user_plan`
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
-
+ALTER TABLE `notifications`
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `pwdreset`
 --
@@ -269,11 +284,19 @@ ALTER TABLE `pwdreset`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table notifications
+--
+
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notifications_ibfk1` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `notifications_ibfk2` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `nutritionist_client`
@@ -305,7 +328,7 @@ ALTER TABLE `recipes`
 --
 ALTER TABLE `recipe_ingredient`
   ADD CONSTRAINT `recipe_ingredient_ibfk_1` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`id`),
-  ADD CONSTRAINT `recipe_ingredient_ibfk_2` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient` (`id`);
+  ADD CONSTRAINT `recipe_ingredient_ibfk_2` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`id`);
 
 --
 -- Contraintes pour la table `user_plan`

@@ -7,7 +7,6 @@ use Manger\Views\UserView;
 use Manger\Views\AdminView;
 use Manger\Views\NutritionistView;
 
-define('APPJSON', 'Content-Type: application/json');
 /**
  * Controller for User-related things.
  * 
@@ -62,6 +61,7 @@ class Users
 
             echo $html;
             http_response_code(200);
+
         } else {
 
 
@@ -182,8 +182,6 @@ class Users
         $_SESSION['weight'] = $user->weight;
         $_SESSION['goal'] = $user->goal;
         $_SESSION['role'] = $user->role;
-
-
     }
 
     /**
@@ -326,7 +324,7 @@ class Users
 
     public function getRecipesByName()
     {
-        header('Content-Type: application/json');
+        header('APPJSON');
         $searchValue = isset($_GET['searchValue']) ? $_GET['searchValue'] : '';
 
         if (!empty($searchValue)) {
@@ -347,4 +345,25 @@ class Users
         exit;
     }
 
+    /**
+     * countNotification
+     * 
+     * Calls the Model to count the number of notifications the user has received
+     *
+     * @return void
+     */
+    public function countNotification()
+    {
+        header('APPJSON');
+
+        $data = $this->userModel->getNotifsById($_SESSION['id']);
+
+        if ($data) {
+            echo json_encode(['success' => true, 'data' => $data]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'No row found.']);
+        }
+
+        exit;
+    }
 }

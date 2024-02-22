@@ -38,7 +38,7 @@ function handleAjaxResponse(
       text: successMessage,
       icon: "success",
     }).then(function () {
-      if (redirectHref != "update" && redirectHref != "recipes-list" && action!='deleteUser') {
+      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser') {
         window.location.href = redirectHref;
       } else if (redirectHref == "recipes-list") {
         window.parent.rafraichirPage();
@@ -47,7 +47,7 @@ function handleAjaxResponse(
         window.location.reload(true);
       }
     });
-    if (!logout && action!='deleteUser') {
+    if (!logout && action != 'deleteUser') {
       $("#form-data")[0].reset();
     }
   } else {
@@ -78,20 +78,20 @@ function performAjaxRequest(
         case "showAllRecipes":
           $("#RecipeList").html(response.message);
           break;
-    
+
         case "getAllUsers":
           $("#showUser").html(response.message);
           $("table").DataTable({ order: [0, "desc"] });
           break;
-    
+
         case "countRegularUsers":
           $("#usersNumber").html(response.count);
           break;
-    
+
         case "countNutritionistUsers":
           $("#nutritionistNumber").html(response.count);
           break;
-    
+
         case "countRecipes":
           $("#countRecipes").html(response.count);
           break;
@@ -99,7 +99,29 @@ function performAjaxRequest(
           var data = response.data;
           $("#plan-recipe-results").html(data);
           break;
-    
+        case "clientSearch":
+          var data = response.data;
+          $("#client-list-results").html(data);
+          break;
+        case "sendNotification":
+          console.log(response.data);
+          console.log("notification envoyée");
+
+          var divID = additionalData.replace('&searchValue=', '');
+          var divID = additionalData.replace('&receiverId=', '');
+
+          console.log(divID);
+          var userDiv = $("#user-" + divID);
+          userDiv.addClass('temp-bg-color');
+
+          setTimeout(function () {
+            userDiv.removeClass('temp-bg-color');
+          }, 2000);
+          break;
+        case "countNotification":
+          $("#notif-displayer").html(response.data);
+          break;
+
         case "getUserDetails":
           Swal.fire({
             title: `<strong>User Info: ID(${response.data.id})</strong>`,
@@ -121,13 +143,13 @@ function performAjaxRequest(
             showCancelButton: true,
           });
           break;
-    
+
         default:
           console.log("Unhandled action: " + action);
           handleAjaxResponse(action, response, successTitle, successMessage);
           break;
       }
-     
+
     },
     error: function (jqXHR, textStatus, errorThrown) {
       handleAjaxError(jqXHR, textStatus, errorThrown);
