@@ -126,15 +126,13 @@
     });
 
     // pour récupérer les users ayant envoyé des notifications 
-    $('#click-to-show-notif').on('click', function() {
-      performAjaxRequest(
-        "GET",
-        "getUsersFromNotifications",
-        "",
-        "",
-        ""
-      );
-    });
+    performAjaxRequest(
+      "GET",
+      "getUsersFromNotifications",
+      "",
+      "",
+      ""
+    );
 
     function getNotif() {
       performAjaxRequest(

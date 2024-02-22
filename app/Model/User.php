@@ -309,6 +309,7 @@ class User
                     $data[] = $row;
                 }
             }
+            // hors du if, sinon lorsqu'il n'y a pas de notification, la session gardera l'ancienne version de $data
             $_SESSION['notifications'] = $data;
             return $nbrRows;
         } else {
@@ -328,7 +329,8 @@ class User
     {
         $notifList = $_SESSION['notifications'];
 
-        if ($notifList != NULL) {
+        if (!empty($notifList)) {
+            $senderList = [];
             foreach ($notifList as $notif) {
                 $sql = "SELECT * FROM users WHERE id=:senderId";
                 $this->db->query($sql);
@@ -336,6 +338,7 @@ class User
                 $sender = $this->db->single();
 
                 if ($sender) {
+                    $sender->notification_type = $notif->type;
                     $senderList[] = $sender;
                 }
             }
@@ -417,7 +420,7 @@ class User
                     return array(false, $returnMessage);
                 }
             }
-            return array(false, "Connection already exists;");
+            return array(true, "Connection already exists;");
         }
 
         return array(true, "All good");

@@ -1,27 +1,47 @@
-<?php foreach ($data as $row) : ?>
-    <div class="d-flex container-fluid bg-dark-gray align-items-center text-white hoverscale client-user" style="width: 100%; justify-content: space-around; border-radius: 10px; cursor: pointer;" id="user-<?= $row->id ?>" data-user-id="<?= $row->id ?>" data-user-name="<?= $row->fullname ?>">
-        <p style="width: 30%; margin: 10px 0">
+<?php foreach ($data as $row) :
+    $statusText = '';
+    if ($row->notification_type == 0) {
+        $statusText = 'Declined';
+    } elseif ($row->notification_type == 1) {
+        $statusText = 'Waiting';
+    } elseif ($row->notification_type == 2) {
+        $statusText = 'Accepted';
+    } else {
+        $statusText = 'Unknown'; // cas où la valeur de $row->notification_type n'est pas prévue
+    }
+    $disableOptions = ''; // Par défaut, les options ne sont pas désactivées
+    if ($row->notification_type != 1) {
+        $disableOptions = 'disabled'; // Si le type n'est pas égal à 1 (Waiting), désactive les options
+    }
+?> <div class="d-flex container-fluid bg-dark-gray align-items-center text-white hoverscale client-user" style="width: 100%; justify-content: space-between; border-radius: 10px; cursor: pointer; <?= $style ?>" id="user-<?= $row->id ?>" data-user-id="<?= $row->id ?>" data-user-name="<?= $row->fullname ?>">
+        <p style="width: 20%; margin: 10px 0">
             <?= htmlspecialchars($row->fullname) ?>
         </p>
-        <p style="width: 26%; margin: 15px 0" id="accept-request-<?php echo $row->id ?>">
-            Accept
+        <?php if ($row->notification_type == 1) : // Si la notif est en attente on peut l'accepter ou décliner
+        ?>
+            <p style="width: 20%; margin: 15px 0" id="accept-request-<?php echo $row->id ?>">
+                Accept
+            </p>
+            <p style="width: 10%; margin: 15px 0" id="decline-request-<?php echo $row->id ?>">
+                Decline
+            </p>
+        <?php endif; ?>
+        <p style="width: 20%; margin: 15px 0" id="status-request-<?php echo $row->id ?>">
+            <?= $statusText ?>
         </p>
-        <p style="width: 10%; margin: 15px 0" id="decline-request-<?php echo $row->id ?>">
-            Decline
-        </p>
-
     </div>
     <style>
         .temp-bg-color {
             background-color: #28E0B2;
         }
     </style>
-
 <?php endforeach; ?>
+
 <script>
     $(document).ready(function() {
         $('[id^="accept-request-"]').on('click', function() {
             // Code à exécuter lorsque "Accept" est cliqué
+
             var userId = this.id.replace('accept-request-', '');
             console.log('Accept clicked for user ID:', userId);
             performAjaxRequest(
@@ -36,6 +56,7 @@
 
         $('[id^="decline-request-"]').on('click', function() {
             // Code à exécuter lorsque "Decline" est cliqué
+
             var userId = this.id.replace('decline-request-', '');
             console.log('Decline clicked for user ID:', userId);
             performAjaxRequest(
