@@ -1,10 +1,11 @@
 <?php
 
 
-if ($_SESSION['role'] != "Admin") {
-  //header('Location: dashboard'); // Redirect to dashboard
-  //exit();
-}
+if ($_SESSION['role'] != "Nutritionist") {
+  header('Location: dashboard'); // Redirect to dashboard
+  exit();
+} 
+
 
 $tab = $_GET['tab'] ?? 'nutritionist-dashboard';
 
@@ -29,8 +30,8 @@ function generateTabLink($currentTab, $tabName, $label, $svgContent)
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin dashboard</title>
 
-  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/nutritionist-dashboard.css">
-  <script src="<?= BASE_APP_DIR ?>/public/js/nutritionist-dashboard.js"></script>
+    <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/nutritionist-dashboard.css">
+
 
 
 
@@ -131,6 +132,7 @@ function generateTabLink($currentTab, $tabName, $label, $svgContent)
 
 
   </div>
+  <script src="<?= BASE_APP_DIR ?>/public/js/nutritionist-dashboard.js"></script>
 
 
 </body>

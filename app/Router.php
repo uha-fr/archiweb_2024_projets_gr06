@@ -139,6 +139,9 @@ class Router
                     case "countNotification":
                         $this->userController->countNotification();
                         // Add other GET actions here
+                    case "getNutriClients":
+                        $this->nutriController->getUsersForNutritionist();
+                        break;
 
                     default:
                         // If no specific action, fallback to generic page handling

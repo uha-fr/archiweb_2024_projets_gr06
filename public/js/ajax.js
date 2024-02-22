@@ -79,6 +79,10 @@ function performAjaxRequest(
           $("#RecipeList").html(response.message);
           break;
 
+        case "getNutriClients":
+          $("#showClients").html(response.message);
+          break;
+
         case "getAllUsers":
           $("#showUser").html(response.message);
           $("table").DataTable({ order: [0, "desc"] });

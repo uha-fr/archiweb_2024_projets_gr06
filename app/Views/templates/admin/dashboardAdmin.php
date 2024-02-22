@@ -32,7 +32,7 @@ function generateTabLink($currentTab, $tabName, $label, $iconClass)
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 </head>
 
-<body>
+<body >
   
 
      

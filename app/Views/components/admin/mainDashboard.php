@@ -1,4 +1,4 @@
-<main>
+<main >
     <div class="header">
       <div class="left">
         <h1>Dashboard</h1>
