@@ -5,7 +5,7 @@ namespace Manger\Controller;
 use Manger\Model\User;
 use Manger\Views\UserView;
 use Manger\Views\AdminView;
-
+use Manger\Views\NutritionistView;
 
 /**
  * Controller for User-related things.
@@ -51,6 +51,17 @@ class Users
 
             echo $html;
             http_response_code(200);
+
+
+        } else if ($page == "nutritionist-dashboard" ) {
+
+            $nutritionistView = new nutritionistView();
+
+            $html = $nutritionistView->viewPage($page);
+
+            echo $html;
+            http_response_code(200);
+
         } else {
 
 
