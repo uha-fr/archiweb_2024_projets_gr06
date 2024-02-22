@@ -37,13 +37,33 @@
         </div>
       </div>
     </div>
+    <div id="open-modal-notifs" class="modal-window">
+      <div>
+        <a href="#" title="Close" class="modal-close">Close</a>
+        <h1>Notifications</h1>
+        <div>gneur.</div>
+        <br>
+
+
+        <!-- Search bar -->
+        <input type="text" class="form-control" name="client-list-search" id="client-list-search" placeholder="Search for client">
+
+        <!-- Results -->
+        <div id="client-list-results" class="pt-4" style="max-height:350px; overflow:scroll;">
+
+        </div>
+      </div>
+    </div>
 
     <!-- BELL NOTIFICATIONS ICON -->
     <div class="position-absolute" style="right: 20px; top: 20px">
       <a href="#open-modal">
-        <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" id="notif-displayer" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;">0</div>
+        <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" id="notif-displayer" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;"></div>
+      </a>
+      <a href="#open-modal-notifs">
         <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="Image of a bell" />
       </a>
+
     </div>
 
     <!-- REST OF THE PAGE CONTENT -->

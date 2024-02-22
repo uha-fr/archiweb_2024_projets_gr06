@@ -355,7 +355,7 @@ class Users
 
         $data = $this->userModel->getNotifsById($_SESSION['id']);
 
-        if ($data < 0) {
+        if ($data >= 0) {
             echo json_encode(['success' => true, 'data' => $data]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Notification query failed.']);

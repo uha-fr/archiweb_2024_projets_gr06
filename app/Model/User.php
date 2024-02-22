@@ -304,7 +304,9 @@ class User
             foreach ($rows as $row) {
                 $data[] = $row;
             }
-            if($data=null){$data=0;}
+            if ($data == null) {
+                $data = 0;
+            }
             $_SESSION['notifications'] = $data;
             return $this->db->rowCount();
         } else {

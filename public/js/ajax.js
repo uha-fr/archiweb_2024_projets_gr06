@@ -124,6 +124,7 @@ function performAjaxRequest(
           break;
         case "countNotification":
           $("#notif-displayer").html(response.data);
+          console.log("nombre de notifications: " + response.data);
           break;
 
         case "getUserDetails":
