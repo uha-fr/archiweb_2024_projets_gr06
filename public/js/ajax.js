@@ -133,9 +133,23 @@ function performAjaxRequest(
           console.log("requestType log: " + response.requestType);
           var sender = response.data;
           console.log("data log: " + sender.fullname);
-
           console.log("succes log: " + response.success);
-          $("#notif-user-" + sender.id).html('<p>voici ' + sender.role + '.</p>');
+
+          if (response.requestType == "insert") {
+            var statusText = "Accepted";
+            var bgColor = "#75d44c";
+          }
+          else if (response.requestType == "delete") {
+            var statusText = "Declined";
+            var bgColor = "#F88F99";
+          }
+
+
+          $("#notif-user-" + sender.id).html(
+            '<p style="width: 20%; margin: 10px 0">' + sender.fullname + '</p>' +
+            '<p style="width: 20%; margin: 15px 0" id="status-request-<?php echo $row->id ?>">' + statusText + '</p>'
+          );
+          $("#notif-user-" + sender.id).css("background-color", bgColor);
           break;
 
         case "getUserDetails":
