@@ -130,7 +130,12 @@ function performAjaxRequest(
           $("#sender-notif-list").html(response.data);
           break;
         case "updateNotification":
-          console.log("réponse de la requête: " + response.data);
+          console.log("requestType log: " + response.requestType);
+          var sender = response.data;
+          console.log("data log: " + sender.fullname);
+
+          console.log("succes log: " + response.success);
+          $("#notif-user-" + sender.id).html('<p>voici ' + sender.role + '.</p>');
           break;
 
         case "getUserDetails":

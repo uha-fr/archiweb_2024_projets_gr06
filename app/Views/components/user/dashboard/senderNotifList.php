@@ -14,7 +14,7 @@
         $bgColor = 'background-color:#4169E1'; // blue
     }
 ?>
-    <div class="d-flex container-fluid bg-dark-gray align-items-center text-white hoverscale client-user" style="width: 100%; justify-content: space-between; border-radius: 10px; cursor: pointer;<?= $bgColor ?>" id="user-<?= $row->id ?>" data-user-id="<?= $row->id ?>" data-user-name="<?= $row->fullname ?>">
+    <div class="d-flex container-fluid bg-dark-gray align-items-center text-white hoverscale client-user" style="width: 100%; justify-content: space-between; border-radius: 10px; cursor: pointer;<?= $bgColor ?>" id="notif-user-<?= $row->id ?>" data-user-id="<?= $row->id ?>" data-user-name="<?= $row->fullname ?>">
         <p style="width: 20%; margin: 10px 0">
             <?= htmlspecialchars($row->fullname) ?>
         </p>

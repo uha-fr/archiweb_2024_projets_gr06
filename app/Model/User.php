@@ -373,6 +373,21 @@ class User
         return $this->db->fetchCount(); // récupère le résultat COUNT(*)
     }
 
+    /**
+     * Retrieves user information based on the user's ID.
+     *
+     * @param int $senderId The ID of the user.
+     * @return mixed The user information or false in case of an error.
+     */
+    public function getSingleUserById($senderId)
+    {
+        $sql = "SELECT * FROM users WHERE id = :senderId";
+        $this->db->query($sql);
+        $this->db->bind(':senderId', $senderId);
+        return $this->db->single();
+    }
+
+
 
     /**
      * Add or Delete a connection into the nutritionist_client table.
@@ -382,7 +397,7 @@ class User
      * @param int $userId The ID of the user.
      * @param Database $db The database connection.
      * @param string $requestType The type of request to execute, can be either "insert" or "delete"
-     * @return array An array indicating success or failure along with a message.
+     * @return array An array indicating success or failure along with a message, and if success, the data of the sender
      */
     private function modifyConnection($userRole, $senderId, $userId, $db, string $requestType)
     {
@@ -413,7 +428,8 @@ class User
             return array(false, $returnMessage);
         }
 
-        return array(true, $requestType . "ed successfully");
+
+        return array(true, $this->getSingleUserById($senderId), $requestType);
     }
 
 
@@ -463,7 +479,7 @@ class User
             if ($this->checkIfConnectionExists($userId, $senderId, $userRole)) { // regarde si la connexion existe avant
                 return $this->modifyConnection($userRole, $senderId, $userId, $this->db, "delete");
             } else {
-                return array(false, "No connection to delete between " . $userId . " and " . $senderId);
+                return array(true, $this->getSingleUserById($senderId), "delete"); // cas où décline, et pas déjà de connection dans la db
             }
         } else {
             return array(false, "Notification State " . $newNotifState . " not allowed");

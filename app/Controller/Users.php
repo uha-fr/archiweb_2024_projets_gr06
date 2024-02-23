@@ -403,7 +403,7 @@ class Users
         $data = $this->userModel->updateNotificationState();
 
         if ($data[0]) {
-            echo json_encode(['success' => true, 'data' => $data[1]]);
+            echo json_encode(['success' => true, 'requestType' => $data[2], 'data' => $data[1]]);
         } else {
             echo json_encode(['success' => false, 'message' => $data[1]]);
         }
