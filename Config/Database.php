@@ -109,6 +109,16 @@ class Database
     }
 
     /**
+     * Get the result of COUNT(*) as an integer
+     *
+     * @return int The count result.
+     */
+    public function fetchCount()
+    {
+        return (int) $this->stmt->fetchColumn();
+    }
+
+    /**
      * Get a single record as an object
      *
      * @return object The single record.
