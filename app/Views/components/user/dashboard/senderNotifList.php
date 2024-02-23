@@ -1,16 +1,20 @@
 <?php foreach ($data as $row) :
     $statusText = '';
-    if ($row->notification_type == 0) {
+    $bgColor = '';
+    if ($row->notification_type == 3) {
         $statusText = 'Declined';
+        $bgColor = 'background-color:#F88F99'; // pourpre
     } elseif ($row->notification_type == 1) {
         $statusText = 'Waiting';
     } elseif ($row->notification_type == 2) {
         $statusText = 'Accepted';
+        $bgColor = 'background-color:#75d44c'; // verte
     } else {
         $statusText = 'Unknown'; // cas où la valeur de $row->notification_type n'est pas prévue
+        $bgColor = 'background-color:#4169E1'; // blue
     }
-
-?> <div class="d-flex container-fluid bg-dark-gray align-items-center text-white hoverscale client-user" style="width: 100%; justify-content: space-between; border-radius: 10px; cursor: pointer; <?= $style ?>" id="user-<?= $row->id ?>" data-user-id="<?= $row->id ?>" data-user-name="<?= $row->fullname ?>">
+?>
+    <div class="d-flex container-fluid bg-dark-gray align-items-center text-white hoverscale client-user" style="width: 100%; justify-content: space-between; border-radius: 10px; cursor: pointer;<?= $bgColor ?>" id="user-<?= $row->id ?>" data-user-id="<?= $row->id ?>" data-user-name="<?= $row->fullname ?>">
         <p style="width: 20%; margin: 10px 0">
             <?= htmlspecialchars($row->fullname) ?>
         </p>
@@ -27,15 +31,19 @@
             <?= $statusText ?>
         </p>
     </div>
-    <style>
-        .temp-bg-color {
-            background-color: #28E0B2;
-        }
-    </style>
 <?php endforeach; ?>
 
 <script>
     $(document).ready(function() {
+        function getUserFromNotif() {
+            performAjaxRequest(
+                "GET",
+                "getUsersFromNotifications",
+                "",
+                "",
+                ""
+            );
+        }
         $('[id^="accept-request-"]').on('click', function() {
             // Code à exécuter lorsque "Accept" est cliqué
 
@@ -48,6 +56,8 @@
                 "",
                 ""
             );
+            getUserFromNotif();
+
 
         });
 
@@ -63,6 +73,8 @@
                 "",
                 ""
             );
+            getUserFromNotif();
+
 
         });
     });

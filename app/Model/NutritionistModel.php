@@ -59,6 +59,7 @@ class NutritionistModel
      * checkIfWaitingNotification
      * 
      * Check if a notification already exists with the given receiver and sender ids and type 1
+     * by counting the number of rows affected
      *
      * @param int $receiverID
      * @param int $senderID

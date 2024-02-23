@@ -365,6 +365,49 @@ class User
     }
 
     /**
+     * Add or Delete a connection into the nutritionist_client table.
+     * 
+     * @param string $userRole The role of the user.
+     * @param int $senderId The ID of the sender.
+     * @param int $userId The ID of the user.
+     * @param Database $db The database connection.
+     * @param string $requestType The type of request to execute, can be either "insert" or "delete"
+     * @return array An array indicating success or failure along with a message.
+     */
+    private function modifyConnection($userRole, $senderId, $userId, $db, string $requestType)
+    {
+        if ($requestType == "insert") {
+            if ($userRole == "Nutritionist") {
+                $query = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:senderId, :userId)";
+            } else if ($userRole == "Regular") {
+                $query = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:userId, :senderId)";
+            } else {
+                return array(false, "Neither client nor nutritionist");
+            }
+        } else if ($requestType == "delete") {
+            if ($userRole == "Nutritionist") {
+                $query = "DELETE FROM nutritionist_client WHERE `client_id` = :senderId AND `nutritionist_id` = :userId";
+            } else if ($userRole == "Regular") {
+                $query = "DELETE FROM nutritionist_client WHERE `client_id` = :userId AND `nutritionist_id` = :senderId";
+            } else {
+                return array(false, "Neither client nor nutritionist");
+            }
+        }
+
+        // Exécuter la requête d'insertion
+        $db->query($query);
+        $db->bind(':senderId', $senderId);
+        $db->bind(':userId', $userId);
+        if (!$db->execute()) {
+            $returnMessage = "Couldn't " . $requestType . " nutritionist_client table";
+            return array(false, $returnMessage);
+        }
+
+        return array(true, $requestType . "d successfully");
+    }
+
+
+    /**
      * updateNotificationState
      * 
      * Modify the notification in the table, depending of if it was declined or accepted,
@@ -383,7 +426,7 @@ class User
         if ($notifState == "Accept") {
             $newNotifState = 2;
         } else if ($notifState == "Decline") {
-            $newNotifState = 0;
+            $newNotifState = 3;
         } else {
             $returnMessage = "Parameter not allowed: " . $notifState;
             return array(false, $returnMessage);
@@ -402,27 +445,15 @@ class User
 
         if ($newNotifState == 2) { // If Accept -> insertion
             if (!$this->checkIfConnectionExists($userId, $senderId)) {
-                if ($userRole == "Nutritionist") {
-                    $addQuery = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:senderId, :userId)";
-                } else if ($userRole == "Regular") {
-                    $addQuery = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:userId, :senderId)";
-                } else {
-                    $returnMessage = "Neither client nor nutritionist";
-                    return array(false, $returnMessage);
-                }
-
-                // Exécuter la requête d'insertion
-                $this->db->query($addQuery);
-                $this->db->bind(':senderId', $senderId);
-                $this->db->bind(':userId', $userId);
-                if (!$this->db->execute()) {
-                    $returnMessage = "Couldn't update nutritionist_client table";
-                    return array(false, $returnMessage);
-                }
+                return $this->modifyConnection($userRole, $senderId, $userId, $this->db, "insert");
             }
             return array(true, "Connection already exists;");
+        } else if ($newNotifState == 3) { // If Decline -> deletion
+            if ($this->checkIfConnectionExists($userId, $senderId)) { // regarde si la connexion existe avant
+                return $this->modifyConnection($userRole, $senderId, $userId, $this->db, "delete");
+            }
+        } else {
+            return array(false, "Notification State " . $newNotifState . " not allowed");
         }
-
-        return array(true, "All good");
     }
 }
