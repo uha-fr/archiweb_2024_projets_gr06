@@ -15,7 +15,6 @@ class Router
     private $adminController;
 
     private $resetPasswordController;
-    private $recipesController;
     private $nutriController;
 
     public function __construct()
@@ -24,7 +23,6 @@ class Router
         $this->adminController = new AdminController();
 
         $this->resetPasswordController = new ResetPasswords();
-        $this->recipesController = new RecipesController();
         $this->nutriController = new NutritionistController();
     }
 
@@ -84,10 +82,10 @@ class Router
                     $this->userController->updateUserFirstLogin();
                     break;
                 case 'showAllRecipes':
-                    $this->recipesController->recipesCont();
+                    $this->userController->recipesList();
                     break;
                 case 'addRecipe':
-                    $this->recipesController->addNewRecipe();
+                    $this->userController->addNewRecipe();
                     break;
                 case 'logout':
                     $this->userController->logout();
