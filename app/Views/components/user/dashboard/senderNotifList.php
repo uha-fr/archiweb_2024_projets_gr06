@@ -56,7 +56,6 @@
                 "",
                 ""
             );
-            getUserFromNotif();
 
 
         });
@@ -73,9 +72,6 @@
                 "",
                 ""
             );
-            getUserFromNotif();
-
-
         });
     });
 </script>

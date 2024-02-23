@@ -293,7 +293,7 @@ class User
      */
     public function getNotifsById($userId)
     {
-        $sql = "SELECT * FROM notifications WHERE receiver_id=:userId";
+        $sql = "SELECT * FROM notifications WHERE receiver_id=:userId ORDER BY type ASC";
 
         $this->db->query($sql);
         $this->db->bind(':userId', $userId);
@@ -354,15 +354,25 @@ class User
      *
      * @param int $clientId
      * @param int $nutritionistId
+     * @param string $requestType The role of the connected user, regular or nutritionist
      * @return bool
      */
-    private function checkIfConnectionExists($clientId, $nutritionistId)
+    private function checkIfConnectionExists($userId, $senderId, string $requestType)
     {
         $this->db->query("SELECT * FROM nutritionist_client WHERE client_id = :clientId AND nutritionist_id = :nutritionistId");
-        $this->db->bind(':clientId', $clientId);
-        $this->db->bind(':nutritionistId', $nutritionistId);
-        return $this->db->rowCount() > 0;
+
+        if ($requestType == "Regular") {
+            $this->db->bind(':clientId', $userId);
+            $this->db->bind(':nutritionistId', $senderId);
+        } else if ($requestType == "Nutritionist") {
+            $this->db->bind(':clientId', $senderId);
+            $this->db->bind(':nutritionistId', $userId);
+        }
+        $this->db->execute();
+
+        return $this->db->fetchCount(); // récupère le résultat COUNT(*)
     }
+
 
     /**
      * Add or Delete a connection into the nutritionist_client table.
@@ -444,16 +454,16 @@ class User
         }
 
         if ($newNotifState == 2) { // If Accept -> insertion
-            if (!$this->checkIfConnectionExists($userId, $senderId)) {
+            if (!$this->checkIfConnectionExists($userId, $senderId, $userRole)) {
                 return $this->modifyConnection($userRole, $senderId, $userId, $this->db, "insert");
             } else {
                 return array(false, "Connection already exists");
             }
         } else if ($newNotifState == 3) { // If Decline -> deletion
-            if ($this->checkIfConnectionExists($userId, $senderId)) { // regarde si la connexion existe avant
+            if ($this->checkIfConnectionExists($userId, $senderId, $userRole)) { // regarde si la connexion existe avant
                 return $this->modifyConnection($userRole, $senderId, $userId, $this->db, "delete");
             } else {
-                return array(false, "No connection to delete");
+                return array(false, "No connection to delete between " . $userId . " and " . $senderId);
             }
         } else {
             return array(false, "Notification State " . $newNotifState . " not allowed");
