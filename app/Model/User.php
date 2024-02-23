@@ -403,7 +403,7 @@ class User
             return array(false, $returnMessage);
         }
 
-        return array(true, $requestType . "d successfully");
+        return array(true, $requestType . "ed successfully");
     }
 
 
@@ -433,7 +433,7 @@ class User
         }
 
 
-        $this->db->query('UPDATE notifications SET type=:newState WHERE sender_id=:senderId AND receiver_id=:userId');
+        $this->db->query('UPDATE notifications SET type=:newState WHERE sender_id=:senderId AND receiver_id=:userId AND type=1');
         $this->db->bind(':newState', $newNotifState);
         $this->db->bind(':senderId', $senderId);
         $this->db->bind(':userId', $userId);
@@ -446,11 +446,14 @@ class User
         if ($newNotifState == 2) { // If Accept -> insertion
             if (!$this->checkIfConnectionExists($userId, $senderId)) {
                 return $this->modifyConnection($userRole, $senderId, $userId, $this->db, "insert");
+            } else {
+                return array(false, "Connection already exists");
             }
-            return array(true, "Connection already exists;");
         } else if ($newNotifState == 3) { // If Decline -> deletion
             if ($this->checkIfConnectionExists($userId, $senderId)) { // regarde si la connexion existe avant
                 return $this->modifyConnection($userRole, $senderId, $userId, $this->db, "delete");
+            } else {
+                return array(false, "No connection to delete");
             }
         } else {
             return array(false, "Notification State " . $newNotifState . " not allowed");

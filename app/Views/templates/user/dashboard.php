@@ -1,3 +1,22 @@
+<?php
+$messageDisplay = '';
+if ($_SESSION['role'] == "Regular") {
+  $messageDisplay = <<<HTML
+  <h1>Nutritionist list</h1>
+  <div>Search any nutritionist.</div>
+  HTML;
+} else if ($_SESSION['role'] == "Nutritionist") {
+  $messageDisplay = <<<HTML
+  <h1>Client list</h1>
+  <div>Search any client.</div>
+  HTML;
+} else {
+  $messageDisplay = <<<HTML
+  <h1>Not for admins</h1>
+  <div>Really no point.</div>
+  HTML;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,8 +42,7 @@
     <div id="open-modal" class="modal-window">
       <div>
         <a href="#" title="Close" class="modal-close">Close</a>
-        <h1>Client list</h1>
-        <div>Search any client.</div>
+        <?php echo $messageDisplay ?>
         <br>
 
 
