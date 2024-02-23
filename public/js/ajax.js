@@ -126,6 +126,31 @@ function performAjaxRequest(
           $("#notif-displayer").html(response.data);
           console.log("nombre de notifications: " + response.data);
           break;
+        case "getUsersFromNotifications":
+          $("#sender-notif-list").html(response.data);
+          break;
+        case "updateNotification":
+          console.log("requestType log: " + response.requestType);
+          var sender = response.data;
+          console.log("nom de l'user sender: " + sender.fullname);
+          console.log("success: " + response.success);
+
+          if (response.requestType == "insert") {
+            var statusText = "Accepted";
+            var bgColor = "#75d44c";
+          }
+          else if (response.requestType == "delete") {
+            var statusText = "Declined";
+            var bgColor = "#F88F99";
+          }
+
+
+          $("#notif-user-" + sender.id).html(
+            '<p style="width: 20%; margin: 10px 0">' + sender.fullname + '</p>' +
+            '<p style="width: 20%; margin: 15px 0" id="status-request-<?php echo $row->id ?>">' + statusText + '</p>'
+          );
+          $("#notif-user-" + sender.id).css("background-color", bgColor);
+          break;
 
         case "getUserDetails":
           Swal.fire({
@@ -148,6 +173,7 @@ function performAjaxRequest(
             showCancelButton: true,
           });
           break;
+
 
         default:
           console.log("Unhandled action: " + action);

@@ -130,7 +130,6 @@ class User
 
 
 
-    //Login user
     /**
      * Login
      *
@@ -294,23 +293,197 @@ class User
      */
     public function getNotifsById($userId)
     {
-        $sql = "SELECT * FROM notifications WHERE receiver_id=:userId";
+        $sql = "SELECT * FROM notifications WHERE receiver_id=:userId ORDER BY type ASC";
 
         $this->db->query($sql);
         $this->db->bind(':userId', $userId);
         $rows = $this->db->resultSet();
+        $nbrRows = $this->db->rowCount();
 
-        if ($this->db->rowCount() >= 0) {
-            foreach ($rows as $row) {
-                $data[] = $row;
+        $data = [];
+
+        if ($nbrRows >= 0) {
+
+            if ($nbrRows > 0) {
+                foreach ($rows as $row) {
+                    $data[] = $row;
+                }
             }
-            if ($data == null) {
-                $data = 0;
-            }
+            // hors du if, sinon lorsqu'il n'y a pas de notification, la session gardera l'ancienne version de $data
             $_SESSION['notifications'] = $data;
-            return $this->db->rowCount();
+            return $nbrRows;
         } else {
-            return false;
+            return 0;
+        }
+    }
+
+    /**
+     * getUsersByNotifs
+     * 
+     * Use the list of notifications in the database to get access to all users who sent notifications
+     * to the current connected user, then put their data in an array and return it
+     *
+     * @return bool|object[]
+     */
+    public function getUsersByNotifs()
+    {
+        $notifList = $_SESSION['notifications'];
+
+        if (!empty($notifList)) {
+            $senderList = [];
+            foreach ($notifList as $notif) {
+                $sql = "SELECT * FROM users WHERE id=:senderId";
+                $this->db->query($sql);
+                $this->db->bind(':senderId', $notif->sender_id);
+                $sender = $this->db->single();
+
+                if ($sender) {
+                    $sender->notification_type = $notif->type;
+                    $senderList[] = $sender;
+                }
+            }
+            return $senderList;
+        }
+        return false;
+    }
+
+    /**
+     * checkIfConnectionExists
+     * 
+     * Check if a connection between a client and a nutritionist already exists in the nutritionist_client table
+     *
+     * @param int $clientId
+     * @param int $nutritionistId
+     * @param string $requestType The role of the connected user, regular or nutritionist
+     * @return bool
+     */
+    private function checkIfConnectionExists($userId, $senderId, string $requestType)
+    {
+        $this->db->query("SELECT * FROM nutritionist_client WHERE client_id = :clientId AND nutritionist_id = :nutritionistId");
+
+        if ($requestType == "Regular") {
+            $this->db->bind(':clientId', $userId);
+            $this->db->bind(':nutritionistId', $senderId);
+        } else if ($requestType == "Nutritionist") {
+            $this->db->bind(':clientId', $senderId);
+            $this->db->bind(':nutritionistId', $userId);
+        }
+        $this->db->execute();
+
+        return $this->db->fetchCount(); // récupère le résultat COUNT(*)
+    }
+
+    /**
+     * Retrieves user information based on the user's ID.
+     *
+     * @param int $senderId The ID of the user.
+     * @return mixed The user information or false in case of an error.
+     */
+    public function getSingleUserById($senderId)
+    {
+        $sql = "SELECT * FROM users WHERE id = :senderId";
+        $this->db->query($sql);
+        $this->db->bind(':senderId', $senderId);
+        return $this->db->single();
+    }
+
+
+
+    /**
+     * Add or Delete a connection into the nutritionist_client table.
+     * 
+     * @param string $userRole The role of the user.
+     * @param int $senderId The ID of the sender.
+     * @param int $userId The ID of the user.
+     * @param Database $db The database connection.
+     * @param string $requestType The type of request to execute, can be either "insert" or "delete"
+     * @return array An array indicating success or failure along with a message, and if success, the data of the sender
+     */
+    private function modifyConnection($userRole, $senderId, $userId, $db, string $requestType)
+    {
+        if ($requestType == "insert") {
+            if ($userRole == "Nutritionist") {
+                $query = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:senderId, :userId)";
+            } else if ($userRole == "Regular") {
+                $query = "INSERT INTO nutritionist_client (`client_id`, `nutritionist_id`) VALUES (:userId, :senderId)";
+            } else {
+                return array(false, "Neither client nor nutritionist");
+            }
+        } else if ($requestType == "delete") {
+            if ($userRole == "Nutritionist") {
+                $query = "DELETE FROM nutritionist_client WHERE `client_id` = :senderId AND `nutritionist_id` = :userId";
+            } else if ($userRole == "Regular") {
+                $query = "DELETE FROM nutritionist_client WHERE `client_id` = :userId AND `nutritionist_id` = :senderId";
+            } else {
+                return array(false, "Neither client nor nutritionist");
+            }
+        }
+
+        // Exécuter la requête d'insertion
+        $db->query($query);
+        $db->bind(':senderId', $senderId);
+        $db->bind(':userId', $userId);
+        if (!$db->execute()) {
+            $returnMessage = "Couldn't " . $requestType . " nutritionist_client table";
+            return array(false, $returnMessage);
+        }
+
+
+        return array(true, $this->getSingleUserById($senderId), $requestType);
+    }
+
+
+    /**
+     * updateNotificationState
+     * 
+     * Modify the notification in the table, depending of if it was declined or accepted,
+     * then add the connection between the nutritionist and the regular user in the nutritionist_client table
+     *
+     * @return array
+     */
+    public function updateNotificationState()
+    {
+
+        $notifState = $_POST['notifState'];
+        $senderId = $_POST['senderId'];
+        $userRole = $_SESSION['role'];
+        $userId = $_SESSION['id'];
+
+        if ($notifState == "Accept") {
+            $newNotifState = 2;
+        } else if ($notifState == "Decline") {
+            $newNotifState = 3;
+        } else {
+            $returnMessage = "Parameter not allowed: " . $notifState;
+            return array(false, $returnMessage);
+        }
+
+
+        $this->db->query('UPDATE notifications SET type=:newState WHERE sender_id=:senderId AND receiver_id=:userId AND type=1');
+        $this->db->bind(':newState', $newNotifState);
+        $this->db->bind(':senderId', $senderId);
+        $this->db->bind(':userId', $userId);
+
+        if (!$this->db->execute()) {
+            $returnMessage = "Couldn't update notification table";
+            return array(false, $returnMessage);
+        }
+
+        if ($newNotifState == 2) { // If Accept -> insertion
+            if (!$this->checkIfConnectionExists($userId, $senderId, $userRole)) {
+                return $this->modifyConnection($userRole, $senderId, $userId, $this->db, "insert");
+            } else {
+                return array(true, $this->getSingleUserById($senderId), "insert"); // cas où A envoie une notif que B accepte, puis B envoie une notif que A veut accepter
+
+            }
+        } else if ($newNotifState == 3) { // If Decline -> deletion
+            if ($this->checkIfConnectionExists($userId, $senderId, $userRole)) { // regarde si la connexion existe avant
+                return $this->modifyConnection($userRole, $senderId, $userId, $this->db, "delete");
+            } else {
+                return array(true, $this->getSingleUserById($senderId), "delete"); // cas où décline, et pas déjà de connection dans la db
+            }
+        } else {
+            return array(false, "Notification State " . $newNotifState . " not allowed");
         }
     }
 }

@@ -1,3 +1,22 @@
+<?php
+$messageDisplay = '';
+if ($_SESSION['role'] == "Regular") {
+  $messageDisplay = <<<HTML
+  <h1>Nutritionist list</h1>
+  <div>Search any nutritionist.</div>
+  HTML;
+} else if ($_SESSION['role'] == "Nutritionist") {
+  $messageDisplay = <<<HTML
+  <h1>Client list</h1>
+  <div>Search any client.</div>
+  HTML;
+} else {
+  $messageDisplay = <<<HTML
+  <h1>Not for admins</h1>
+  <div>Really no point.</div>
+  HTML;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,8 +42,7 @@
     <div id="open-modal" class="modal-window">
       <div>
         <a href="#" title="Close" class="modal-close">Close</a>
-        <h1>Client list</h1>
-        <div>Search any client.</div>
+        <?php echo $messageDisplay ?>
         <br>
 
 
@@ -41,15 +59,11 @@
       <div>
         <a href="#" title="Close" class="modal-close">Close</a>
         <h1>Notifications</h1>
-        <div>gneur.</div>
+        <div>You can accept your requests here.</div>
         <br>
 
-
-        <!-- Search bar -->
-        <input type="text" class="form-control" name="client-list-search" id="client-list-search" placeholder="Search for client">
-
         <!-- Results -->
-        <div id="client-list-results" class="pt-4" style="max-height:350px; overflow:scroll;">
+        <div id="sender-notif-list" class="pt-4" style="max-height:350px; overflow:scroll;">
 
         </div>
       </div>
@@ -60,7 +74,7 @@
       <a href="#open-modal">
         <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" id="notif-displayer" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;"></div>
       </a>
-      <a href="#open-modal-notifs">
+      <a href="#open-modal-notifs" id="click-to-show-notif">
         <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="Image of a bell" />
       </a>
 
@@ -129,6 +143,8 @@
       );
     });
 
+
+    // pour récupérer le nombre de notif, et les mettre en session
     function getNotif() {
       performAjaxRequest(
         "GET",
@@ -137,15 +153,25 @@
         "",
         ""
       );
+    }
 
+    // pour récupérer les users ayant envoyé des notifications 
+    function getUserFromNotif() {
+      performAjaxRequest(
+        "GET",
+        "getUsersFromNotifications",
+        "",
+        "",
+        ""
+      );
     }
 
     getNotif();
+    getUserFromNotif();
 
     // pour effectuer une recherche
     function performSearch() {
       var inputValue = $('#client-list-search').val();
-      console.log(inputValue);
       performAjaxRequest(
         "GET",
         "clientSearch",

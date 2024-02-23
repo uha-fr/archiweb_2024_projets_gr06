@@ -363,4 +363,49 @@ class Users
 
         exit;
     }
+
+    /**
+     * getUsersFromNotifications
+     * 
+     * Asks the Model for all notification senders' information,
+     * in order to display them
+     *
+     * @return void
+     */
+    public function getUsersFromNotifications()
+    {
+        header('APPJSON');
+
+        $data = $this->userModel->getUsersByNotifs();
+
+        if ($data) {
+            ob_start();
+            include VIEWSDIR . DS . 'components' . DS . 'user' . DS . 'dashboard' . DS . 'senderNotifList.php';
+            $output = ob_get_clean();
+            echo json_encode(['success' => true, 'data' => $output]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Users from notification query failed.']);
+        }
+    }
+
+    /**
+     * updateNotificationState
+     * 
+     * Asks the Model to update the notification, meaning either decline or accept it,
+     * based on the content of the POST request
+     *
+     * @return void
+     */
+    public function updateNotificationState()
+    {
+        header('APPJSON');
+
+        $data = $this->userModel->updateNotificationState();
+
+        if ($data[0]) {
+            echo json_encode(['success' => true, 'requestType' => $data[2], 'data' => $data[1]]);
+        } else {
+            echo json_encode(['success' => false, 'message' => $data[1]]);
+        }
+    }
 }
