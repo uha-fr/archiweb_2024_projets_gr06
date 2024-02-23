@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/colors.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/global.css" />
+  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/globals.css" />
 </head>
 
 <body>
@@ -20,10 +20,50 @@
   <!-- BODY -->
   <div class="bg-bg" style="min-height: 100vh; padding-left: 180px">
 
+    <div id="open-modal" class="modal-window">
+      <div>
+        <a href="#" title="Close" class="modal-close">Close</a>
+        <h1>Client list</h1>
+        <div>Search any client.</div>
+        <br>
+
+
+        <!-- Search bar -->
+        <input type="text" class="form-control" name="client-list-search" id="client-list-search" placeholder="Search for client">
+
+        <!-- Results -->
+        <div id="client-list-results" class="pt-4" style="max-height:350px; overflow:scroll;">
+
+        </div>
+      </div>
+    </div>
+    <div id="open-modal-notifs" class="modal-window">
+      <div>
+        <a href="#" title="Close" class="modal-close">Close</a>
+        <h1>Notifications</h1>
+        <div>gneur.</div>
+        <br>
+
+
+        <!-- Search bar -->
+        <input type="text" class="form-control" name="client-list-search" id="client-list-search" placeholder="Search for client">
+
+        <!-- Results -->
+        <div id="client-list-results" class="pt-4" style="max-height:350px; overflow:scroll;">
+
+        </div>
+      </div>
+    </div>
+
     <!-- BELL NOTIFICATIONS ICON -->
     <div class="position-absolute" style="right: 20px; top: 20px">
-      <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;">0</div>
-      <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="Image of a bell" />
+      <a href="#open-modal">
+        <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" id="notif-displayer" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;"></div>
+      </a>
+      <a href="#open-modal-notifs">
+        <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="Image of a bell" />
+      </a>
+
     </div>
 
     <!-- REST OF THE PAGE CONTENT -->
@@ -72,3 +112,55 @@
 </body>
 
 </html>
+<script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    // on doit attacher l'évènement au parent, car les enfants ne sont pas encore créés
+    $('#client-list-results').on('click', '.client-user', function() {
+      const userId = $(this).data('user-id');
+      console.log(userId);
+      performAjaxRequest(
+        "POST",
+        "sendNotification",
+        "&receiverId=" + userId,
+        "",
+        ""
+      );
+    });
+
+    function getNotif() {
+      performAjaxRequest(
+        "GET",
+        "countNotification",
+        "",
+        "",
+        ""
+      );
+
+    }
+
+    getNotif();
+
+    // pour effectuer une recherche
+    function performSearch() {
+      var inputValue = $('#client-list-search').val();
+      console.log(inputValue);
+      performAjaxRequest(
+        "GET",
+        "clientSearch",
+        "&searchValue=" + inputValue,
+        function(data) {
+          $("#client-list-results").html(data);
+        },
+        ""
+      );
+    }
+
+    var debouncedSearch = debounce(performSearch, 700);
+
+    $('#client-list-search').on('input', function() {
+      debouncedSearch();
+    });
+  });
+</script>

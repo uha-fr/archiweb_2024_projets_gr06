@@ -5,9 +5,8 @@ namespace Manger\Controller;
 use Manger\Model\User;
 use Manger\Views\UserView;
 use Manger\Views\AdminView;
+use Manger\Views\NutritionistView;
 
-
-define('APPJSON','Content-Type: application/json');
 /**
  * Controller for User-related things.
  * 
@@ -44,29 +43,35 @@ class Users
      * @return void
      */
     public function GETPage($page)
-    {  
-        if($page=="dashboardAdmin"){
+    {
+        if ($page == "dashboardAdmin") {
             $adminView = new AdminView();
 
             $html = $adminView->viewPage($page);
 
-          echo $html;
-           http_response_code(200);
-       
-            
-        }else{
+            echo $html;
+            http_response_code(200);
+        } else if ($page == "nutritionist-dashboard") {
+
+            $nutritionistView = new nutritionistView();
+
+            $html = $nutritionistView->viewPage($page);
+
+            echo $html;
+            http_response_code(200);
+        } else {
 
 
-        $userView = new UserView();
+            $userView = new UserView();
 
-        $html = $userView->viewPage($page);
+            $html = $userView->viewPage($page);
 
-        echo $html;
-        http_response_code(200);
+            echo $html;
+            http_response_code(200);
         }
     }
 
-   
+
 
 
 
@@ -174,8 +179,6 @@ class Users
         $_SESSION['weight'] = $user->weight;
         $_SESSION['goal'] = $user->goal;
         $_SESSION['role'] = $user->role;
-
-
     }
 
     /**
@@ -312,5 +315,52 @@ class Users
             echo json_encode(['success' => false, 'message' => 'Something went wrong']);
             exit;
         }
+    }
+
+
+
+    public function getRecipesByName()
+    {
+        header('APPJSON');
+        $searchValue = isset($_GET['searchValue']) ? $_GET['searchValue'] : '';
+
+        if (!empty($searchValue)) {
+            $data = $this->userModel->getRecipesByName($searchValue);
+
+            if ($data) {
+                ob_start();
+                include VIEWSDIR . DS . 'components' . DS . 'user' . DS . 'planning' . DS . 'searchResults.php';
+                $output = ob_get_clean();
+
+                echo json_encode(['success' => true, 'data' => $output]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'No recipes found.']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'No search value provided.']);
+        }
+        exit;
+    }
+
+    /**
+     * countNotification
+     * 
+     * Calls the Model to count the number of notifications the user has received
+     *
+     * @return void
+     */
+    public function countNotification()
+    {
+        header('APPJSON');
+
+        $data = $this->userModel->getNotifsById($_SESSION['id']);
+
+        if ($data >= 0) {
+            echo json_encode(['success' => true, 'data' => $data]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Notification query failed.']);
+        }
+
+        exit;
     }
 }

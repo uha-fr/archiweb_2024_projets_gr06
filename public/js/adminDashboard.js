@@ -47,10 +47,24 @@ window.addEventListener('resize', () => {
 
 const toggler = document.getElementById('theme-toggle');
 
-toggler.addEventListener('change', function () {
-    if (this.checked) {
-        document.body.classList.add('dark');
-    } else {
-        document.body.classList.remove('dark');
-    }
+// Retrieve the toggle state from localStorage
+var isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+// Set the initial state of the toggle based on localStorage
+document.querySelector('#theme-toggle').checked = isDarkMode;
+
+// Set the dark mode class initially if it was enabled before
+if (isDarkMode) {
+    document.body.classList.add('dark');
+}
+
+// Add event listener to the toggle
+document.querySelector('#theme-toggle').addEventListener('change', function () {
+    // Toggle the dark mode class on the body
+    document.body.classList.toggle('dark', this.checked);
+
+    // Update localStorage with the current state of the toggle
+    localStorage.setItem('darkMode', this.checked);
 });
+
+

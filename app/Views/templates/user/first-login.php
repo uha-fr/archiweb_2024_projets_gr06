@@ -22,7 +22,7 @@
 
   if (isset($_SESSION['age']) && $_SESSION['age'] !== null) {
     // Redirect to home.php
-    header('Location: home');
+    header('Location: dashboard');
     exit();
   }
   ?>

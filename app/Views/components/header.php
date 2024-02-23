@@ -24,13 +24,13 @@
   <?php else : ?>
 
     <div>
-      <nav class="" style="padding-top: 130px">
+      <nav class="" style="padding-top: 15%">
         <ul class="d-flex flex-column align-items-center list-unstyled" style="gap: 5rem;">
           <li>
             <a href="dashboard"><img src="<?= BASE_APP_DIR ?>/public/images/icons/home.png" alt="" /></a>
           </li>
           <li>
-            <a href=""><img src="<?= BASE_APP_DIR ?>/public/images/icons/calender.png" alt="" /></a>
+            <a href="planning"><img src="<?= BASE_APP_DIR ?>/public/images/icons/calender.png" alt="" /></a>
           </li>
           <li>
             <a href="recipes-list"><img src="<?= BASE_APP_DIR ?>/public/images/icons/market.png" alt="" /></a>
@@ -41,6 +41,12 @@
           <?php if ($_SESSION['role'] === "Admin") : ?>
             <a class="logo" href="dashboardAdmin">
          Admin 
+        <img src="" alt="" />
+      </a>
+          <?php endif; ?>
+          <?php if ($_SESSION['role'] === "Nutritionist") : ?>
+            <a class="logo" href="nutritionist-dashboard">
+         Nutritionist 
         <img src="" alt="" />
       </a>
           <?php endif; ?>

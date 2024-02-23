@@ -5,6 +5,7 @@ namespace Manger;
 use Manger\Controller\RecipesController;
 use Manger\Controller\Users;
 use Manger\Controller\AdminController;
+use Manger\Controller\NutritionistController;
 use Manger\Controller\ResetPasswords;
 
 
@@ -15,6 +16,7 @@ class Router
 
     private $resetPasswordController;
     private $recipesController;
+    private $nutriController;
 
     public function __construct()
     {
@@ -23,6 +25,7 @@ class Router
 
         $this->resetPasswordController = new ResetPasswords();
         $this->recipesController = new RecipesController();
+        $this->nutriController = new NutritionistController();
     }
 
 
@@ -61,7 +64,7 @@ class Router
             switch ($_POST['action']) {
                 case 'register':
                     $this->userController->register();
-                       break;
+                    break;
                 case 'login':
                     $this->userController->login();
                     break;
@@ -86,12 +89,14 @@ class Router
                 case 'addRecipe':
                     $this->recipesController->addNewRecipe();
                     break;
-                case 'showAllUsers':
-                    $this->adminController->showAllUsers();
-                    break;
-
                 case 'logout':
                     $this->userController->logout();
+                    break;
+                case 'deleteUser':
+                    $this->adminController->deleteUser();
+                    break;
+                case 'sendNotification':
+                    $this->nutriController->sendNotification();
                     break;
                 default:
                     include __DIR__ . '/../Views/login.php';
@@ -116,7 +121,28 @@ class Router
                     case 'countNutritionistUsers':
                         $this->adminController->countNutritionistUsers();
                         break;
+                    case 'countRecipes':
+                        $this->adminController->countRecipes();
+                        break;
+                    case 'getAllUsers':
+                        $this->adminController->getAllUsers();
+                        break;
+                    case 'getUserDetails':
+                        $this->adminController->getUserDetails();
+                        break;
+                    case 'planSearchForRecipe':
+                        $this->userController->getRecipesByName();
+                        break;
+                    case 'clientSearch':
+                        $this->nutriController->getClientList();
+                        break;
+                    case "countNotification":
+                        $this->userController->countNotification();
                         // Add other GET actions here
+                    case "getNutriClients":
+                        $this->nutriController->getUsersForNutritionist();
+                        break;
+
                     default:
                         // If no specific action, fallback to generic page handling
                         $this->userController->GETPage($requested);

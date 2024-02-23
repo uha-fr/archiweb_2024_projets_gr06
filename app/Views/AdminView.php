@@ -29,7 +29,7 @@ class AdminView
         if (file_exists($filePath)) {
             include $filePath;
         } else {
-            include TEMPLATESDIR . DS . 'user' . DS . 'login.php'; // A modifier
+            include TEMPLATESDIR . DS . '404-error.php' ; 
         }
 
         return endStream();

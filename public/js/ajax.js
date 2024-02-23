@@ -7,23 +7,29 @@ function handleAjaxError(jqXHR, textStatus, errorThrown) {
   });
 }
 
-function handleAjaxResponse(action, response, successTitle, successMessage, logout) {
+function handleAjaxResponse(
+  action,
+  response,
+  successTitle,
+  successMessage,
+  logout
+) {
   switch (action) {
-    case 'login':
-      console.log("on va vers first-login")
-      redirectHref = "first-login"
+    case "login":
+      console.log("on va vers first-login");
+      redirectHref = "first-login";
       break;
-    case 'first-login':
-      redirectHref = "home"
+    case "first-login":
+      redirectHref = "dashboard";
       break;
-    case 'update':
-      redirectHref = "update"
+    case "update":
+      redirectHref = "update";
       break;
-    case 'addRecipe':
-      redirectHref = "recipes-list"
+    case "addRecipe":
+      redirectHref = "recipes-list";
       break;
     default:
-      redirectHref = "login"
+      redirectHref = "login";
       break;
   }
   if (response.success) {
@@ -32,17 +38,16 @@ function handleAjaxResponse(action, response, successTitle, successMessage, logo
       text: successMessage,
       icon: "success",
     }).then(function () {
-      if (redirectHref != "update" && redirectHref != "recipes-list") {
+      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser') {
         window.location.href = redirectHref;
-      }
-      else if (redirectHref == "recipes-list") {
+      } else if (redirectHref == "recipes-list") {
         window.parent.rafraichirPage();
-      }
-      else {
+      } else {
+        console.log("refresh");
         window.location.reload(true);
       }
     });
-    if (!logout) {
+    if (!logout && action != 'deleteUser') {
       $("#form-data")[0].reset();
     }
   } else {
@@ -53,8 +58,6 @@ function handleAjaxResponse(action, response, successTitle, successMessage, logo
     });
   }
 }
-
-
 
 function performAjaxRequest(
   requestType,
@@ -69,29 +72,95 @@ function performAjaxRequest(
     data: $("#form-data").serialize() + "&action=" + action + additionalData,
     dataType: "json",
     success: function (response) {
-      console.log("action: 1111  " + action);
+      console.log("action:  " + action);
 
-      if (action == "showAllRecipes") {
-        $("#RecipeList").html(response.message);
+      switch (action) {
+        case "showAllRecipes":
+          $("#RecipeList").html(response.message);
+          break;
+
+        case "getNutriClients":
+          $("#showClients").html(response.message);
+          break;
+
+        case "getAllUsers":
+          $("#showUser").html(response.message);
+          $("table").DataTable({ order: [0, "desc"] });
+          break;
+
+        case "countRegularUsers":
+          $("#usersNumber").html(response.count);
+          break;
+
+        case "countNutritionistUsers":
+          $("#nutritionistNumber").html(response.count);
+          break;
+
+        case "countRecipes":
+          $("#countRecipes").html(response.count);
+          break;
+        case "planSearchForRecipe":
+          var data = response.data;
+          $("#plan-recipe-results").html(data);
+          break;
+        case "clientSearch":
+          var data = response.data;
+          $("#client-list-results").html(data);
+          break;
+        case "sendNotification":
+          console.log(response.data);
+          console.log("notification envoyée");
+
+          var divID = additionalData.replace('&searchValue=', '');
+          var divID = additionalData.replace('&receiverId=', '');
+
+          console.log(divID);
+          var userDiv = $("#user-" + divID);
+          userDiv.addClass('temp-bg-color');
+
+          setTimeout(function () {
+            userDiv.removeClass('temp-bg-color');
+          }, 2000);
+          break;
+        case "countNotification":
+          $("#notif-displayer").html(response.data);
+          console.log("nombre de notifications: " + response.data);
+          break;
+
+        case "getUserDetails":
+          Swal.fire({
+            title: `<strong>User Info: ID(${response.data.id})</strong>`,
+            icon: 'info',
+            html: `
+              <div style="text-align: left;">
+                <b>Full Name:</b> ${response.data.fullname}<br>
+                <b>Email:</b> ${response.data.email}<br>
+                <b>Gender:</b> ${response.data.gender}<br>
+                <b>Creation Date:</b> ${response.data.creation_date}<br>
+                <b>Goal:</b> ${response.data.goal}<br>
+                <b>Age:</b> ${response.data.age}<br>
+                <b>Role:</b> ${response.data.role}<br>
+                <b>Height:</b> ${response.data.height} cm<br>
+                <b>Weight:</b> ${response.data.weight} kg<br>
+                <b>Daily Calorie Goal:</b> ${response.data.daily_caloriegoal} calories
+              </div>
+            `,
+            showCancelButton: true,
+          });
+          break;
+
+        default:
+          console.log("Unhandled action: " + action);
+          handleAjaxResponse(action, response, successTitle, successMessage);
+          break;
       }
-      else if (action == "showAllUsers") {
-        $("#showUser").html(response.message);
-        $("table").DataTable({ order: [0, "desc"] });
-      } else if (action == "countRegularUsers") {
-        $("#usersNumber").html(response.count);
-      } else if (action == "countNutritionistUsers") {
-        $("#nutritionistNumber").html(response.count);
-      } else {
-        console.log("action: " + action);
-        handleAjaxResponse(action, response, successTitle, successMessage, action == "logout");
-      }
+
     },
     error: function (jqXHR, textStatus, errorThrown) {
       handleAjaxError(jqXHR, textStatus, errorThrown);
     },
   });
 }
-
 
 function performAjaxRequestWithImg(
   requestType,
@@ -102,31 +171,52 @@ function performAjaxRequestWithImg(
 ) {
   // creation FormData() object
   var formData = new FormData();
-  var fileInput = document.getElementById('image_url');
-  var name = document.getElementById('name');
-  var calories = document.getElementById('calories');
+  var fileInput = document.getElementById("image_url");
+  var name = document.getElementById("name");
+  var calories = document.getElementById("calories");
 
   if (fileInput.files.length > 0) {
-    formData.append('name', name.value);
-    formData.append('calories', calories.value);
-    formData.append('action', action);
-    formData.append('file', fileInput.files[0]);
-    formData.append('additionalData', additionalData);
+    formData.append("name", name.value);
+    formData.append("calories", calories.value);
+    formData.append("action", action);
+    formData.append("file", fileInput.files[0]);
+    formData.append("additionalData", additionalData);
   }
-  $.ajax(
-    {
-      url: 'index.php',
-      type: requestType,
-      data: formData,
-      processData: false,
-      contentType: false,
-      dataType: "JSON",
-      success: function (response) {
-        console.log("action: 1111  " + action);
-        handleAjaxResponse(action, response, successTitle, successMessage, action);
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        handleAjaxError(jqXHR, textStatus, errorThrown);
-      },
-    });
+  $.ajax({
+    url: "index.php",
+    type: requestType,
+    data: formData,
+    processData: false,
+    contentType: false,
+    dataType: "JSON",
+    success: function (response) {
+      console.log("action:  " + action);
+      handleAjaxResponse(
+        action,
+        response,
+        successTitle,
+        successMessage,
+        action
+      );
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      handleAjaxError(jqXHR, textStatus, errorThrown);
+    },
+  });
+}
+
+// DEBOUNCE (for search bars mainly, it only runs functions when a value is no longer being changed after X time)
+function debounce(func, wait) {
+  var timeout;
+
+  return function () {
+    var context = this,
+      args = arguments;
+    var later = function () {
+      timeout = null;
+      func.apply(context, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 }

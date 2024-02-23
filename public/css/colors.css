@@ -2,6 +2,7 @@
   --bg-color: #f8ede3;
   --main-color: #678e48;
   --gray-color: #b0b29f;
+  --dark-gray-color: #979989;
   --accent-color: #d6ff92;
   --red-color: #ffb0b0;
   --black-color: #252624;
@@ -15,6 +16,9 @@
 }
 .bg-gray {
   background-color: var(--gray-color);
+}
+.bg-dark-gray {
+  background-color: var(--dark-gray-color);
 }
 .bg-accent {
   background-color: var(--accent-color);
@@ -35,6 +39,9 @@
 .text-gray {
   color: var(--gray-color);
 }
+.text-dark-gray {
+  color: var(--dark-gray-color);
+}
 .text-accent {
   color: var(--accent-color);
 }
@@ -53,6 +60,9 @@
 }
 .border-gray {
   border-color: var(--gray-color);
+}
+.border-dark-gray {
+  border-color: var(--dark-gray-color);
 }
 .border-accent {
   border-color: var(--accent-color);
