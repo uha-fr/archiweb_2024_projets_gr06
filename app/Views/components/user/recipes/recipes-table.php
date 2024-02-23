@@ -1,6 +1,5 @@
 <?php
 // Assuming $recipes is an array containing the items retrieved from the database
-
 // Divide recipes into groups of 4
 $recipeGroups = array_chunk($recipes, 4);
 ?>
@@ -24,5 +23,3 @@ $recipeGroups = array_chunk($recipes, 4);
         <?php endforeach; ?>
     <?php endforeach; ?>
 </div>
-
-
