@@ -70,7 +70,7 @@ class NutritionistModel
         $this->db->bind(':receiverID', $receiverID);
         $this->db->bind(':senderID', $senderID);
         $this->db->execute();
-        $count = $this->db->fetchCount(); // Récupérer le résultat COUNT(*)
+        $count = $this->db->fetchCount(); // récupère le résultat COUNT(*)
 
         return $count > 0;
     }
