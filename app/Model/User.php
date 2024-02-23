@@ -473,7 +473,8 @@ class User
             if (!$this->checkIfConnectionExists($userId, $senderId, $userRole)) {
                 return $this->modifyConnection($userRole, $senderId, $userId, $this->db, "insert");
             } else {
-                return array(false, "Connection already exists");
+                return array(true, $this->getSingleUserById($senderId), "insert"); // cas où A envoie une notif que B accepte, puis B envoie une notif que A veut accepter
+
             }
         } else if ($newNotifState == 3) { // If Decline -> deletion
             if ($this->checkIfConnectionExists($userId, $senderId, $userRole)) { // regarde si la connexion existe avant

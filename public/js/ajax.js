@@ -132,8 +132,8 @@ function performAjaxRequest(
         case "updateNotification":
           console.log("requestType log: " + response.requestType);
           var sender = response.data;
-          console.log("data log: " + sender.fullname);
-          console.log("succes log: " + response.success);
+          console.log("nom de l'user sender: " + sender.fullname);
+          console.log("success: " + response.success);
 
           if (response.requestType == "insert") {
             var statusText = "Accepted";
