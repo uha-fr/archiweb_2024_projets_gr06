@@ -23,7 +23,19 @@ class AdminController
      * @var AdminModel
      */
     private $adminModel;
+    /**
+     * userModel
+     *
+     * @var UserModel
+     */
     private $userModel;
+    /**
+     * recipeModel
+     *
+     * @var recipeModel
+     */
+    private $recipeModel;
+
 
 
     /**
@@ -117,7 +129,22 @@ class AdminController
     }
 
 
+    public function getAllRecipes(){
+        header('APPJSON');
+        $data = $this->adminModel->getAllRecipes();
+        if ($data) {
+            // Output buffering to capture the included file's content
+            ob_start();
+            include VIEWSDIR . DS . 'components' . DS . 'admin' . DS . 'recipes-table.php';
+            $output = ob_get_clean();
 
+            // Echo the content captured, which now includes $data being used in recipesList.php
+            echo json_encode(['message' => $output]);
+        } else {
+            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">:( No recipes present in the database!</h3>']);
+        }
+        exit;
+    }
 
 
     /**

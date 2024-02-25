@@ -91,7 +91,8 @@ function performAjaxRequest(
           $("#showUser").html(response.message);
           $("table").DataTable({ order: [0, "desc"] });
           break;
-
+        case "getAllRecipes":
+          $("#showRecipes").html(response.message);
         case "countRegularUsers":
           $("#usersNumber").html(response.count);
           break;
