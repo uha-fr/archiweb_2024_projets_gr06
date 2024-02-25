@@ -17,6 +17,9 @@
 <body>
 
   <?php
+
+
+
   if (empty($_GET['selector']) || empty($_GET['validator'])) {
     echo ' Could not validate your request';
   } else {
