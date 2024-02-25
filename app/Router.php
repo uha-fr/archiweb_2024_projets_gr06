@@ -40,20 +40,36 @@ class Router
     public function manageRequest()
     {
 
+        // Parse the path from the URL
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+        // Explode the path into segments
         $uriSegments = explode('/', $path);
 
-        $requested = $uriSegments[2];
-        $controller = "user";
+        // Assuming the action is always after the project base in the URL
+        // and adjusting for unconventional query parameter format
+        $requestedRaw = isset($uriSegments[2]) ? $uriSegments[2] : "";
 
+        // Separate the action from any following query string that starts unusually with '&'
+        list($requested,) = explode('&', $requestedRaw, 2);
+
+        // var_dump($requested); // Debug: See the requested action
+
+        $controller = "user"; // Default controller
+
+        // Check if the requested segment matches 'admin' or 'nutritionist'
         if ($requested === 'admin' || $requested === 'nutritionist') {
             $controller = $requested;
-            $requested = $uriSegments[3];
+            $requested = isset($uriSegments[3]) ? $uriSegments[3] : "";
+            // Again, separate the actual request from any unconventional query string
+            list($requested,) = explode('&', $requested, 2);
         }
 
+        // Fallback to "login" if no specific action is requested
         $requested = $requested !== "" ? $requested : "login";
-        $no_redirect_pages = array('login', 'register', 'reset-password');
+
+        // Define pages that do not require redirect
+        $no_redirect_pages = array('login', 'register', 'reset-password' , 'create-new-password');
 
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
