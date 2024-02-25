@@ -163,7 +163,8 @@ CREATE TABLE `users` (
   `weight` int(11) DEFAULT NULL,
   `daily_caloriegoal` int(11) DEFAULT NULL,
   `gender` varchar(250) DEFAULT NULL,
-  `goal` varchar(250) DEFAULT NULL
+  `goal` varchar(250) DEFAULT NULL,
+  `img` varchar(250) DEFAULT '/public/images/default-user.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

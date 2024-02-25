@@ -68,7 +68,7 @@ function generateTabLink($currentTab, $tabName, $label, $iconClass)
  
   <ul class="side-menu" >
     <li>
-      <a href="#" class="logout">
+      <a href="dashboard" class="logout">
         <i class='bx bx-log-out-circle'></i>
         Logout
       </a>
