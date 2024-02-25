@@ -78,25 +78,34 @@
 
       <!-- Modal body -->
       <div class="modal-body px-4">
-        <form action="" method="post" id="form-data">
+      <form action="" method="post" id="form-data" enctype="multipart/form-data">
           <div class="profile-card">
 
 
-            <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" style="display: none;" />
+          <input type="file" id="imageUpload" name="imageUpload" accept=".png, .jpg, .jpeg" style="display: none;" />
             <label for="imageUpload">
-              <img src="<?= BASE_APP_DIR ?>/public/images/default-user.png" alt="Profile Image" class="profile-image" id="profileImage" style="  text-align: center; " />
+            <img src="<?= BASE_APP_DIR ?>/public/images/default-user.png" alt="Profile Image" class="profile-image" id="profileImage" style="text-align: center;" />
             </label>
           </div>
-          <div class="form-group">
-            <input type="text" name="fname" class="form-control" placeholder="Full name" Required>
+          
+
+            <div class="form-group">
+            <input type="text" name="fullname" class="form-control" placeholder="Full name"   required />
           </div>
 
           <div class="form-group">
-            <input type="text" name="email" class="form-control" placeholder="Email" required>
+            <input type="email" name="email" placeholder="Email"  class="form-control" required />
           </div>
           <div class="form-group">
-            <input type="submit" name="insert" id="insert" value="Add user" class="btn btn-danger btn-block">
+            <input type="password" id="password" name="password" placeholder="Password" class="form-control" required />
           </div>
+          <div class="form-group">
+            <input type="password" id="confPassword" name="confPassword" placeholder="Repeat Password" class="form-control"  required />
+          </div>
+            
+            <div class="form-group">
+              <input type="submit" name="addNewUser" id="addNewUser" value="Add user" class="btn btn-secondary btn-block" >
+            </div>
 
         </form>
       </div>
@@ -112,6 +121,7 @@
 
 
 <script type="text/javascript">
+
   console.log("Document ready");
   $(document).ready(function() {
     console.log("Making AJAX call");
@@ -127,4 +137,31 @@
     };
     reader.readAsDataURL(event.target.files[0]);
   });
+
+  $("#addNewUser").click(function(e) {
+    e.preventDefault(); // Prevent default form submission
+
+    if ($("#form-data")[0].checkValidity()) {
+        var formData = new FormData($("#form-data")[0]); // Create FormData object from the form
+
+        var password = $("#password").val();
+        var confirmPassword = $("#confPassword").val();
+
+        var fileName = $('#imageUpload').val().split('\\').pop(); // Gets the file name
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+          Swal.fire({
+            title: 'Registration failed!',
+            text: 'Passwords do not match.',
+            icon: 'error'
+          });
+          return; 
+        }
+
+        performAjaxWithImage('form-data', 'addNewUser', 'User added successfully!', 'The user has been successfully added.');
+
+    }
+});
+
 </script>

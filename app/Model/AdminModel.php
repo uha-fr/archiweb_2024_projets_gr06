@@ -170,4 +170,42 @@ class AdminModel
             return 0; // In case of no users or an error
         }
     }
+
+
+    /**
+ * add New User 
+ *
+ * add a new user in the database using the content of $data, including their profile image.
+ * It executes a prepared statement to insert the user's data into the database.
+ * If the operation is successful, it returns true, otherwise false.
+ *
+ * @param array $data An associative array containing user data (fullname, password, email, image).
+ * @return bool True if the user is added successfully, false otherwise.
+ */
+public function addNewUser($data)
+{
+    // Prepare SQL query to insert user data into the database.
+    $this->db->query('INSERT INTO users (fullname, password, email, img, active, creation_date)
+                      VALUES (:fullname, :password, :email, :profile_image, 1, NOW())');
+
+    // Bind parameters to the query.
+    $this->db->bind(':fullname', $data['fullname']);
+    $this->db->bind(':password', $data['password']);
+    $this->db->bind(':email', $data['email']);
+    $this->db->bind(':profile_image', $data['image']);
+
+    // Execute the query and handle any exceptions.
+    try {
+        return $this->db->execute();
+    } catch (\PDOException $e) {
+        // Log or handle the database error accordingly.
+        echo "Database error: " . $e->getMessage();
+        return false;
+    }
+}
+
+
+
+
+
 }

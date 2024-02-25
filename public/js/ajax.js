@@ -28,6 +28,10 @@ function handleAjaxResponse(
     case "addRecipe":
       redirectHref = "recipes-list";
       break;
+      case "addNewUser":
+        redirectHref = "dashboardAdmin?tab=usersList";
+        $("#form-data")[0].reset();
+        break;
     default:
       redirectHref = "login";
       break;
@@ -246,3 +250,25 @@ function debounce(func, wait) {
     timeout = setTimeout(later, wait);
   };
 }
+
+
+function performAjaxWithImage(formId, action, successTitle, successMessage) {
+  var formData = new FormData(document.getElementById(formId));
+  formData.append("action", action); // Ensure your backend handles this action appropriately
+
+  $.ajax({
+      url: "index.php", // or the specific endpoint for user registration
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      dataType: "json",
+      success: function(response) {
+          handleAjaxResponse(action, response, successTitle, successMessage, false);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+          handleAjaxError(jqXHR, textStatus, errorThrown);
+      },
+  });
+}
+

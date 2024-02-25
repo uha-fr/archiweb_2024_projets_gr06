@@ -42,7 +42,9 @@ function generateTabLink($currentTab, $tabName, $label, $iconClass)
   <div>
     <!-- Logo -->
     <div class="logo" style="margin-left: 80px;">
+     <a href="dashboard">
       <img src="<?= BASE_APP_DIR ?>/public/images/logo.png" alt="" />
+      </a>
     </div>
   <!--  <ul class="side-menu">
     <li class=""><a href="?section=dashboardAdmin"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
