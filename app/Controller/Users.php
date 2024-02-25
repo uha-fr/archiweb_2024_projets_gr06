@@ -419,6 +419,8 @@ class Users
                 echo json_encode(['success' => false, 'message' => "there is a probleme to add"]);
                 exit;
             };
+        }
+    }
 
     /**
      * getUsersFromNotifications

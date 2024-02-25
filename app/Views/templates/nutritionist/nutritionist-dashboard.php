@@ -4,7 +4,7 @@
 if ($_SESSION['role'] != "Nutritionist") {
   header('Location: dashboard'); // Redirect to dashboard
   exit();
-} 
+}
 
 
 $tab = $_GET['tab'] ?? 'nutritionist-dashboard';
@@ -30,7 +30,7 @@ function generateTabLink($currentTab, $tabName, $label, $svgContent)
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin dashboard</title>
 
-    <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/nutritionist-dashboard.css">
+  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/nutritionist-dashboard.css">
 
 
 
@@ -119,7 +119,7 @@ function generateTabLink($currentTab, $tabName, $label, $svgContent)
           include_once VIEWSDIR . DS . '/components/nutritionist/client-list.php';
           break;
         case 'recipesList':
-          include_once VIEWSDIR . DS . '/components/admin/recipesList.php';
+          include_once VIEWSDIR . DS . 'components/admin/recipesList.php';
           break;
         default:
           include_once VIEWSDIR . DS . '/components/nutritionist/main-dashboard.php';
