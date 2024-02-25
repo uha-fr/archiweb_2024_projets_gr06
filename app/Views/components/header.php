@@ -39,8 +39,7 @@
             <a href="settings"><img src="<?= BASE_APP_DIR ?>/public/images/icons/user.png" alt="" /></a>
           </li>
           <?php if ($_SESSION['role'] === "Admin") : ?>
-            <a class="logo" href="dashboardAdmin">
-         Admin 
+            <a href="dashboardAdmin"><img src="<?= BASE_APP_DIR ?>/public/images/icons/admin.png" alt="" /></a>
         <img src="" alt="" />
       </a>
           <?php endif; ?>
