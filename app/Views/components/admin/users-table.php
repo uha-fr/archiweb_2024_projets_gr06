@@ -13,7 +13,7 @@
     <?php foreach ($data as $row) : ?>
       <tr>
         <td>
-          <img src="<?= BASE_APP_DIR ?>/public/images/profile-1.jpg" alt="">
+          <img src="<?= BASE_APP_DIR ?><?= htmlspecialchars($row->img) ?>" alt="">
           <p><?= htmlspecialchars($row->fullname) ?></p>
         </td>
         <td><?= htmlspecialchars($row->email) ?></td>

@@ -114,6 +114,9 @@ class Router
                 case 'updateNotification':
                     $this->userController->updateNotificationState();
                     break;
+                case 'addNewUser':
+                    $this->adminController->addNewUser();
+                    break;
                 default:
                     include __DIR__ . '/../Views/login.php';
                     exit;
