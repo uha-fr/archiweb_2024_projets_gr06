@@ -115,6 +115,22 @@ class AdminModel
         }
     }
 
+    public function getRecipeById($recipeId)
+    {
+        $sql = "SELECT * from recipes where id = :id";
+
+        $this->db->query($sql);
+        $this->db->bind(':id', $recipeId);
+
+        $row = $this->db->single();
+
+        if ($row) {
+            return $row;
+        } else {
+            return false;
+        }
+    }
+
 
     /**
      * Get Count of Regular Users

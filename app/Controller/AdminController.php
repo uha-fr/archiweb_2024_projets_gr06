@@ -146,6 +146,24 @@ class AdminController
         exit;
     }
 
+    public function getRecipeDetails()
+    {
+        header('APPJSON');
+        $recipeId = isset($_GET['info_id']) ? $_GET['info_id'] : '';
+
+        if (!empty($recipeId)) {
+            $data = $this->adminModel->getRecipeById($recipeId);
+
+            if ($data) {
+                echo json_encode(['success' => true, 'data' => $data]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'User not found.']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'No user ID provided.']);
+        }
+        exit;
+    }
 
     /**
      * Count Regular Users
