@@ -28,10 +28,49 @@
 </table>
 
 <!-- Add your modals and scripts here, similar to the users-table.php file -->
+<!-- Recipe Details Modal -->
+<div class="modal fade" id="recipeDetailsModal" tabindex="-1" role="dialog" aria-labelledby="recipeDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="recipeDetailsModalLabel">Recipe Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="recipeDetails">
+        <!-- Recipe details will be loaded here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
-    // Similar AJAX setup for delete and edit actions for recipes
+
+
+
+
+
+    //show user details
+    $("body").on("click", ".infoBtn", function(e) {
+      e.preventDefault();
+      info_id = $(this).attr('id');
+      var additionalData = "&info_id=" + info_id;
+
+      performAjaxRequest("GET", "getRecipeDetails", additionalData, "", "");
+
+
+
+    })
+    
+
+
+
   });
 </script>

@@ -178,8 +178,25 @@ function performAjaxRequest(
             showCancelButton: true,
           });
           break;
-
-
+          case "getRecipeDetails":
+            Swal.fire({
+              title: `<strong>Recipe Details: ID(${response.data.id})</strong>`,
+              icon: 'info',
+              html: `
+                <div style="text-align: left;">
+                  <b>Name:</b> ${response.data.name}<br>
+                  <b>Calories:</b> ${response.data.calories}<br>
+                  <b>Type:</b> ${response.data.type}<br>
+                  <b>Visibility:</b> ${response.data.visibility == 1 ? 'Visible' : 'Not Visible'}<br>
+                  <b>Creation Date:</b> ${response.data.creation_date}<br>
+                  <b>Creator:</b> ${response.data.creator}<br>
+                  <img src="${response.data.image_url}" alt="Recipe Image" style="max-width: 100%; margin-top: 10px;">
+                </div>
+              `,
+              showCancelButton: true,
+            });
+            break;
+          
         default:
           console.log("Unhandled action: " + action);
           handleAjaxResponse(action, response, successTitle, successMessage);
