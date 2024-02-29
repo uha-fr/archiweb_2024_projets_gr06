@@ -239,7 +239,31 @@ public function addNewUser($data)
     }
 }
 
+public function addNewRecipe($data)
+{
+    // Prepare SQL query to insert recipe data into the database.
+    $this->db->query('INSERT INTO recipes (name, calories, type, image_url, visibility, creation_date, creator)
+    VALUES (:name, :calories, :type, :image_url, :visibility, :creation_date, :creator)');
 
+    // Bind parameters to the query.
+    $this->db->bind(':name', $data['name']);
+    $this->db->bind(':calories', $data['calories']);
+    $this->db->bind(':type', $data['type']);
+    $this->db->bind(':image_url', $data['image']);
+    $this->db->bind(':visibility', $data['visibility']);
+    $this->db->bind(':creation_date', $data['creation_date']);
+    $this->db->bind(':creator', $data['creator']);
+
+    // Execute the query and handle any exceptions.
+    try {
+        return $this->db->execute();
+    } catch (\PDOException $e) {
+    // Log or handle the database error accordingly.
+        echo "Database error: " . $e->getMessage();
+    return false;
+    }
+
+}
 
 
 

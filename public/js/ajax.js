@@ -32,6 +32,10 @@ function handleAjaxResponse(
         redirectHref = "dashboardAdmin?tab=usersList";
         $("#form-data")[0].reset();
         break;
+      case "addNewRecipe":
+        redirectHref= "dashboardAdmin?tab=recipesList";
+        $("#recipe-form-data")[0].reset();
+        break;
     default:
       redirectHref = "login";
       break;

@@ -304,4 +304,60 @@ public function addNewUser()
 }
 
 
+public function addNewRecipe()
+    {
+    // Check if a file was uploaded and handle the file upload first
+    $imageUploadPath = ''; // Default value if no file is uploaded
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["imageUpload"])) {
+        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/archiweb_2024_projets_gr06/public/images/recipesImages/';
+        $fileName = basename($_FILES["imageUpload"]["name"]);
+        $targetFilePath = $targetDir . $fileName;
+
+        // Optional: Validate file size and type here before proceeding with the upload
+
+        // Create the target directory if it doesn't exist
+        if (!file_exists($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
+
+        // Attempt to move the uploaded file to the target directory
+        if (move_uploaded_file($_FILES["imageUpload"]["tmp_name"], $targetFilePath)) {
+            $imageUploadPath = '/public/images/recipesImages/' . $fileName;
+        } else {
+            // Handle file upload failure
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'File upload failed']);
+            exit; // Stop execution if file upload fails
+        }   
+    }
+
+    // Sanitize input data
+    $name = trim($_POST['name'] ?? '');
+    $calories = trim($_POST['calories'] ?? '');
+    $type = trim($_POST['type'] ?? '');
+    $visibility = trim($_POST['visibility'] ?? '');
+    $creationDate = trim($_POST['creation_date'] ?? '');
+    $creator = trim($_POST['creator'] ?? '');
+
+    $data = [
+        'name' => $name,
+        'calories' => $calories,
+        'type' => $type,
+        'visibility' => $visibility,
+        'creation_date' => $creationDate,
+        'creator' => $creator,
+        'image' => $imageUploadPath 
+    ];
+    
+
+    // Attempt to register the recipe
+    if ($this->adminModel->addNewRecipe($data)) {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'redirect' => 'login.php']);
+    } else {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Something went wrong']);
+    }
+}
+
 }
