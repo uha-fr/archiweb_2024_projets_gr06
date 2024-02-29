@@ -117,6 +117,9 @@ class Router
                 case 'addNewUser':
                     $this->adminController->addNewUser();
                     break;
+                case 'addNewRecipe':
+                    $this->adminController->addNewRecipe();
+                    break;
                 default:
                     include __DIR__ . '/../Views/login.php';
                     exit;
