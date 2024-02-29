@@ -60,23 +60,45 @@
       <div class="modal-body px-4">
         <form action="" method="post" id="recipe-form-data" enctype="multipart/form-data">
           <div class="form-group">
-            <input type="text" name="recipeName" class="form-control" placeholder="Recipe name" required />
+            <input type="text" name="name" class="form-control" placeholder="Name" required />
           </div>
           <div class="form-group">
-            <textarea name="recipeDescription" placeholder="Recipe description" class="form-control" required></textarea>
+            <input type="number" name="calories" class="form-control" placeholder="Calories" required />
           </div>
           <div class="form-group">
-            <label for="recipeImageUpload">Choose recipe image</label>
-            <input type="file" id="recipeImageUpload" name="recipeImageUpload" accept=".png, .jpg, .jpeg" class="form-control" />
+            <select name="type" class="form-control" required>
+              <option value="">Select type</option>
+              <option value="breakfast">breakfast</option>
+              <option value="lunch">lunch</option>
+              <option value="dinner">dinner</option>
+              <option value="snack">snack</option>
+            </select>
           </div>
           <div class="form-group">
-            <input type="submit" name="addNewRecipe" id="addNewRecipe" value="Add recipe" class="btn btn-secondary btn-block" >
+            <select name="visibility" class="form-control" required>
+              <option value="visible">Visible</option>
+              <option value="hidden">Hidden</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="date" name="creation_date" class="form-control" placeholder="Creation Date" required />
+          </div>
+          <div class="form-group">
+            <input type="text" name="creator" class="form-control" placeholder="Creator ID" required />
+          </div>
+          <div class="form-group">
+            <label for="imageUpload">Choose recipe image</label>
+            <input type="file" id="imageUpload" name="image" accept=".png, .jpg, .jpeg" class="form-control" />
+          </div>
+          <div class="form-group">
+            <input type="submit" name="addNewRecipe" value="Add Recipe" class="btn btn-secondary btn-block">
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
 
 <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 
