@@ -359,5 +359,20 @@ public function addNewRecipe()
         echo json_encode(['success' => false, 'message' => 'Something went wrong']);
     }
 }
+public function deleteRecipe()
+{
+    if (isset($_POST['del_id'])) {
+        $del_id = $_POST['del_id'];
+        $result = $this->adminModel->deleteRecipeById($del_id);
+
+        if ($result) {
+            echo json_encode(['success' => true, 'message' => 'Recipe deleted successfully!']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to delete Recipe.']);
+        }
+        exit;
+    }
+}
+    
 
 }
