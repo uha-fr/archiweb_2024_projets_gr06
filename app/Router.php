@@ -120,6 +120,8 @@ class Router
                 case 'addNewRecipe':
                     $this->adminController->addNewRecipe();
                     break;
+                case 'deleteRecipe':
+                    $this->adminController->deleteRecipe();
                 default:
                     include __DIR__ . '/../Views/login.php';
                     exit;
