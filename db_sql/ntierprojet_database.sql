@@ -55,7 +55,7 @@ CREATE TABLE `nutritionist_client` (
 --
 
 CREATE TABLE `plans` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `period` int(11) DEFAULT NULL,
   `total_length` int(11) DEFAULT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE `plans` (
 --
 
 CREATE TABLE `plan_recipes` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `plan_id` int(11) DEFAULT NULL,
   `recipe_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL
@@ -187,7 +187,7 @@ INSERT INTO `users` (`id`, `fullname`, `password`, `email`, `active`, `creation_
 --
 
 CREATE TABLE `user_plan` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `plan_id` int(11) DEFAULT NULL,
   `creation_date` datetime DEFAULT NULL,
