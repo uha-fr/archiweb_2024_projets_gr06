@@ -8,6 +8,8 @@ if (!isset($_SESSION['id'])) {
 
 $period = $_GET["period"] ?? 7;
 $duration = $_GET["duration"] ?? 30;
+$periodJson = json_encode($period);
+$durationJson = json_encode($duration);
 
 ?>
 
@@ -89,7 +91,10 @@ $duration = $_GET["duration"] ?? 30;
                 </div>
                 <div class="selector width-per-item">
                     <input type="text" name="plan-name" id="plan-name" class="bg-bg rounded p-1 px-2" style="width:300px; border:0" placeholder="Plan Name">
+                    <input type="submit" name="add-plan-btn" id="add-plan-btn" class="rounded p-1 px-3" style="width:100px; border:0 ; margin-left: 10px;" value="Add Plan" disabled>
+                    <!-- Add "disabled" attribute to disable the button by default -->
                 </div>
+                
             </div>
         </div>
 
@@ -174,8 +179,10 @@ $duration = $_GET["duration"] ?? 30;
                     if (dayDiv) {
                         // Create a new element to hold the recipe information as a meal card
                         var recipeElement = document.createElement('div');
-                        recipeElement.className = 'flex flex-column justify-content-start bg-bg p-4 rounded';
-                        recipeElement.style = 'width: fit-content; max-width: 250px; min-width: 250px; align-items:center';
+                        recipeElement.className =
+                            'flex flex-column justify-content-start bg-bg p-4 rounded';
+                        recipeElement.style =
+                            'width: fit-content; max-width: 250px; min-width: 250px; align-items:center';
                         recipeElement.innerHTML = `
                 <img style="width: 200px; height: 200px; object-fit: cover; border-radius: 100%;"
                     src="${recipe.image ?? "https://www.allrecipes.com/thmb/5SdUVhHTMs-rta5sOblJESXThEE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11691-tomato-and-garlic-pasta-ddmfs-3x4-1-bf607984a23541f4ad936b33b22c9074.jpg"}" />
@@ -221,6 +228,61 @@ $duration = $_GET["duration"] ?? 30;
                     handleRecipeClick.call(recipeItem);
                 }
             });
+        });
+    </script>
+    <script>
+         // disable add plan btn if the input field is empty
+
+       document.addEventListener('DOMContentLoaded', function() {
+    // Get the input field and button
+    var planNameInput = document.getElementById('plan-name');
+    var addPlanBtn = document.getElementById('add-plan-btn');
+
+    // Add event listener to the input field
+    planNameInput.addEventListener('input', function() {
+        // Check if the input field is empty
+        if (planNameInput.value.trim() === '') {
+            // If empty, disable the button
+            addPlanBtn.disabled = true;
+        } else {
+            // If not empty, enable the button
+            addPlanBtn.disabled = false;
+        }
+    });
+});
+
+    </script>
+
+    <script type="text/javascript">
+        $("#add-plan-btn").click(function(e) {
+            console.log("add plan btn clicked");
+
+            //recupiration des valeur nécaissaire a transfirer
+            var recipesData = JSON.parse(localStorage.getItem('recipes'));
+            var period = <?php echo $periodJson; ?>;
+            var duration = <?php echo $durationJson; ?>;
+            var planName = $('#plan-name').val();
+            console.log(planName);
+
+
+            // recipesData.forEach(function(recipe, index) {
+            //     console.log("Recette " + (index + 1) + ": ", recipe);
+            // });
+            // console.log(period);
+            //console.log(duration);
+            // Convertir recipesData en JSON
+            var recipesDataJSON = JSON.stringify(recipesData);
+            var additionalData = "&recipesData=" + encodeURIComponent(recipesDataJSON) + "&period=" + period + "&duration=" + duration + "&planName=" + planName;
+
+            // Utilisation de la fonction performAjaxRequest pour envoyer les données au serveur
+            performAjaxRequest(
+                "POST",
+                "insertPlan",
+                additionalData,
+                "Plan added successfully!",
+                "",
+            );
+
         });
     </script>
 
