@@ -86,6 +86,9 @@ function performAjaxRequest(
         case "showAllRecipes":
           $("#RecipeList").html(response.message);
           break;
+        case 'insertPlan':
+          console.log(response.message );
+          break;
 
         case "getNutriClients":
           $("#showClients").html(response.message);
@@ -200,7 +203,6 @@ function performAjaxRequest(
               showCancelButton: true,
             });
             break;
-          
         default:
           console.log("Unhandled action: " + action);
           handleAjaxResponse(action, response, successTitle, successMessage);
@@ -272,7 +274,6 @@ function debounce(func, wait) {
     timeout = setTimeout(later, wait);
   };
 }
-
 
 function performAjaxWithImage(formId, action, successTitle, successMessage) {
   var formData = new FormData(document.getElementById(formId));
