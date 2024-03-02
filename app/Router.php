@@ -122,17 +122,11 @@ class Router
                     break;
                 case 'insertPlan':
                     if(isset($_POST['recipesData']) && isset($_POST['period']) && isset($_POST['duration'])) {
-                        
-                        $recipesData = json_decode($_POST['recipesData'], true);       
+                       $recipesData = json_decode($_POST['recipesData'], true);       
                        $period = $_POST['period'];
                        $duration = $_POST['duration'];
                        $planName = $_POST['planName'];
-
-                       
-
-                        $this->userController->addPlan($recipesData,$period,$duration,$planName);
-
-
+                       $this->userController->addPlan($recipesData,$period,$duration,$planName);
                     }
                     break;
                 default:
