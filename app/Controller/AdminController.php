@@ -128,6 +128,18 @@ class AdminController
         }
     }
 
+    /**
+     * Get All Recipes
+     * 
+     * Retrieves all the recipes from the database and returns them in a JSON format.
+     * If recipes are found, the function dynamically includes a PHP view file (for example, a table of recipes),
+     * captures its output using output buffering, and returns this HTML as part of the JSON response.
+     * If no recipes are found, a JSON response with a message indicating the absence of recipes is returned.
+     *
+     * @return void Outputs a JSON-encoded string. On success, this string includes HTML content generated 
+     *              by including a view file that displays the recipes in a user-friendly format.
+     *              On failure, it includes a simple message indicating that no recipes are available.
+     */
 
     public function getAllRecipes(){
         header('APPJSON');
@@ -146,6 +158,17 @@ class AdminController
         exit;
     }
 
+    /**
+    * Get Recipe Details
+    * 
+    * Retrieves and returns the details of a recipe based on the provided recipe ID.
+    * The recipe ID is expected to be passed via the 'info_id' query parameter.
+    * If a recipe is found with the provided ID, the function returns a JSON response 
+    * with the recipe details. If no recipe is found, or no ID is provided, 
+    * it returns a JSON response indicating failure.
+    *
+    * @return void
+    */
     public function getRecipeDetails()
     {
         header('APPJSON');
@@ -231,148 +254,167 @@ class AdminController
     }
 
 
-    /**
- * Add a new user with profile image.
- *
- * Processes the form submission, sanitizes input, handles profile image upload,
- * and add a new user in the database. It checks for an existing user with the same
- * email, handles password hashing, and includes the profile image's filename in the database.
- * Responds with JSON indicating success or failure.
- *
- * @return void Outputs JSON response.
- */
-public function addNewUser()
-{
-    // Check if a file was uploaded and handle the file upload first
-    $imageUploadPath = ''; // Default value if no file is uploaded
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["imageUpload"])) {
-        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/archiweb_2024_projets_gr06/public/images/profile-images/';
-        $fileName = basename($_FILES["imageUpload"]["name"]);
-        $targetFilePath = $targetDir . $fileName;
-       // var_dump($targetFilePath);
-        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-
-        // Optional: Validate file size and type here before proceeding with the upload
-
-        // Create the target directory if it doesn't exist
-        if (!file_exists($targetDir)) {
-            mkdir($targetDir, 0777, true);
-        }
-
-        // Attempt to move the uploaded file to the target directory
-        if (move_uploaded_file($_FILES["imageUpload"]["tmp_name"], $targetFilePath)) {
-            $imageUploadPath = '/public/images/profile-images/' . $fileName;
-        } else {
-            // Handle file upload failure
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'File upload failed']);
-            exit; // Stop execution if file upload fails
-        }
-    }
-
-    // Sanitize input data
-    $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
-    $fullname = trim($_POST['fullname'] ?? '');
-    $password = trim($_POST['password'] ?? '');
-
-    // Prepare data array for user registration
-    $data = [
-        'fullname' => $fullname,
-        'password' => $password,
-        'email' => $email,
-        'image' => $imageUploadPath // Use the uploaded image path or default
-    ];
-
-    // Check if user with this email already exists
-    if ($this->userModel->findUserByEmail($data['email'])) {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => 'Email already exists']);
-        return;
-    }
-
-    // Hash password before storing
-    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-
-    // Attempt to register the user
-    if ($this->adminModel->addNewUser($data)) {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => true, 'redirect' => 'login.php']);
-    } else {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => 'Something went wrong']);
-    }
-}
-
-
-public function addNewRecipe()
+        /**
+     * Add a new user with profile image.
+     *
+     * Processes the form submission, sanitizes input, handles profile image upload,
+     * and add a new user in the database. It checks for an existing user with the same
+     * email, handles password hashing, and includes the profile image's filename in the database.
+     * Responds with JSON indicating success or failure.
+     *
+     * @return void Outputs JSON response.
+     */
+    public function addNewUser()
     {
-    // Check if a file was uploaded and handle the file upload first
-    $imageUploadPath = ''; // Default value if no file is uploaded
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["imageUpload"])) {
-        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/archiweb_2024_projets_gr06/public/images/recipesImages/';
-        $fileName = basename($_FILES["imageUpload"]["name"]);
-        $targetFilePath = $targetDir . $fileName;
+        // Check if a file was uploaded and handle the file upload first
+        $imageUploadPath = ''; // Default value if no file is uploaded
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["imageUpload"])) {
+            $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/archiweb_2024_projets_gr06/public/images/profile-images/';
+            $fileName = basename($_FILES["imageUpload"]["name"]);
+            $targetFilePath = $targetDir . $fileName;
+        // var_dump($targetFilePath);
+            $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 
-        // Optional: Validate file size and type here before proceeding with the upload
+            // Optional: Validate file size and type here before proceeding with the upload
 
-        // Create the target directory if it doesn't exist
-        if (!file_exists($targetDir)) {
-            mkdir($targetDir, 0777, true);
+            // Create the target directory if it doesn't exist
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            // Attempt to move the uploaded file to the target directory
+            if (move_uploaded_file($_FILES["imageUpload"]["tmp_name"], $targetFilePath)) {
+                $imageUploadPath = '/public/images/profile-images/' . $fileName;
+            } else {
+                // Handle file upload failure
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => 'File upload failed']);
+                exit; // Stop execution if file upload fails
+            }
         }
 
-        // Attempt to move the uploaded file to the target directory
-        if (move_uploaded_file($_FILES["imageUpload"]["tmp_name"], $targetFilePath)) {
-            $imageUploadPath = '/public/images/recipesImages/' . $fileName;
-        } else {
-            // Handle file upload failure
+        // Sanitize input data
+        $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+        $fullname = trim($_POST['fullname'] ?? '');
+        $password = trim($_POST['password'] ?? '');
+
+        // Prepare data array for user registration
+        $data = [
+            'fullname' => $fullname,
+            'password' => $password,
+            'email' => $email,
+            'image' => $imageUploadPath // Use the uploaded image path or default
+        ];
+
+        // Check if user with this email already exists
+        if ($this->userModel->findUserByEmail($data['email'])) {
             header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'File upload failed']);
-            exit; // Stop execution if file upload fails
-        }   
-    }
-
-    // Sanitize input data
-    $name = trim($_POST['name'] ?? '');
-    $calories = trim($_POST['calories'] ?? '');
-    $type = trim($_POST['type'] ?? '');
-    $visibility = trim($_POST['visibility'] ?? '');
-    $creationDate = trim($_POST['creation_date'] ?? '');
-    $creator = trim($_POST['creator'] ?? '');
-
-    $data = [
-        'name' => $name,
-        'calories' => $calories,
-        'type' => $type,
-        'visibility' => $visibility,
-        'creation_date' => $creationDate,
-        'creator' => $creator,
-        'image' => $imageUploadPath 
-    ];
-    
-
-    // Attempt to register the recipe
-    if ($this->adminModel->addNewRecipe($data)) {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => true, 'redirect' => 'login.php']);
-    } else {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => 'Something went wrong']);
-    }
-}
-public function deleteRecipe()
-{
-    if (isset($_POST['del_id'])) {
-        $del_id = $_POST['del_id'];
-        $result = $this->adminModel->deleteRecipeById($del_id);
-
-        if ($result) {
-            echo json_encode(['success' => true, 'message' => 'Recipe deleted successfully!']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to delete Recipe.']);
+            echo json_encode(['success' => false, 'message' => 'Email already exists']);
+            return;
         }
-        exit;
+
+        // Hash password before storing
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+        // Attempt to register the user
+        if ($this->adminModel->addNewUser($data)) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => true, 'redirect' => 'login.php']);
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Something went wrong']);
+        }
     }
-}
+
+    /**
+     * Add a new Recipe with image.
+     *
+     * Processes the form submission, sanitizes input, handles image upload,
+     * and add a new recipe in the database. It includes the profile image's filename in the database.
+     * Responds with JSON indicating success or failure.
+     *
+     * @return void Outputs JSON response.
+     */
+
+    public function addNewRecipe()
+        {
+        // Check if a file was uploaded and handle the file upload first
+        $imageUploadPath = ''; // Default value if no file is uploaded
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["imageUpload"])) {
+            $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/archiweb_2024_projets_gr06/public/images/recipesImages/';
+            $fileName = basename($_FILES["imageUpload"]["name"]);
+            $targetFilePath = $targetDir . $fileName;
+
+            // Optional: Validate file size and type here before proceeding with the upload
+
+            // Create the target directory if it doesn't exist
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            // Attempt to move the uploaded file to the target directory
+            if (move_uploaded_file($_FILES["imageUpload"]["tmp_name"], $targetFilePath)) {
+                $imageUploadPath = '/public/images/recipesImages/' . $fileName;
+            } else {
+                // Handle file upload failure
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => 'File upload failed']);
+                exit; // Stop execution if file upload fails
+            }   
+        }
+
+        // Sanitize input data
+        $name = trim($_POST['name'] ?? '');
+        $calories = trim($_POST['calories'] ?? '');
+        $type = trim($_POST['type'] ?? '');
+        $visibility = trim($_POST['visibility'] ?? '');
+        $creationDate = trim($_POST['creation_date'] ?? '');
+        $creator = trim($_POST['creator'] ?? '');
+
+        $data = [
+            'name' => $name,
+            'calories' => $calories,
+            'type' => $type,
+            'visibility' => $visibility,
+            'creation_date' => $creationDate,
+            'creator' => $creator,
+            'image' => $imageUploadPath 
+        ];
+        
+
+        // Attempt to register the recipe
+        if ($this->adminModel->addNewRecipe($data)) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => true, 'redirect' => 'login.php']);
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Something went wrong']);
+        }
+    }
+    /**
+     * Handles the deletion of a recipe.
+     *
+     * This method is called when a request to delete a recipe is received.
+     * It retrieves the recipe ID from the POST data, calls the model to delete the recipe,
+     * and then returns a JSON response indicating the success or failure of the operation.
+     *
+     * @return void Outputs a JSON response with the operation result.
+     */
+
+    public function deleteRecipe()
+    {
+        if (isset($_POST['del_id'])) {
+            $del_id = $_POST['del_id'];
+            $result = $this->adminModel->deleteRecipeById($del_id);
+
+            if ($result) {
+                echo json_encode(['success' => true, 'message' => 'Recipe deleted successfully!']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to delete Recipe.']);
+            }
+            exit;
+        }
+    }
     
 
 }
