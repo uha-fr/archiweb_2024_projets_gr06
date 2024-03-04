@@ -103,6 +103,7 @@ function performAjaxRequest(
           break;
         case "getAllRecipes":
           $("#showRecipes").html(response.message);
+          $("table").DataTable({ order: [0, "desc"] });
         case "countRegularUsers":
           $("#usersNumber").html(response.count);
           break;
