@@ -138,4 +138,8 @@ class Database
     {
         return $this->stmt->rowCount();
     }
+  // retun the last inserted ID
+    public function lastInsertId() {
+        return $this->dbh->lastInsertId();
+    }
 }

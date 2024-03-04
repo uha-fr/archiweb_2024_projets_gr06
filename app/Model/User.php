@@ -528,5 +528,47 @@ class User
             return false;
         }
     }
+    function addUserPlan($recipesData, $period, $duration,$plan_name)
+    {
+        $userId = $_SESSION['id']; //  user ID from the session
+        // Insert into the `plans` table
+        $planName = $plan_name ??  "Default Plan for User " . $userId;
+        $creatorId = $_SESSION['id']; //  user ID from the session
+        $type = "Your Plan Type"; // You can define a type for the plan
+        $sql = "INSERT INTO plans (name, period, total_length, creator, type) VALUES (:name, :period, :total_length, :creator, :type)";
+        $this->db->query($sql);
+        $this->db->bind(':name', $planName);
+        $this->db->bind(':period', $period);
+        $this->db->bind(':total_length', $duration);
+        $this->db->bind(':creator', $creatorId);
+        $this->db->bind(':type', $type);
+        $this->db->execute();
+        $planId = $this->db->lastInsertId(); // Get the ID of the inserted plan
+    
+        // Insert into the `user_plan` table
+        $sql = "INSERT INTO user_plan (user_id, plan_id, creation_date) VALUES (:user_id, :plan_id, NOW())";
+        $this->db->query($sql);
+        $this->db->bind(':user_id', $userId);
+        $this->db->bind(':plan_id', $planId);
+        $this->db->execute();
+    
+        // Insert into the `plan_recipes` table for each recipe in $recipesData
+        foreach ($recipesData as $recipe) {
+            $recipeId = $recipe['id'];
+            $date = $recipe['day']; // Assuming 'day' in $recipeData represents the date
+            $sql = "INSERT INTO plan_recipes (plan_id, recipe_id, date) VALUES (:plan_id, :recipe_id, :date)";
+            $this->db->query($sql);
+            $this->db->bind(':plan_id', $planId);
+            $this->db->bind(':recipe_id', $recipeId);
+            $this->db->bind(':date', $date);
+            $this->db->execute();
+        }
+    
+        // Optionally, you can return the plan ID or any other relevant information
+        return true; 
+    }
+    
+
+    
 }
 
