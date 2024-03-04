@@ -129,6 +129,8 @@ class Router
                        $this->userController->addPlan($recipesData,$period,$duration,$planName);
                     }
                     break;
+                case 'deleteRecipe':
+                    $this->adminController->deleteRecipe();
                 default:
                     include __DIR__ . '/../Views/login.php';
                     exit;
