@@ -122,7 +122,7 @@ class Router
                     break;
                 case 'insertPlan':
                     if(isset($_POST['recipesData']) && isset($_POST['period']) && isset($_POST['duration'])) {
-                        
+
                        $recipesData = json_decode($_POST['recipesData'], true);       
                        $period = $_POST['period'];
                        $duration = $_POST['duration'];
@@ -130,9 +130,14 @@ class Router
                        $this->userController->addPlan($recipesData,$period,$duration,$planName);
                     }
                     break;
+
                     case 'isUserHavePlan':
                         $this->userController->isUserHavePlan();
                         break;
+
+                case 'deleteRecipe':
+                    $this->adminController->deleteRecipe();
+
                 default:
                     include __DIR__ . '/../Views/login.php';
                     exit;
