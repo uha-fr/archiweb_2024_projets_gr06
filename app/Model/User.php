@@ -563,9 +563,33 @@ class User
             $this->db->bind(':date', $date);
             $this->db->execute();
         }
-    
-        // Optionally, you can return the plan ID or any other relevant information
-        return true; 
+            return true; 
+    }
+    function ifUserHavePlan()
+    {
+        $userId = $_SESSION['id']; //  user ID from the session
+        $sql = "SELECT * FROM user_plan WHERE user_id = :userId";
+        $this->db->query($sql);
+        $this->db->bind(':userId', $userId);
+        $results = $this->db->resultSet();
+        if ($this->db->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+        
+
+        try {
+            if ($this->db->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\PDOException $e) {
+            // Handle exception
+            echo "Database error: " . $e->getMessage();
+            return false;
+        }
     }
     
 

@@ -203,6 +203,21 @@ function performAjaxRequest(
               showCancelButton: true,
             });
             break;
+            case "isUserHavePlan":
+             console.log(response.message);
+              if (response.message === 'PlanFonded') {
+                // Masquer div2 et afficher div1
+                $('#userHavePlan').hide();
+                $('#userNotHavePlan').show();
+               
+                
+            } else if (response.message === 'noPlanFonded') {
+                // Masquer div1 et afficher div2
+                $('#userHavePlan').show();
+                $('#userNotHavePlan').hide();
+
+            } 
+               break;
         default:
           console.log("Unhandled action: " + action);
           handleAjaxResponse(action, response, successTitle, successMessage);

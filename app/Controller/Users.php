@@ -473,4 +473,12 @@ class Users
         }
         else{ echo json_encode(['success' => false, 'message' => 'failed to insert plan']);}
     }
+    public function isUserHavePlan()
+    {
+        if ($this->userModel->ifUserHavePlan()) {
+            echo json_encode(['success' => true, 'message' => "PlanFonded"]);
+        }
+        else{ echo json_encode(['success' => true, 'message' => 'noPlanFonded']);}
+
+    }
 }
