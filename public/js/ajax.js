@@ -49,7 +49,7 @@ function handleAjaxResponse(
       text: successMessage,
       icon: "success",
     }).then(function () {
-      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser') {
+      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser'&&action!='insertPlan') {
         window.location.href = redirectHref;
       } else if (redirectHref == "recipes-list") {
         window.parent.rafraichirPage();
@@ -89,10 +89,6 @@ function performAjaxRequest(
         case "showAllRecipes":
           $("#RecipeList").html(response.message);
           break;
-        case 'insertPlan':
-          console.log(response.message );
-          break;
-
         case "getNutriClients":
           $("#showClients").html(response.message);
           break;
@@ -206,18 +202,18 @@ function performAjaxRequest(
               showCancelButton: true,
             });
             break;
+            case 'insertPlan':
+             console.log(response.message );
+             handleAjaxResponse(action, response, "Plan Added successfully", "", false);
+             break;
             case "isUserHavePlan":
              console.log(response.message);
               if (response.message === 'PlanFonded') {
-                // Masquer div2 et afficher div1
-                $('#userHavePlan').hide();
-                $('#userNotHavePlan').show();
-               
-                
-            } else if (response.message === 'noPlanFonded') {
-                // Masquer div1 et afficher div2
                 $('#userHavePlan').show();
                 $('#userNotHavePlan').hide();
+            } else if (response.message === 'noPlanFonded') {
+                $('#userHavePlan').hide();
+                $('#userNotHavePlan').show();
 
             } 
                break;

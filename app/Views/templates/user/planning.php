@@ -74,7 +74,7 @@ $durationJson = json_encode($duration);
         <!-- Planning Params -->
 
         <div style="min-height: 250px">
-            <div id="userHavePlan" class="radio-container" style="background-color: var(--main-color); display: none;">
+            <div id="userNotHavePlan" class="radio-container" style="background-color: var(--main-color); display: none;">
                 <div class="radio-container" style="background-color: var(--main-color);">
                     <div class="form-group">
                         <div class="selector-label">
@@ -134,7 +134,7 @@ $durationJson = json_encode($duration);
                 </div>
             </div>
 
-            <div id="userNotHavePlan" class="radio-container"
+            <div id="userHavePlan" class="radio-container"
                 style="background-color: var(--main-color);display: none;">
                 <div class="radio-container" style="background-color: var(--main-color);">
                     <div class="form-group">
@@ -321,6 +321,7 @@ $durationJson = json_encode($duration);
        
         console.log("add plan btn clicked");
         if ($("#form-data")[0].checkValidity()) {
+            e.preventDefault()
             //recupiration des valeur nécaissaire a transfirer
             var recipesData = JSON.parse(localStorage.getItem('recipes'));
             if (!recipesData) {
@@ -332,9 +333,8 @@ $durationJson = json_encode($duration);
             console.log(period);
             console.log(duration);
             console.log(planName);
-            // Convertir recipesData en JSON
-
             if (recipesData.length > 0) {
+                // Convertir recipesData en JSON
                 var recipesDataJSON = JSON.stringify(recipesData);
                 var additionalData = "&recipesData=" + encodeURIComponent(recipesDataJSON) + "&period=" +
                     period +
@@ -348,7 +348,6 @@ $durationJson = json_encode($duration);
                     "",
                 );
             } else {
-                e.preventDefault();
                 // Si le tableau est vide, imprimer un message indiquant qu'il n'y a aucun élément
                 Swal.fire({
                     title: `Recipe Plan Incomplete`,
