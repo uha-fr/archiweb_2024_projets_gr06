@@ -139,7 +139,7 @@ class Database
         return $this->stmt->rowCount();
     }
     /**
-     * Get the ID of the last inserted record in a bdd table
+     * Get the ID of the last inserted record in a database table
      * 
      * This function retrieves the ID of the last inserted record in the database
      * using the lastInsertId method provided by the PDO database connection,
