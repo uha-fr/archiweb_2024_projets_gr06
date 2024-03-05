@@ -138,8 +138,18 @@ class Database
     {
         return $this->stmt->rowCount();
     }
-  // retun the last inserted ID
+    /**
+     * Get the ID of the last inserted record in a bdd table
+     * 
+     * This function retrieves the ID of the last inserted record in the database
+     * using the lastInsertId method provided by the PDO database connection,
+     * which is a predefined method in PHP.
+     * 
+     * @return int The ID of the last inserted record
+     */
+  
     public function lastInsertId() {
+        // retun the last inserted ID
         return $this->dbh->lastInsertId();
     }
 }

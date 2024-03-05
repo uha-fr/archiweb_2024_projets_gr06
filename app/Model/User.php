@@ -528,6 +528,21 @@ class User
             return false;
         }
     }
+        /**
+       * addUserPlan
+       * 
+       * This function adds a new plan for the user based on the provided data. If a plan name
+       * is not provided, it defaults to "Default Plan for User" followed by the user's ID. 
+       * The plan details are inserted into the plans table, and the user-plan relationship 
+       * is stored in the user_plan table. Additionally, each recipe in the plan is inserted 
+       * into the plan_recipes table.
+       * 
+       * @param array $recipesData An array containing information about the recipes in the plan
+       * @param int $period The number of days of the plan (repeats through the duration)
+       * @param int $duration The total number of days of the plan
+       * @param string|null $plan_name The name of the plan (optional)
+       * @return bool Returns true if the plan is successfully added, false otherwise
+       */
     function addUserPlan($recipesData, $period, $duration,$plan_name)
     {
         $userId = $_SESSION['id']; //  user ID from the session
@@ -565,6 +580,15 @@ class User
         }
             return true; 
     }
+    /**
+       * ifUserHavePlan
+       * 
+       * This function queries the user_plan table to determine if the user already has a plan.
+       * It retrieves the user's ID from the session and executes a SQL query to check for 
+       * existing entries in the user_plan table associated with that user ID.
+       * 
+       * @return bool Returns true if the user already has a plan, false otherwise
+       */
     function ifUserHavePlan()
     {
         $userId = $_SESSION['id']; //  user ID from the session
@@ -575,19 +599,6 @@ class User
         if ($this->db->rowCount() > 0) {
             return true;
         } else {
-            return false;
-        }
-        
-
-        try {
-            if ($this->db->execute()) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (\PDOException $e) {
-            // Handle exception
-            echo "Database error: " . $e->getMessage();
             return false;
         }
     }
