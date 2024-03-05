@@ -363,6 +363,15 @@ class Users
 
         exit;
     }
+         /**
+      * Retrieve a list of recipes
+     * 
+      * This function retrieves a list of recipes from the UserModel and returns 
+      * the list as a JSON response. If no recipes are found, it returns a message 
+      * indicating so.
+      * 
+      * @return void
+         */
     function recipesList()
     {
         header('APPJSON');
@@ -466,11 +475,43 @@ class Users
             echo json_encode(['success' => false, 'message' => $data[1]]);
         }
     }
-    public function addPlan($recipesData, $period, $duration,$planName)
+  
+     /**
+     * addPlan
+     * 
+     * This function adds a new plan for the user based on the provided parameters. 
+     * It invokes the addUserPlan method from the UserModel to handle the insertion 
+     * of the plan into the database.
+     * 
+     * @param array $recipesData An array containing data about the recipes included in the plan
+     * @param int $period The period of the plan in days
+     * @param int $duration The total duration of the plan in days
+    * @param string $planName The name of the plan provided by the user
+    * @return void
+     */  
+
+  public function addPlan($recipesData, $period, $duration,$planName)
     {
         if ($this->userModel->addUserPlan($recipesData, $period, $duration,$planName)) {
             echo json_encode(['success' => true, 'message' => "plan added"]);
         }
         else{ echo json_encode(['success' => false, 'message' => 'failed to insert plan']);}
+    }
+         /**
+      * isUserHavePlan
+      * 
+      * This function checks if the user already has an existing plan by invoking 
+      * the ifUserHavePlan method from the UserModel. It returns a JSON response 
+      * indicating whether a plan is found or not.
+      * 
+      * @return void
+      */
+    public function isUserHavePlan()
+    {
+        if ($this->userModel->ifUserHavePlan()) {
+            echo json_encode(['success' => true, 'message' => "PlanFonded"]);
+        }
+        else{ echo json_encode(['success' => true, 'message' => 'noPlanFonded']);}
+
     }
 }
