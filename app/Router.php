@@ -132,7 +132,7 @@ class Router
                     break;
 
                     case 'isUserHavePlan':
-                        $this->userController->isUserHavePlan();
+                        $this->userController->UserHavePlan();
                         break;
 
                 case 'deleteRecipe':

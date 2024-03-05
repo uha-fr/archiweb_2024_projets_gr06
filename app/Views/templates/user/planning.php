@@ -39,8 +39,8 @@ $durationJson = json_encode($duration);
     ?>
     <!-- BODY -->
     <script type="text/javascript">
+        
     $(document).ready(function() {
-        console.log("is user have plan");
         performAjaxRequest(
             "POST",
             "isUserHavePlan",
@@ -48,7 +48,7 @@ $durationJson = json_encode($duration);
             "",
             ""
         );
-    });
+});
     </script>
     <div class="container-fluid bg-bg pt-5" style="padding-left: 180px; min-height: 100vh;">
         <!-- MODAL -->
@@ -74,7 +74,8 @@ $durationJson = json_encode($duration);
         <!-- Planning Params -->
 
         <div style="min-height: 250px">
-            <div id="userNotHavePlan" class="radio-container" style="background-color: var(--main-color); display: none;">
+            <div id="userNotHavePlan" class="radio-container"
+                style="background-color: var(--main-color); display: none;">
                 <div class="radio-container" style="background-color: var(--main-color);">
                     <div class="form-group">
                         <div class="selector-label">
@@ -134,9 +135,23 @@ $durationJson = json_encode($duration);
                 </div>
             </div>
 
-            <div id="userHavePlan" class="radio-container"
-                style="background-color: var(--main-color);display: none;">
+            <div id="userHavePlan" class="radio-container" style="background-color: var(--main-color);display: none;">
                 <div class="radio-container" style="background-color: var(--main-color);">
+                    <div class="form-group text-center">
+                        <div class="selector-label">
+                            <h3 class="text-white">Name of the Plan:</h3>
+                        </div>
+                        <div class="selector width-per-item d-flex justify-content-center">
+                            <h3 class="text-white"><strong>My Plan Name</strong></h3>
+                        </div>
+                        <div class="selector width-per-item d-flex justify-content-center">
+                            <button type="submit" name="modify-plan-btn" id="modify-plan-btn"
+                                class="btn text-decoration-none selection rounded p-1 text-white">
+                                <h3 class="text-white"><strong>Modify my plan</strong></h3>
+                            </button>
+                        </div>
+
+                    </div>
                     <div class="form-group">
                         <div class="selector-label">
                             <h3 class="text-white">Period</h3>
@@ -155,22 +170,6 @@ $durationJson = json_encode($duration);
                             <a class="text-decoration-none selection" style="pointer-events: none;">7 Days</a>
                         </div>
                     </div>
-                    <div class="form-group text-center">
-                        <div class="selector-label">
-                            <h3 class="text-white"><strong>Name of the Plan:</strong></h3>
-                        </div>
-                        <div class="selector width-per-item d-flex justify-content-center">
-                            <h3 class="text-white"><strong>My Plan Name</strong></h3>
-                        </div>
-                        <div class="selector width-per-item d-flex justify-content-center">
-                            <button type="submit" name="modify-plan-btn" id="modify-plan-btn"
-                                class="btn text-decoration-none selection rounded p-1 "
-                                style="color: white; font-weight: 600;">
-                                Modify my paln
-                            </button>
-                        </div>
-
-                    </div>
                 </div>
             </div>
         </div>
@@ -178,7 +177,7 @@ $durationJson = json_encode($duration);
 
 
         <h4 class="mt-5 mb-3" style="padding-left: 20px;">Your Dietary Plan:</h4>
-        <div class="bg-gray mx-3 rounded">
+        <div class="bg-gray mx-3 rounded" id="dayPlan">
             <?php for ($day = 1; $day <= $period; $day++) : ?>
             <div>
                 <p class="p-3 text-white fw-bold" style="">Day
@@ -233,7 +232,9 @@ $durationJson = json_encode($duration);
     });
 
     // HANDLE SELECT RECIPE:
-    document.addEventListener('DOMContentLoaded', (event) => {
+    document.addEventListener('DOMContentLoaded', (event) => 
+    {
+        setTimeout(() => {
 
         var recipes = JSON.parse(localStorage.getItem('recipes')) || [];
 
@@ -259,7 +260,7 @@ $durationJson = json_encode($duration);
 
             // Go through each recipe and append it to the correct day div
             recipes.forEach(recipe => {
-                var dayDiv = document.getElementById(`day-${recipe.day}`);
+                var dayDiv = document.getElementById(`day-${recipe.date}`);
                 if (dayDiv) {
                     // Create a new element to hold the recipe information as a meal card
                     var recipeElement = document.createElement('div');
@@ -269,7 +270,7 @@ $durationJson = json_encode($duration);
                         'width: fit-content; max-width: 250px; min-width: 250px; align-items:center';
                     recipeElement.innerHTML = `
                 <img style="width: 200px; height: 200px; object-fit: cover; border-radius: 100%;"
-                    src="${recipe.image ?? "https://www.allrecipes.com/thmb/5SdUVhHTMs-rta5sOblJESXThEE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11691-tomato-and-garlic-pasta-ddmfs-3x4-1-bf607984a23541f4ad936b33b22c9074.jpg"}" />
+                    src="${recipe.image_url ?? "https://www.allrecipes.com/thmb/5SdUVhHTMs-rta5sOblJESXThEE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11691-tomato-and-garlic-pasta-ddmfs-3x4-1-bf607984a23541f4ad936b33b22c9074.jpg"}" />
                 <div class="mt-4">
                     <p style="margin: 0;">
                         ${recipe.calories ?? "400"} Cal
@@ -293,7 +294,7 @@ $durationJson = json_encode($duration);
             var recipeData = {
                 id: recipeId,
                 name: recipeName,
-                day: selectedDay
+                date: selectedDay
             };
 
             // Add the clicked recipe's data to the recipes array
@@ -312,13 +313,14 @@ $durationJson = json_encode($duration);
                 handleRecipeClick.call(recipeItem);
             }
         });
-    });
+    }, 300); // 2000 millisecondes = 2 secondes
+});
     </script>
 
 
     <script type="text/javascript">
     $("#add-plan-btn").click(function(e) {
-       
+
         console.log("add plan btn clicked");
         if ($("#form-data")[0].checkValidity()) {
             e.preventDefault()

@@ -209,11 +209,13 @@ function performAjaxRequest(
             case "isUserHavePlan":
              console.log(response.message);
               if (response.message === 'PlanFonded') {
+                localStorage.setItem('recipes', JSON.stringify(response.data));
                 $('#userHavePlan').show();
                 $('#userNotHavePlan').hide();
             } else if (response.message === 'noPlanFonded') {
                 $('#userHavePlan').hide();
                 $('#userNotHavePlan').show();
+               
 
             } 
                break;

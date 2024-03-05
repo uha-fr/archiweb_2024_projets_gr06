@@ -528,22 +528,22 @@ class User
             return false;
         }
     }
-        /**
-       * addUserPlan
-       * 
-       * This function adds a new plan for the user based on the provided data. If a plan name
-       * is not provided, it defaults to "Default Plan for User" followed by the user's ID. 
-       * The plan details are inserted into the plans table, and the user-plan relationship 
-       * is stored in the user_plan table. Additionally, each recipe in the plan is inserted 
-       * into the plan_recipes table.
-       * 
-       * @param array $recipesData An array containing information about the recipes in the plan
-       * @param int $period The number of days of the plan (repeats through the duration)
-       * @param int $duration The total number of days of the plan
-       * @param string|null $plan_name The name of the plan (optional)
-       * @return bool Returns true if the plan is successfully added, false otherwise
-       */
-    function addUserPlan($recipesData, $period, $duration,$plan_name)
+    /**
+     * addUserPlan
+     * 
+     * This function adds a new plan for the user based on the provided data. If a plan name
+     * is not provided, it defaults to "Default Plan for User" followed by the user's ID. 
+     * The plan details are inserted into the plans table, and the user-plan relationship 
+     * is stored in the user_plan table. Additionally, each recipe in the plan is inserted 
+     * into the plan_recipes table.
+     * 
+     * @param array $recipesData An array containing information about the recipes in the plan
+     * @param int $period The number of days of the plan (repeats through the duration)
+     * @param int $duration The total number of days of the plan
+     * @param string|null $plan_name The name of the plan (optional)
+     * @return bool Returns true if the plan is successfully added, false otherwise
+     */
+    function addUserPlan($recipesData, $period, $duration, $plan_name)
     {
         $userId = $_SESSION['id']; //  user ID from the session
         // Insert into the `plans` table
@@ -559,18 +559,16 @@ class User
         $this->db->bind(':type', $type);
         $this->db->execute();
         $planId = $this->db->lastInsertId(); // Get the ID of the inserted plan
-    
-        // Insert into the `user_plan` table
+
         $sql = "INSERT INTO user_plan (user_id, plan_id, creation_date) VALUES (:user_id, :plan_id, NOW())";
         $this->db->query($sql);
         $this->db->bind(':user_id', $userId);
         $this->db->bind(':plan_id', $planId);
         $this->db->execute();
-    
-        // Insert into the `plan_recipes` table for each recipe in $recipesData
+
         foreach ($recipesData as $recipe) {
             $recipeId = $recipe['id'];
-            $date = $recipe['day']; // Assuming 'day' in $recipeData represents the date
+            $date = $recipe['date']; 
             $sql = "INSERT INTO plan_recipes (plan_id, recipe_id, date) VALUES (:plan_id, :recipe_id, :date)";
             $this->db->query($sql);
             $this->db->bind(':plan_id', $planId);
@@ -578,32 +576,90 @@ class User
             $this->db->bind(':date', $date);
             $this->db->execute();
         }
-            return true; 
+        return true;
     }
     /**
-       * ifUserHavePlan
-       * 
-       * This function queries the user_plan table to determine if the user already has a plan.
-       * It retrieves the user's ID from the session and executes a SQL query to check for 
-       * existing entries in the user_plan table associated with that user ID.
-       * 
-       * @return bool Returns true if the user already has a plan, false otherwise
-       */
+     * Checks if a user has a plan in the database.
+     *
+     * This function checks if a user has a plan recorded in the user_plan table
+     * of the database based on their user ID.
+     *
+     * @param int $userId The ID of the user to check.
+     *
+     * @return bool True if the user has a plan, otherwise False.
+     */
     function ifUserHavePlan()
     {
-        $userId = $_SESSION['id']; //  user ID from the session
-        $sql = "SELECT * FROM user_plan WHERE user_id = :userId";
+        $userId = $_SESSION['id']; // ID de l'utilisateur depuis la session
+        $sql = "SELECT EXISTS (SELECT 1 FROM user_plan WHERE user_id = :userId) AS planExists";
         $this->db->query($sql);
         $this->db->bind(':userId', $userId);
-        $results = $this->db->resultSet();
-        if ($this->db->rowCount() > 0) {
+        $result = $this->db->single(); // Récupère le résultat de la clause EXISTS
+
+        if ($result->planExists == 1) {
             return true;
         } else {
             return false;
         }
     }
-    
+    /**
+     * getUserPlan
+     * 
+     * Retrieves the plan associated with the specified user ID from the database.
+     * 
+     * @param int $userId The ID of the user to retrieve the plan for.
+     * @return mixed Returns the plan details if found, or false if no plan exists for the user.
+     */
 
-    
+    function getUserPlan($userId)
+    {
+        $sql = "SELECT * FROM user_plan WHERE user_id = :userId";
+        $this->db->query($sql);
+        $this->db->bind(':userId', $userId);
+        $plan = $this->db->single();
+        if ($this->db->rowCount() > 0) {
+            return $plan;
+        } else {
+            return false;
+        }
+    }
+    /**
+     * getPlanRecipesDetails
+     * 
+     * Retrieves the details of recipes associated with the specified plan ID from the database.
+     * This function executes a query to select all recipes linked to the provided plan ID,
+     * including the recipe details such as name, calories, and the date associated with each recipe.
+     * 
+     * @param int $planId The ID of the plan to retrieve recipe details for.
+     * @return array|null Returns an array containing the details of recipes associated with the plan.
+     *                   If no recipes are found for the given plan ID, returns null.
+     */
+    function getPlanRecipesDetails($planId)
+    {
+        $sql = "SELECT r.*, pr.date FROM recipes r JOIN plan_recipes pr ON r.id = pr.recipe_id WHERE pr.plan_id = :planId";
+        $this->db->query($sql);
+        $this->db->bind(':planId', $planId);
+        $recipes = $this->db->resultSet();
+        return $recipes;
+    }
+    /**
+     * getPlanRecipesDetail
+     * 
+     * Retrieves the details of recipes associated with the user's plan from the database.
+     * This function first retrieves the user's plan using the getUserPlan method,
+     * then fetches the details of recipes associated with the retrieved plan using the getPlanRecipesDetails method.
+     * 
+     * @return array|null Returns an array containing the details of recipes associated with the user's plan.
+     *                   If no plan is found for the user or if no recipes are associated with the plan, returns null.
+     */
+
+    function getPlanRecipesDetail()
+    {
+        // Récupération du plan de l'utilisateur
+        $userId = $_SESSION['id'];
+        $plan = $this->getUserPlan($userId);
+        $planId = $plan->id;
+        $planRecipesDetails = $this->getPlanRecipesDetails($planId);
+        return $planRecipesDetails;
+    }
 }
-
