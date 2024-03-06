@@ -568,7 +568,7 @@ class User
 
         foreach ($recipesData as $recipe) {
             $recipeId = $recipe['id'];
-            $date = $recipe['date']; 
+            $date = $recipe['date'];
             $sql = "INSERT INTO plan_recipes (plan_id, recipe_id, date) VALUES (:plan_id, :recipe_id, :date)";
             $this->db->query($sql);
             $this->db->bind(':plan_id', $planId);
@@ -623,6 +623,26 @@ class User
             return false;
         }
     }
+      /**
+     * getPlanInfo
+     * 
+     * get all information about user plan from plans table 
+     * 
+     * @param int $planId The ID of the plan to retrieve the plan information.
+     * @return mixed Returns the plan information if found, or false if no plan exist.
+     */
+    function getPlanInfo($planId)
+    {
+        $sql = "SELECT * FROM plans WHERE id = :planId";
+        $this->db->query($sql);
+        $this->db->bind(':planId', $planId);
+        $plan = $this->db->single();
+        if ($this->db->rowCount() > 0) {
+            return $plan;
+        } else {
+            return false;
+        }
+    }
     /**
      * getPlanRecipesDetails
      * 
@@ -634,7 +654,7 @@ class User
      * @return array|null Returns an array containing the details of recipes associated with the plan.
      *                   If no recipes are found for the given plan ID, returns null.
      */
-    function getPlanRecipesDetails($planId)
+    function getRecipesAndDay($planId)
     {
         $sql = "SELECT r.*, pr.date FROM recipes r JOIN plan_recipes pr ON r.id = pr.recipe_id WHERE pr.plan_id = :planId";
         $this->db->query($sql);
@@ -659,7 +679,12 @@ class User
         $userId = $_SESSION['id'];
         $plan = $this->getUserPlan($userId);
         $planId = $plan->id;
-        $planRecipesDetails = $this->getPlanRecipesDetails($planId);
-        return $planRecipesDetails;
+        $planInfo = $this->getPlanInfo($planId);
+        $planRecipesDetails = $this->getRecipesAndDay($planId);
+        $result = array(
+            'planData' => $planInfo,
+            'planRecipesDetails' => $planRecipesDetails
+        );
+        return $result;
     }
 }

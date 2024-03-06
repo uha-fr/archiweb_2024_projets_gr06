@@ -499,7 +499,7 @@ class Users
         }
     }
     /**
-     * UserHavePlan
+     * userHavePlan
      * 
      * This method checks if the user already has an existing plan by invoking 
      * the UserHavePlan method from the UserModel. It returns a JSON response 
@@ -508,13 +508,15 @@ class Users
      * 
      * @return void
      */
-    public function UserHavePlan()
+    public function userHavePlan()
     {
         if ($this->userModel->ifUserHavePlan()) {
-            $data = $this->userModel->getPlanRecipesDetail();
-            echo json_encode(['success' => true, 'message' => 'PlanFonded', 'data' => $data]);
+            $result = $this->userModel->getPlanRecipesDetail();
+            $data=$result['planRecipesDetails'];
+            $planInfo=$result['planData'];
+            echo json_encode(['success' => true, 'message' => 'PlanExist', 'data' => $data,'planInfo' => $planInfo]);
         } else {
-            echo json_encode(['success' => true, 'message' => 'noPlanFonded']);
+            echo json_encode(['success' => true, 'message' => 'noPlanExist']);
         }
     }
 }

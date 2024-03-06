@@ -43,7 +43,7 @@ $durationJson = json_encode($duration);
     $(document).ready(function() {
         performAjaxRequest(
             "POST",
-            "isUserHavePlan",
+            "UserHavePlan",
             "",
             "",
             ""
@@ -142,7 +142,7 @@ $durationJson = json_encode($duration);
                             <h3 class="text-white">Name of the Plan:</h3>
                         </div>
                         <div class="selector width-per-item d-flex justify-content-center">
-                            <h3 class="text-white"><strong>My Plan Name</strong></h3>
+                            <h3 class="text-white"><strong id="planNameId"></strong></h3>
                         </div>
                         <div class="selector width-per-item d-flex justify-content-center">
                             <button type="submit" name="modify-plan-btn" id="modify-plan-btn"
@@ -158,7 +158,7 @@ $durationJson = json_encode($duration);
                             <p>The number of days of the plan (repeats through the duration)</p>
                         </div>
                         <div class="selector width-per-item">
-                            <a class="text-decoration-none selection" style="pointer-events: none;">30 Days</a>
+                            <a class="text-decoration-none selection" style="pointer-events: none;"id="periodValue"></a>
                         </div>
                     </div>
                     <div class="form-group">
@@ -167,7 +167,7 @@ $durationJson = json_encode($duration);
                             <p>The number of total days of the plan</p>
                         </div>
                         <div class="selector width-per-item">
-                            <a class="text-decoration-none selection" style="pointer-events: none;">7 Days</a>
+                            <a class="text-decoration-none selection" style="pointer-events: none;" id="durationValue"></a>
                         </div>
                     </div>
                 </div>
@@ -313,7 +313,7 @@ $durationJson = json_encode($duration);
                 handleRecipeClick.call(recipeItem);
             }
         });
-    }, 300); // 2000 millisecondes = 2 secondes
+    }, 300); // 300 millisecondes 
 });
     </script>
 
