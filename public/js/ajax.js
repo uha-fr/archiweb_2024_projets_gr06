@@ -207,12 +207,15 @@ function performAjaxRequest(
              console.log(response.message );
              handleAjaxResponse(action, response, "Plan Added successfully", "", false);
              break;
-            case "isUserHavePlan":
+            case "UserHavePlan":
              console.log(response.message);
-              if (response.message === 'PlanFonded') {
+              if (response.message === 'PlanExist') {
+                localStorage.setItem('recipes', JSON.stringify(response.data));
                 $('#userHavePlan').show();
                 $('#userNotHavePlan').hide();
-            } else if (response.message === 'noPlanFonded') {
+                $("#planNameId").html(response.planInfo["name"]);
+                $("#periodValue").html(response.planInfo["period"]);
+                $("#durationValue").html(response.planInfo["total_length"]);            } else if (response.message === 'noPlanExist ') {
                 $('#userHavePlan').hide();
                 $('#userNotHavePlan').show();
 
