@@ -137,7 +137,7 @@ class Router
                     $this->adminController->deleteRecipe();
 
                 default:
-                    include __DIR__ . '/../Views/login.php';
+                    include __DIR__ . '/Views/templates/user/login.php';
                     exit;
             }
         } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
