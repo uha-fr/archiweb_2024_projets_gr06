@@ -28,7 +28,7 @@ function generateTabLink($currentTab, $tabName, $label, $svgContent)
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin dashboard</title>
+  <title>Nutritionist dashboard</title>
 
   <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/nutritionist-dashboard.css">
 
@@ -112,16 +112,13 @@ function generateTabLink($currentTab, $tabName, $label, $svgContent)
 
       <?php
       switch ($tab) {
-        case 'nutritionist-dashboard':
-          include_once VIEWSDIR . DS . '/components/nutritionist/main-dashboard.php';
-          break;
         case 'client-list':
           include_once VIEWSDIR . DS . '/components/nutritionist/client-list.php';
           break;
         case 'recipesList':
           include_once VIEWSDIR . DS . 'components/admin/recipesList.php';
           break;
-        default:
+        default: // also case 'nutritionist-dashboard':
           include_once VIEWSDIR . DS . '/components/nutritionist/main-dashboard.php';
           break;
       }

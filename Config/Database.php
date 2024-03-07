@@ -138,6 +138,7 @@ class Database
     {
         return $this->stmt->rowCount();
     }
+
     /**
      * Get the ID of the last inserted record in a database table
      * 
@@ -147,8 +148,8 @@ class Database
      * 
      * @return int The ID of the last inserted record
      */
-  
-    public function lastInsertId() {
+    public function lastInsertId()
+    {
         // retun the last inserted ID
         return $this->dbh->lastInsertId();
     }
