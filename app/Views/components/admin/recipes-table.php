@@ -8,21 +8,21 @@
     </tr>
   </thead>
   <tbody>
-  <?php foreach ($data as $row) : ?>
-  <tr>
-    <td>
-      <img src="<?= BASE_APP_DIR ?><?= htmlspecialchars($row->image_url) ?>" alt="" style="width: 50px; height: 50px; border-radius: 50%;">
-      <p><?= htmlspecialchars($row->name) ?></p>
-    </td>
-    <td><?= htmlspecialchars($row->type) ?></td>
-    <td><?= htmlspecialchars($row->calories) ?></td>
-    <td>
-      <a href="#" title="View Details" class="text-success infoBtn" id="<?= $row->id ?>"><i class='bx bxs-book-open'></i></a>
-      <a href="#" title="Edit" class="editBtn" id="<?= $row->id ?>"><i class='bx bxs-edit'></i></a>
-      <a href="#" style="color: var(--danger)" class="delBtn" id="<?= $row->id ?>"><i class='bx bxs-trash'></i></a>
-    </td>
-  </tr>
-<?php endforeach; ?>
+    <?php foreach ($data as $row) : ?>
+      <tr>
+        <td>
+          <img src="<?= BASE_APP_DIR ?><?= htmlspecialchars($row->image_url) ?>" alt="" style="width: 50px; height: 50px; border-radius: 50%;">
+          <p><?= htmlspecialchars($row->name) ?></p>
+        </td>
+        <td><?= htmlspecialchars($row->type) ?></td>
+        <td><?= htmlspecialchars($row->calories) ?></td>
+        <td>
+          <a href="#" title="View Details" class="text-success infoBtn" id="<?= $row->id ?>"><i class='bx bxs-book-open'></i></a>
+          <a href="#" title="Edit" class="editBtn" id="<?= $row->id ?>"><i class='bx bxs-edit'></i></a>
+          <a href="#" style="color: var(--danger)" class="delBtn" id="<?= $row->id ?>"><i class='bx bxs-trash'></i></a>
+        </td>
+      </tr>
+    <?php endforeach; ?>
 
   </tbody>
 </table>
@@ -52,8 +52,6 @@
 <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
-
-
 
 
 
@@ -87,7 +85,6 @@
         }
       });
     });
-
 
 
   });

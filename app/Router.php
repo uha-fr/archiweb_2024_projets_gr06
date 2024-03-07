@@ -3,7 +3,7 @@
 namespace Manger;
 
 use Manger\Controller\RecipesController;
-use Manger\Controller\Users;
+use Manger\Controller\UserController;
 use Manger\Controller\AdminController;
 use Manger\Controller\NutritionistController;
 use Manger\Controller\ResetPasswords;
@@ -18,7 +18,7 @@ class Router
 
     public function __construct()
     {
-        $this->userController = new Users();
+        $this->userController = new UserController();
         $this->adminController = new AdminController();
 
         $this->resetPasswordController = new ResetPasswords();
@@ -53,8 +53,6 @@ class Router
         // Separate the action from any following query string that starts unusually with '&'
         list($requested,) = explode('&', $requestedRaw, 2);
 
-        // var_dump($requested); // Debug: See the requested action
-
         $controller = "user"; // Default controller
 
         // Check if the requested segment matches 'admin' or 'nutritionist'
@@ -69,7 +67,7 @@ class Router
         $requested = $requested !== "" ? $requested : "login";
 
         // Define pages that do not require redirect
-        $no_redirect_pages = array('login', 'register', 'reset-password' , 'create-new-password');
+        $no_redirect_pages = array('login', 'register', 'reset-password', 'create-new-password');
 
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -121,25 +119,25 @@ class Router
                     $this->adminController->addNewRecipe();
                     break;
                 case 'insertPlan':
-                    if(isset($_POST['recipesData']) && isset($_POST['period']) && isset($_POST['duration'])) {
+                    if (isset($_POST['recipesData']) && isset($_POST['period']) && isset($_POST['duration'])) {
 
-                       $recipesData = json_decode($_POST['recipesData'], true);       
-                       $period = $_POST['period'];
-                       $duration = $_POST['duration'];
-                       $planName = $_POST['planName'];
-                       $this->userController->addPlan($recipesData,$period,$duration,$planName);
+                        $recipesData = json_decode($_POST['recipesData'], true);
+                        $period = $_POST['period'];
+                        $duration = $_POST['duration'];
+                        $planName = $_POST['planName'];
+                        $this->userController->addPlan($recipesData, $period, $duration, $planName);
                     }
                     break;
 
-                    case 'UserHavePlan':
-                        $this->userController->userHavePlan();
-                        break;
+                case 'UserHavePlan':
+                    $this->userController->userHavePlan();
+                    break;
 
                 case 'deleteRecipe':
                     $this->adminController->deleteRecipe();
 
                 default:
-                    include __DIR__ . '/../Views/login.php';
+                    include __DIR__ . '/Views/templates/user/login.php';
                     exit;
             }
         } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -155,7 +153,6 @@ class Router
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
                     case 'countRegularUsers':
-                        // Assuming you have an adminController or similar for handling admin-related actions
                         $this->adminController->countRegularUsers();
                         break;
                     case 'countNutritionistUsers':
@@ -185,7 +182,6 @@ class Router
                     case "countNotification":
                         $this->userController->countNotification();
                         break;
-                        // Add other GET actions here
                     case "getNutriClients":
                         $this->nutriController->getUsersForNutritionist();
                         break;

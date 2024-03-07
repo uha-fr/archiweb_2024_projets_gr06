@@ -98,10 +98,10 @@ class AdminModel
     }
 
     /**
-     * Get Recipe By ID
+     * Get All Recipes
      * 
-     * Retrieves a single recipe from the database based on its unique identifier (ID). This method prepares
-     * an SQL query to select all columns from the recipes table where the ID matches the provided recipe ID. 
+     * This method prepares an SQL query to select all columns from the recipes table 
+     * where the ID matches the provided recipe ID. 
      * It then binds the provided ID to the query to ensure a safe query execution.
      * 
      * After executing the query, it attempts to fetch a single row from the result set. If a recipe with the 
@@ -149,7 +149,7 @@ class AdminModel
      * 
      * @param int|string $recipeId The unique identifier of the recipe to retrieve. The type can be int or string,
      *                             depending on the database design.
-     * @return array|bool An associative array containing the recipe's details if found, or false if no recipe
+     * @return object|bool An associative array containing the recipe's details if found, or false if no recipe
      *                    matches the provided ID.
      */
     public function getRecipeById($recipeId)
@@ -245,7 +245,7 @@ class AdminModel
 
 
     /**
-     * add New User 
+     * Add New User 
      *
      * add a new user in the database using the content of $data, including their profile image.
      * It executes a prepared statement to insert the user's data into the database.
@@ -312,11 +312,10 @@ class AdminModel
         try {
             return $this->db->execute();
         } catch (\PDOException $e) {
-        // Log or handle the database error accordingly.
+            // Log or handle the database error accordingly.
             echo "Database error: " . $e->getMessage();
-        return false;
+            return false;
         }
-
     }
 
     /**
@@ -336,16 +335,15 @@ class AdminModel
      * @return bool Returns true if the recipe was successfully deleted from the database, false otherwise.
      */
     public function deleteRecipeById($id)
-        {
-            $sql = "DELETE FROM recipes WHERE id = :id";
-            $this->db->query($sql);
-            $this->db->bind(':id', $id);
+    {
+        $sql = "DELETE FROM recipes WHERE id = :id";
+        $this->db->query($sql);
+        $this->db->bind(':id', $id);
 
-            if ($this->db->execute()) {
-                return true;
-            } else {
-                return false;
-            }
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
         }
-
+    }
 }

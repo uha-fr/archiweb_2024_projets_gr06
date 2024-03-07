@@ -2,7 +2,7 @@
 
 namespace Manger\Controller;
 
-use Manger\Model\User;
+use Manger\Model\UserModel;
 use Manger\Views\UserView;
 use Manger\Views\AdminView;
 use Manger\Views\NutritionistView;
@@ -12,13 +12,13 @@ use Manger\Views\NutritionistView;
  * 
  * Handle actions such as registration, login, logout, and all modifications of attributes.
  */
-class Users
+class UserController
 {
 
     /**
      * userModel
      *
-     * @var User
+     * @var UserModel
      */
     private $userModel;
 
@@ -30,7 +30,7 @@ class Users
     public function __construct()
     {
 
-        $this->userModel = new User();
+        $this->userModel = new UserModel();
     }
 
 
@@ -319,6 +319,14 @@ class Users
 
 
 
+    /**
+     * getRecipesByName
+     * 
+     * Use the name from the GET request to look for correspondances  via the UserModel,
+     * then display said correspondances
+     * 
+     * @return void
+     */
     public function getRecipesByName()
     {
         header('APPJSON');
@@ -512,9 +520,9 @@ class Users
     {
         if ($this->userModel->ifUserHavePlan()) {
             $result = $this->userModel->getPlanRecipesDetail();
-            $data=$result['planRecipesDetails'];
-            $planInfo=$result['planData'];
-            echo json_encode(['success' => true, 'message' => 'PlanExist', 'data' => $data,'planInfo' => $planInfo]);
+            $data = $result['planRecipesDetails'];
+            $planInfo = $result['planData'];
+            echo json_encode(['success' => true, 'message' => 'PlanExist', 'data' => $data, 'planInfo' => $planInfo]);
         } else {
             echo json_encode(['success' => true, 'message' => 'noPlanExist']);
         }

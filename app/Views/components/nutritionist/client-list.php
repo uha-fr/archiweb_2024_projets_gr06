@@ -1,11 +1,11 @@
 <div class="projects-section">
-        <div class="projects-section-header">
-          <p>Client List</p>
-          <p class="time" id="currentDate">December, 12</p>
-        </div>
-        <div class="projects-section-line">
-          
-          <!-- <div class="view-actions">
+  <div class="projects-section-header">
+    <p>Client List</p>
+    <p class="time" id="currentDate">December, 12</p>
+  </div>
+  <div class="projects-section-line">
+
+    <!-- <div class="view-actions">
             <button class="view-btn list-view" title="List View">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
                 <line x1="8" y1="6" x2="21" y2="6" />
@@ -23,10 +23,10 @@
                 <rect x="3" y="14" width="7" height="7" /></svg>
             </button>
           </div> -->
-        </div>
-        <div class="project-boxes jsListView" id="showClients">
-           
-<!--         
+  </div>
+  <div class="project-boxes jsListView" id="showClients">
+
+    <!--         
         <div class="project-box-wrapper">
           <div class="project-box" style="background-color: #e9e7fd;">
             <div class="project-box-header">
@@ -227,13 +227,13 @@
             </div>
           </div>
         </div> -->
-    </div>
   </div>
+</div>
 
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-  
-  <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
+
+<script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 
 
 <script type="text/javascript">
@@ -242,11 +242,9 @@
     console.log("Making AJAX call");
     var sessionId = '<?php echo $_SESSION['id'] ?>';
     var additionalData = "&nutri_id=" + sessionId;
-    console.log("dada "+sessionId);
+    console.log("dada " + sessionId);
 
 
     performAjaxRequest("GET", "getNutriClients", additionalData, "", "");
   });
-
-
 </script>

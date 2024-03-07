@@ -4,7 +4,7 @@ namespace Manger\Controller;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use Manger\Model\ResetPasswordModel;
-use Manger\Model\User;
+use Manger\Model\UserModel;
 
 /**
  * Controller used to reset password
@@ -19,7 +19,7 @@ class ResetPasswords
     private $resetModel;
 
     /**
-     * @var User $userModel An instance of the User class for accessing user data.
+     * @var UserModel $userModel An instance of the User class for accessing user data.
      */
     private $userModel;
 
@@ -36,7 +36,7 @@ class ResetPasswords
     public function __construct()
     {
         $this->resetModel = new ResetPasswordModel();
-        $this->userModel = new User();
+        $this->userModel = new UserModel();
 
         // Setup PHPMailer
         // $this->mail = new PHPMailer();
@@ -51,13 +51,11 @@ class ResetPasswords
         $this->mail->isSMTP();
         $this->mail->Host = 'smtp.gmail.com';
         $this->mail->SMTPAuth = true;
-    //    $this->mail->Port = 2525;
+        //    $this->mail->Port = 2525;
         $this->mail->Username = 'projetmangergr06@gmail.com';
         $this->mail->Password = ''; // Put the password here 
-        $this->mail->SMTPSecure='ssl';
+        $this->mail->SMTPSecure = 'ssl';
         $this->mail->Port = 465;
-        
-
     }
 
     /**
