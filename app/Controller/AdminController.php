@@ -5,7 +5,7 @@ namespace Manger\Controller;
 use Manger\Model\AdminModel;
 use Manger\Views\UserView;
 use Manger\Views\AdminView;
-use Manger\Model\User;
+use Manger\Model\UserModel;
 
 use PDOException;
 
@@ -46,8 +46,7 @@ class AdminController
     public function __construct()
     {
         $this->adminModel = new AdminModel();
-        $this->userModel = new User();
-
+        $this->userModel = new UserModel();
     }
 
 
@@ -141,7 +140,8 @@ class AdminController
      *              On failure, it includes a simple message indicating that no recipes are available.
      */
 
-    public function getAllRecipes(){
+    public function getAllRecipes()
+    {
         header('APPJSON');
         $data = $this->adminModel->getAllRecipes();
         if ($data) {
@@ -159,16 +159,16 @@ class AdminController
     }
 
     /**
-    * Get Recipe Details
-    * 
-    * Retrieves and returns the details of a recipe based on the provided recipe ID.
-    * The recipe ID is expected to be passed via the 'info_id' query parameter.
-    * If a recipe is found with the provided ID, the function returns a JSON response 
-    * with the recipe details. If no recipe is found, or no ID is provided, 
-    * it returns a JSON response indicating failure.
-    *
-    * @return void
-    */
+     * Get Recipe Details
+     * 
+     * Retrieves and returns the details of a recipe based on the provided recipe ID.
+     * The recipe ID is expected to be passed via the 'info_id' query parameter.
+     * If a recipe is found with the provided ID, the function returns a JSON response 
+     * with the recipe details. If no recipe is found, or no ID is provided, 
+     * it returns a JSON response indicating failure.
+     *
+     * @return void
+     */
     public function getRecipeDetails()
     {
         header('APPJSON');
@@ -254,7 +254,7 @@ class AdminController
     }
 
 
-        /**
+    /**
      * Add a new user with profile image.
      *
      * Processes the form submission, sanitizes input, handles profile image upload,
@@ -272,7 +272,7 @@ class AdminController
             $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/archiweb_2024_projets_gr06/public/images/profile-images/';
             $fileName = basename($_FILES["imageUpload"]["name"]);
             $targetFilePath = $targetDir . $fileName;
-        // var_dump($targetFilePath);
+            // var_dump($targetFilePath);
             $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 
             // Optional: Validate file size and type here before proceeding with the upload
@@ -337,7 +337,7 @@ class AdminController
      */
 
     public function addNewRecipe()
-        {
+    {
         // Check if a file was uploaded and handle the file upload first
         $imageUploadPath = ''; // Default value if no file is uploaded
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["imageUpload"])) {
@@ -360,7 +360,7 @@ class AdminController
                 header('Content-Type: application/json');
                 echo json_encode(['success' => false, 'message' => 'File upload failed']);
                 exit; // Stop execution if file upload fails
-            }   
+            }
         }
 
         // Sanitize input data
@@ -378,9 +378,9 @@ class AdminController
             'visibility' => $visibility,
             'creation_date' => $creationDate,
             'creator' => $creator,
-            'image' => $imageUploadPath 
+            'image' => $imageUploadPath
         ];
-        
+
 
         // Attempt to register the recipe
         if ($this->adminModel->addNewRecipe($data)) {
@@ -415,6 +415,4 @@ class AdminController
             exit;
         }
     }
-    
-
 }

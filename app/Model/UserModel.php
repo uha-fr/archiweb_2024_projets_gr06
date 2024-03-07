@@ -13,7 +13,7 @@ define('EMAIL', ':email');
  *
  * Represents the model for managing user data.
  */
-class User
+class UserModel
 {
 
     /**
@@ -623,7 +623,7 @@ class User
             return false;
         }
     }
-      /**
+    /**
      * getPlanInfo
      * 
      * get all information about user plan from plans table 
