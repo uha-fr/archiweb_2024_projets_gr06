@@ -55,7 +55,7 @@ CREATE TABLE `nutritionist_client` (
 --
 
 CREATE TABLE `plans` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `period` int(11) DEFAULT NULL,
   `total_length` int(11) DEFAULT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE `plans` (
 --
 
 CREATE TABLE `plan_recipes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `plan_id` int(11) DEFAULT NULL,
   `recipe_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL
@@ -187,7 +187,7 @@ INSERT INTO `users` (`id`, `fullname`, `password`, `email`, `active`, `creation_
 --
 
 CREATE TABLE `user_plan` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `plan_id` int(11) DEFAULT NULL,
   `creation_date` datetime DEFAULT NULL,
@@ -237,7 +237,9 @@ ALTER TABLE `plans`
 ALTER TABLE `plan_recipes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `plan_id` (`plan_id`),
-  ADD KEY `recipe_id` (`recipe_id`);
+  ADD KEY `recipe_id` (`recipe_id`),
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- Index pour la table `pwdreset`
@@ -268,7 +270,9 @@ ALTER TABLE `user_plan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `plan_id` (`plan_id`),
-  ADD KEY `managed_by` (`managed_by`);
+  ADD KEY `managed_by` (`managed_by`),
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -309,7 +313,8 @@ ALTER TABLE `nutritionist_client`
 -- Contraintes pour la table `plans`
 --
 ALTER TABLE `plans`
-  ADD CONSTRAINT `plans_ibfk_1` FOREIGN KEY (`creator`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `plans_ibfk_1` FOREIGN KEY (`creator`) REFERENCES `users` (`id`),
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour la table `plan_recipes`
