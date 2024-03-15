@@ -4,17 +4,23 @@ if ($_SESSION['role'] == "Regular") {
   $messageDisplay = <<<HTML
   <h1>Nutritionist list</h1>
   <div>Search any nutritionist.</div>
+
   HTML;
+
+  $titleNotifIcon = "Search for a nutritionist";
 } else if ($_SESSION['role'] == "Nutritionist") {
   $messageDisplay = <<<HTML
   <h1>Client list</h1>
   <div>Search any client.</div>
   HTML;
+
+  $titleNotifIcon = "Search for a client";
 } else {
   $messageDisplay = <<<HTML
   <h1>Not for admins</h1>
   <div>Really no point.</div>
   HTML;
+  $titleNotifIcon = "Search for a nutritionist or a client";
 }
 ?>
 <!DOCTYPE html>
@@ -71,11 +77,12 @@ if ($_SESSION['role'] == "Regular") {
 
     <!-- BELL NOTIFICATIONS ICON -->
     <div class="position-absolute" style="right: 20px; top: 20px">
-      <a href="#open-modal">
+      <a href="#open-modal-notifs" id="click-to-show-notif">
+
         <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" id="notif-displayer" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;"></div>
       </a>
-      <a href="#open-modal-notifs" id="click-to-show-notif">
-        <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="Image of a bell" />
+      <a href="#open-modal" title="<?php echo $titleNotifIcon ?>">
+        <img src=" <?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="<?php echo $titleNotifIcon ?>" />
       </a>
 
     </div>

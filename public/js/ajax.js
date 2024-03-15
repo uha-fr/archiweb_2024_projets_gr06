@@ -29,16 +29,16 @@ function handleAjaxResponse(
       redirectHref = "recipes-list";
       break;
     case "addNewUser":
-        redirectHref = "dashboardAdmin?tab=usersList";
-        $("#form-data")[0].reset();
-        break;
+      redirectHref = "dashboardAdmin?tab=usersList";
+      $("#form-data")[0].reset();
+      break;
     case "addNewRecipe":
-        redirectHref= "dashboardAdmin?tab=recipesList";
-        $("#recipe-form-data")[0].reset();
-        break;
+      redirectHref = "dashboardAdmin?tab=recipesList";
+      $("#recipe-form-data")[0].reset();
+      break;
     case "deleteRecipe":
-        redirectHref= "dashboardAdmin?tab=recipesList";
-        break;
+      redirectHref = "dashboardAdmin?tab=recipesList";
+      break;
     default:
       redirectHref = "login";
       break;
@@ -49,7 +49,7 @@ function handleAjaxResponse(
       text: successMessage,
       icon: "success",
     }).then(function () {
-      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser'&&action!='insertPlan') {
+      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser' && action != 'insertPlan') {
         window.location.href = redirectHref;
       } else if (redirectHref == "recipes-list") {
         window.parent.rafraichirPage();
@@ -135,7 +135,9 @@ function performAjaxRequest(
           }, 2000);
           break;
         case "countNotification":
-          $("#notif-displayer").html(response.data);
+          const element = document.createElement("div");
+          element.innerHTML = response.data;
+          $("#notif-displayer").append(element);
           console.log("nombre de notifications: " + response.data);
           break;
         case "getUsersFromNotifications":
@@ -185,11 +187,11 @@ function performAjaxRequest(
             showCancelButton: true,
           });
           break;
-          case "getRecipeDetails":
-            Swal.fire({
-              title: `<strong>Recipe Details: ID(${response.data.id})</strong>`,
-              icon: 'info',
-              html: `
+        case "getRecipeDetails":
+          Swal.fire({
+            title: `<strong>Recipe Details: ID(${response.data.id})</strong>`,
+            icon: 'info',
+            html: `
                 <div style="text-align: left;">
                   <b>Name:</b> ${response.data.name}<br>
                   <b>Calories:</b> ${response.data.calories}<br>
@@ -200,27 +202,28 @@ function performAjaxRequest(
                   <img src="${response.data.image_url}" alt="Recipe Image" style="max-width: 100%; margin-top: 10px;">
                 </div>
               `,
-              showCancelButton: true,
-            });
-            break;
-            case 'insertPlan':
-             console.log(response.message );
-             handleAjaxResponse(action, response, "Plan Added successfully", "", false);
-             break;
-            case "UserHavePlan":
-             console.log(response.message);
-              if (response.message === 'PlanExist') {
-                localStorage.setItem('recipes', JSON.stringify(response.data));
-                $('#userHavePlan').show();
-                $('#userNotHavePlan').hide();
-                $("#planNameId").html(response.planInfo["name"]);
-                $("#periodValue").html(response.planInfo["period"]);
-                $("#durationValue").html(response.planInfo["total_length"]);            } else if (response.message === 'noPlanExist ') {
-                $('#userHavePlan').hide();
-                $('#userNotHavePlan').show();
+            showCancelButton: true,
+          });
+          break;
+        case 'insertPlan':
+          console.log(response.message);
+          handleAjaxResponse(action, response, "Plan Added successfully", "", false);
+          break;
+        case "UserHavePlan":
+          console.log(response.message);
+          if (response.message === 'PlanExist') {
+            localStorage.setItem('recipes', JSON.stringify(response.data));
+            $('#userHavePlan').show();
+            $('#userNotHavePlan').hide();
+            $("#planNameId").html(response.planInfo["name"]);
+            $("#periodValue").html(response.planInfo["period"]);
+            $("#durationValue").html(response.planInfo["total_length"]);
+          } else if (response.message === 'noPlanExist ') {
+            $('#userHavePlan').hide();
+            $('#userNotHavePlan').show();
 
-            } 
-               break;
+          }
+          break;
         default:
           console.log("Unhandled action: " + action);
           handleAjaxResponse(action, response, successTitle, successMessage);
@@ -298,18 +301,18 @@ function performAjaxWithImage(formId, action, successTitle, successMessage) {
   formData.append("action", action); // Ensure your backend handles this action appropriately
 
   $.ajax({
-      url: "index.php", // or the specific endpoint for user registration
-      type: "POST",
-      data: formData,
-      processData: false,
-      contentType: false,
-      dataType: "json",
-      success: function(response) {
-          handleAjaxResponse(action, response, successTitle, successMessage, false);
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-          handleAjaxError(jqXHR, textStatus, errorThrown);
-      },
+    url: "index.php", // or the specific endpoint for user registration
+    type: "POST",
+    data: formData,
+    processData: false,
+    contentType: false,
+    dataType: "json",
+    success: function (response) {
+      handleAjaxResponse(action, response, successTitle, successMessage, false);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      handleAjaxError(jqXHR, textStatus, errorThrown);
+    },
   });
 }
 
