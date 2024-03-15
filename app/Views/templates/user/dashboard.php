@@ -123,70 +123,8 @@ if ($_SESSION['role'] == "Regular") {
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
+  <script src="<?= BASE_APP_DIR ?>/public/js/notification.js"></script>
 </body>
 
 </html>
-<script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
-<script type="text/javascript">
-  $(document).ready(function() {
-
-    // on doit attacher l'évènement au parent, car les enfants ne sont pas encore créés
-    $('#client-list-results').on('click', '.client-user', function() {
-      const userId = $(this).data('user-id');
-      console.log(userId);
-      performAjaxRequest(
-        "POST",
-        "sendNotification",
-        "&receiverId=" + userId,
-        "",
-        ""
-      );
-    });
-
-
-    // pour récupérer le nombre de notif, et les mettre en session
-    function getNotif() {
-      performAjaxRequest(
-        "GET",
-        "countNotification",
-        "",
-        "",
-        ""
-      );
-    }
-
-    // pour récupérer les users ayant envoyé des notifications 
-    function getUserFromNotif() {
-      performAjaxRequest(
-        "GET",
-        "getUsersFromNotifications",
-        "",
-        "",
-        ""
-      );
-    }
-
-    getNotif();
-    getUserFromNotif();
-
-    // pour effectuer une recherche
-    function performSearch() {
-      var inputValue = $('#client-list-search').val();
-      performAjaxRequest(
-        "GET",
-        "clientSearch",
-        "&searchValue=" + inputValue,
-        function(data) {
-          $("#client-list-results").html(data);
-        },
-        ""
-      );
-    }
-
-    var debouncedSearch = debounce(performSearch, 700);
-
-    $('#client-list-search').on('input', function() {
-      debouncedSearch();
-    });
-  });
-</script>
