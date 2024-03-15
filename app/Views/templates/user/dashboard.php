@@ -4,17 +4,23 @@ if ($_SESSION['role'] == "Regular") {
   $messageDisplay = <<<HTML
   <h1>Nutritionist list</h1>
   <div>Search any nutritionist.</div>
+
   HTML;
+
+  $titleNotifIcon = "Search for a nutritionist";
 } else if ($_SESSION['role'] == "Nutritionist") {
   $messageDisplay = <<<HTML
   <h1>Client list</h1>
   <div>Search any client.</div>
   HTML;
+
+  $titleNotifIcon = "Search for a client";
 } else {
   $messageDisplay = <<<HTML
   <h1>Not for admins</h1>
   <div>Really no point.</div>
   HTML;
+  $titleNotifIcon = "Search for a nutritionist or a client";
 }
 ?>
 <!DOCTYPE html>
@@ -71,11 +77,12 @@ if ($_SESSION['role'] == "Regular") {
 
     <!-- BELL NOTIFICATIONS ICON -->
     <div class="position-absolute" style="right: 20px; top: 20px">
-      <a href="#open-modal">
+      <a href="#open-modal-notifs" id="click-to-show-notif">
+
         <div class="text-bg text-center d-flex align-items-center justify-content-center position-absolute" id="notif-displayer" style="font-size: 16px; height:30px; width:30px; border-radius: 100%; left: -40%; top:40%; z-index:0; background-color: #252624;"></div>
       </a>
-      <a href="#open-modal-notifs" id="click-to-show-notif">
-        <img src="<?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="Image of a bell" />
+      <a href="#open-modal" title="<?php echo $titleNotifIcon ?>">
+        <img src=" <?= BASE_APP_DIR ?>/public/images/icons/bell.png" style="z-index:2;" alt="<?php echo $titleNotifIcon ?>" />
       </a>
 
     </div>
@@ -123,70 +130,8 @@ if ($_SESSION['role'] == "Regular") {
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
+  <script src="<?= BASE_APP_DIR ?>/public/js/notification.js"></script>
 </body>
 
 </html>
-<script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
-<script type="text/javascript">
-  $(document).ready(function() {
-
-    // on doit attacher l'évènement au parent, car les enfants ne sont pas encore créés
-    $('#client-list-results').on('click', '.client-user', function() {
-      const userId = $(this).data('user-id');
-      console.log(userId);
-      performAjaxRequest(
-        "POST",
-        "sendNotification",
-        "&receiverId=" + userId,
-        "",
-        ""
-      );
-    });
-
-
-    // pour récupérer le nombre de notif, et les mettre en session
-    function getNotif() {
-      performAjaxRequest(
-        "GET",
-        "countNotification",
-        "",
-        "",
-        ""
-      );
-    }
-
-    // pour récupérer les users ayant envoyé des notifications 
-    function getUserFromNotif() {
-      performAjaxRequest(
-        "GET",
-        "getUsersFromNotifications",
-        "",
-        "",
-        ""
-      );
-    }
-
-    getNotif();
-    getUserFromNotif();
-
-    // pour effectuer une recherche
-    function performSearch() {
-      var inputValue = $('#client-list-search').val();
-      performAjaxRequest(
-        "GET",
-        "clientSearch",
-        "&searchValue=" + inputValue,
-        function(data) {
-          $("#client-list-results").html(data);
-        },
-        ""
-      );
-    }
-
-    var debouncedSearch = debounce(performSearch, 700);
-
-    $('#client-list-search').on('input', function() {
-      debouncedSearch();
-    });
-  });
-</script>

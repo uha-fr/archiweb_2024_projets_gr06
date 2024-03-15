@@ -29,16 +29,53 @@ function generateTabLink($currentTab, $tabName, $label, $svgContent)
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nutritionist dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/colors.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/globals.css" />
 
   <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/nutritionist-dashboard.css">
-
-
 
 
 </head>
 
 <body>
   <div class="app-container">
+
+    <!-- partie modal pour notif -->
+    <div id="open-modal" class="modal-window">
+      <div>
+        <a href="#" title="Close" class="modal-close">Close</a>
+        <h1>Client list</h1>
+        <div>Search any client.</div>
+        <br>
+
+
+        <!-- Search bar -->
+        <input type="text" class="form-control" name="client-list-search" id="client-list-search" placeholder="Search for client">
+
+        <!-- Results -->
+        <div id="client-list-results" class="pt-4" style="max-height:350px; overflow:scroll;">
+
+        </div>
+      </div>
+    </div>
+    <div id="open-modal-notifs" class="modal-window">
+      <div>
+        <a href="#" title="Close" class="modal-close">Close</a>
+        <h1>Notifications</h1>
+        <div>You can accept your requests here.</div>
+        <br>
+
+        <!-- Results -->
+        <div id="sender-notif-list" class="pt-4" style="max-height:350px; overflow:scroll;">
+
+        </div>
+      </div>
+    </div>
+    <!-- fin partie modal notif -->
+
     <div class="app-header">
       <div class="app-header-left">
         <div class="logo">
@@ -61,21 +98,30 @@ function generateTabLink($currentTab, $tabName, $label, $svgContent)
             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
           </svg>
         </button>
-        <button class="add-btn" title="Add New Project">
-          <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
+
+
+
+        <button class="add-btn" title="Add New Client">
+          <a href="#open-modal" style="text-decoration: none;">
+            <svg class=" btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </a>
         </button>
-        <button class="notification-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-          </svg>
+
+        <button class="notification-btn" alt="Notifications" title="Check notifications">
+          <a href="#open-modal-notifs" id="click-to-show-notif" style="text-decoration: none;">
+            <svg xmlns=" http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="notif-displayer" class="feather feather-bell">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+          </a>
         </button>
+
         <button class="profile-btn">
           <img src="https://assets.codepen.io/3306515/IMG_2025.jpg" />
-          <span>Aybüke C.</span>
+          <span><?php echo $_SESSION['fullname'] ?></span>
         </button>
       </div>
       <button class="messages-btn">
@@ -129,7 +175,9 @@ function generateTabLink($currentTab, $tabName, $label, $svgContent)
 
 
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="<?= BASE_APP_DIR ?>/public/js/nutritionist-dashboard.js"></script>
-
+  <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
+  <script src="<?= BASE_APP_DIR ?>/public/js/notification.js"></script>
 
 </body>
