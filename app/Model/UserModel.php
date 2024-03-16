@@ -171,20 +171,29 @@ class UserModel
      */
     public function updateUserDetails($data)
     {
-        $this->db->query('UPDATE users SET fullname = :fullname, goal = :goal, height = :height,
-             weight = :weight, age = :age WHERE id = :user_id');
+        $sql = 'UPDATE users SET fullname = :fullname, img= :img, goal = :goal, height = :height,
+             weight = :weight, age = :age WHERE id = :user_id';
 
         $params = [
             USER_ID,
+            ':img',
             ':fullname',
             ':goal',
             ':height',
             ':weight',
             ':age'
         ];
+
+        $this->db->query($sql);
         $this->db->bindMultipleParams($params, $data);
 
-        return $this->db->execute();
+        try {
+            return $this->db->execute();
+        } catch (\PDOException $e) {
+            // Handle or log the exception
+            error_log("PDOException: " . $e->getMessage() . "\nSQL: " . $sql . "\nParams: " . print_r($params, true) . "\Data: " . print_r($data, true)); // Log details
+            return false;
+        }
     }
 
     /**

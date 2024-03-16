@@ -3,7 +3,7 @@
   <h4>Personal Info</h4>
   <p>Update your photo and personal details here.</p>
   <!-- Name -->
-  <form class="" id="form-data" method="post">
+  <form class="" id="form-data" method="post" enctype="multipart/form-data">
     <!-- User id HIDDEN -->
     <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION['id'] ?>" />
     <!-- FULL NAME -->
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <!-- HEIGH AND WEIGHT -->
+    <!-- HEIGHT AND WEIGHT -->
     <label for="height" class="pt-4">Height & Weight</label>
     <div class="input-group mt-2 flex-nowrap">
       <span class="input-group-text">Height</span>
