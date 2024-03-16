@@ -365,7 +365,7 @@ class AdminController
         $name = trim($_POST['name'] ?? '');
         $calories = trim($_POST['calories'] ?? '');
         $type = trim($_POST['type'] ?? '');
-        $visibility = trim($_POST['visibility'] ?? '');
+        $visibility = ($_POST['visibility'] ?? '') === 'visible' ? 1 : 0;
         $creationDate = trim($_POST['creation_date'] ?? '');
         $creator = trim($_POST['creator'] ?? '');
 
