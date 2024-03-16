@@ -20,6 +20,10 @@
     "config": {
         "sort-packages": true
     },
+    "scripts": {
+        "phpdoc": "phpDocumentor -d app -t doc",
+        "update_db": "sudo bash ./db_refresh_script.sh"
+    },
     "minimum-stability": "stable",
     "prefer-stable": true
 }

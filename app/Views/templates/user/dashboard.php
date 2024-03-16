@@ -53,7 +53,7 @@ if ($_SESSION['role'] == "Regular") {
 
 
         <!-- Search bar -->
-        <input type="text" class="form-control" name="client-list-search" id="client-list-search" placeholder="Search for client">
+        <input type="text" class="form-control" name="client-list-search" id="client-list-search" placeholder="<?php echo $titleNotifIcon ?>">
 
         <!-- Results -->
         <div id="client-list-results" class="pt-4" style="max-height:350px; overflow:scroll;">
@@ -104,7 +104,6 @@ if ($_SESSION['role'] == "Regular") {
 
             </div>
           </div>
-
 
           <!-- HERE WE PUT THE DAILY MEALS -->
           <div class="col-12" style="">

@@ -7,8 +7,6 @@ use Manger\Views\UserView;
 use Manger\Views\AdminView;
 use Manger\Model\UserModel;
 
-use PDOException;
-
 /**
  * Controller for Admin-related things.
  * 
@@ -32,7 +30,7 @@ class AdminController
     /**
      * recipeModel
      *
-     * @var recipeModel
+     * @var RecipeModel
      */
     private $recipeModel;
 
@@ -202,7 +200,7 @@ class AdminController
 
             // Assuming the count is successfully retrieved, send a JSON response
             echo json_encode(['success' => true, 'count' => $regularUsersCount]);
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             // If an error occurs, send a JSON response with the error message
             echo json_encode(['success' => false, 'message' => 'An error occurred while fetching the user count.']);
         }
@@ -223,7 +221,7 @@ class AdminController
 
             // Assuming the count is successfully retrieved, send a JSON response
             echo json_encode(['success' => true, 'count' => $nutritionistCount]);
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             // If an error occurs, send a JSON response with the error message
             echo json_encode(['success' => false, 'message' => 'An error occurred while fetching the user count.']);
         }
@@ -246,7 +244,7 @@ class AdminController
 
             // Assuming the count is successfully retrieved, send a JSON response
             echo json_encode(['success' => true, 'count' => $recipesCount]);
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             // If an error occurs, send a JSON response with the error message
             echo json_encode(['success' => false, 'message' => 'An error occurred while fetching the user count.']);
         }

@@ -29,7 +29,7 @@ class UserView
         if (file_exists($filePath)) {
             include $filePath;
         } else {
-            include TEMPLATESDIR . DS . '404-error.php' ;
+            include TEMPLATESDIR . DS . '404-error.php';
         }
 
         return endStream();

@@ -88,6 +88,20 @@ class Database
     }
 
     /**
+     * Bind multiples values to prepared statement using named parameters
+     *
+     * @param array $params The array of names.
+     * @param array $value The array of values to bind.
+     * @param array|null $type The array containing the data type of the parameter.
+     */
+    public function bindMultipleParams($params, $values, $types = null)
+    {
+        array_map(function ($param, $value) {
+            $this->bind($param, $value);
+        }, $params, $values);
+    }
+
+    /**
      * Execute the prepared statement
      *
      * @return bool True if the execution is successful, false otherwise.
