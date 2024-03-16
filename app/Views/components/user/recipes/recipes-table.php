@@ -12,7 +12,7 @@ $recipeGroups = array_chunk($recipes, 4);
             $imageSrc = file_exists($imageUrl) ? $imageUrl : $defaultImageUrl;
             ?>
             <div class="col mb-4">
-                <div class="flex flex-column justify-content-start bg-bg p-4 rounded" style="width: fit-content; min-width: 250px;">
+            <div class="flex flex-column justify-content-start bg-bg p-4 rounded" style="height:350px;max-height:350px; min-width: 250px;max-width: 250px;">
                     <img style="width: 200px; height: 200px; object-fit: cover; border-radius: 100%;" src="<?php echo $imageSrc; ?>" />
                     <div class="mt-4">
                         <p style="margin: 0;"><?php echo $recipe->calories; ?> Cal</p>

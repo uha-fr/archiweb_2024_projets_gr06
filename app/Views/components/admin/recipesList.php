@@ -83,9 +83,9 @@
           <div class="form-group">
             <input type="date" name="creation_date" class="form-control" placeholder="Creation Date" required />
           </div>
-          <div class="form-group">
-            <input type="text" name="creator" class="form-control" placeholder="Creator ID" required />
-          </div>
+         <div class="form-group">
+            <input type="hidden" name="creator" class="form-control" placeholder="Creator ID" required value="<?= $_SESSION['id'] ?>" />
+          </div> 
           <div class="form-group">
             <label for="imageUpload">Choose recipe image</label>
             <input type="file" id="imageUpload" name="imageUpload" accept=".png, .jpg, .jpeg" class="form-control" />
@@ -111,11 +111,10 @@
   $("#addNewRecipe").click(function(e) {
     e.preventDefault(); // Prevent default form submission
     if ($("#recipe-form-data")[0].checkValidity()) {
-      var formData = new FormData($("#recipe-form-data")[0]); // Create FormData object from the form
 
-      //Verifs a ajouter
-      performAjaxWithImage('recipe-form-data', 'addNewRecipe', 'Recipe added successfully!', 'The recipe has been successfully added.');
-
+        var formData = new FormData($("#recipe-form-data")[0]); // Create FormData object from the form
+        //Verifs a ajouter
+        performAjaxWithImage('recipe-form-data', 'addNewRecipe', 'Recipe added successfully!', 'The recipe has been successfully added.');
     }
   });
 </script>

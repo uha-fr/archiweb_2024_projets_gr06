@@ -49,7 +49,7 @@ function handleAjaxResponse(
       text: successMessage,
       icon: "success",
     }).then(function () {
-      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser' && action != 'insertPlan') {
+      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser' && action != 'insertPlan' && action != 'addNewRecipe') {
         window.location.href = redirectHref;
       } else if (redirectHref == "recipes-list") {
         window.parent.rafraichirPage();
@@ -214,12 +214,17 @@ function performAjaxRequest(
           console.log(response.message);
           if (response.message === 'PlanExist') {
             localStorage.setItem('recipes', JSON.stringify(response.data));
+            lienActuel=window.location.href;
+            if(lienActuel=="https://localhost/archiweb_2024_projets_gr06/planning")
+            {
+               window.location.href = "https://localhost/archiweb_2024_projets_gr06/planning?period=" + response.planInfo["period"]+ "&duration=" + response.planInfo["total_length"];
+            }
             $('#userHavePlan').show();
             $('#userNotHavePlan').hide();
             $("#planNameId").html(response.planInfo["name"]);
             $("#periodValue").html(response.planInfo["period"]);
             $("#durationValue").html(response.planInfo["total_length"]);
-          } else if (response.message === 'noPlanExist ') {
+          } else if (response.message === 'noPlanExist') {
             $('#userHavePlan').hide();
             $('#userNotHavePlan').show();
 
@@ -299,6 +304,7 @@ function debounce(func, wait) {
 
 function performAjaxWithImage(formId, action, successTitle, successMessage) {
   var formData = new FormData(document.getElementById(formId));
+  console.log(formId);
   formData.append("action", action); // Ensure your backend handles this action appropriately
 
   $.ajax({
