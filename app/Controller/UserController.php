@@ -73,8 +73,6 @@ class UserController
 
 
 
-
-
     /**
      * Register
      *
@@ -188,16 +186,7 @@ class UserController
      */
     public function logout()
     {
-        unset($_SESSION['id']);
-        unset($_SESSION['fullname']);
-        unset($_SESSION['email']);
-        unset($_SESSION['height']);
-        unset($_SESSION['age']);
-        unset($_SESSION['weight']);
-        unset($_SESSION['goal']);
-        unset($_SESSION['role']);
-
-
+        session_unset();
         session_destroy();
         echo json_encode(['success' => true]);
         exit;
