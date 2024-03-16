@@ -11,6 +11,10 @@
     <?php foreach ($data as $row) : ?>
       <tr>
         <td>
+          <?php
+          if (!isset($row->image_url) || $row->image_url == null) {
+            $row->image_url = 'https://cdn2.iconfinder.com/data/icons/picnic-filledoutline/64/FOOD_RECIPE-recipe-ingredients-ingredient-eduation-recipes-orange-books-cooking-512.png';
+          } ?>
           <img src="<?= htmlspecialchars($row->image_url) ?>" alt="" style="width: 50px; height: 50px; border-radius: 50%;">
           <p><?= htmlspecialchars($row->name) ?></p>
         </td>
