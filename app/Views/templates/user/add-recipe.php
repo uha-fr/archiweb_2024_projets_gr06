@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    
+
     <!-- BODY -->
     <div class="bg-bg">
       <!-- ADD RECIPE Form-->
@@ -25,7 +25,7 @@
           </div>
           <div class="flex flex-column mt-4">
             <label class="font-bold text-white">calories number</label>
-            <input type="text" name="calories" id="calories" placeholder="Ex: 300" class="py-3 px-4 rounded mt-2" required onkeypress="return event.charCode >= 48 && event.charCode <= 57 || (event.charCode === 46 && this.value.indexOf('.') === -1)" oninput="this.value = this.value.replace(/^(-\d*\.?\d*)$/g, '')" />          <input type="file" id="image_url" name="img_url" placeholder="url temp" class="py-3 px-4 rounded mt-2" required />
+            <input type="text" name="calories" id="calories" placeholder="Ex: 300" class="py-3 px-4 rounded mt-2" required onkeypress="return event.charCode >= 48 && event.charCode <= 57 || (event.charCode === 46 && this.value.indexOf('.') === -1)" oninput="this.value = this.value.replace(/^(-\d*\.?\d*)$/g, '')" /> <input type="file" id="image_url" name="img_url" placeholder="url temp" class="py-3 px-4 rounded mt-2" required />
           </div>
           <div class="flex flex-column mt-4">
             <input type="submit" class="py-3 px-4 bg-[#d6ff92] rounded w-full" name="addRecipe" id="addRecipe" value="Add recipe">
@@ -36,8 +36,7 @@
 
     <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 
-    <script >
-
+    <script>
       $("#addRecipe").click(function(e) {
         console.log("dans ADD RECIPE");
         if ($("#form-data")[0].checkValidity()) {
@@ -49,11 +48,9 @@
             "Recipe added successfully!",
             ""
           );
-          
+
         }
       });
-  
-      
     </script>
   </body>
 

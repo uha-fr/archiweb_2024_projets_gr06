@@ -11,10 +11,10 @@
     <?php foreach ($data as $row) : ?>
       <tr>
         <td>
-          <img src="<?= BASE_APP_DIR ?><?= htmlspecialchars($row->image_url) ?>" alt="" style="width: 50px; height: 50px; border-radius: 50%;">
+          <img src="<?= htmlspecialchars($row->image_url) ?>" alt="" style="width: 50px; height: 50px; border-radius: 50%;">
           <p><?= htmlspecialchars($row->name) ?></p>
         </td>
-        <td><?= htmlspecialchars($row->type) ?></td>
+        <td><?= isset($row->type) && $row->type !== null ? htmlspecialchars($row->type) : "" ?></td>
         <td><?= htmlspecialchars($row->calories) ?></td>
         <td>
           <a href="#" title="View Details" class="text-success infoBtn" id="<?= $row->id ?>"><i class='bx bxs-book-open'></i></a>
@@ -47,7 +47,6 @@
     </div>
   </div>
 </div>
-
 
 <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 <script type="text/javascript">
