@@ -1,6 +1,5 @@
 /vendor/*
 composer.lock
 .env
-.phpdoc/
-doc/
+
 public/images/recipesImages/3wayHSWireShark.png

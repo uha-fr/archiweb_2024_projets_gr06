@@ -671,15 +671,11 @@ class UserModel
         }
     }
     /**
-     * getPlanRecipesDetails
-     * 
-     * Retrieves the details of recipes associated with the specified plan ID from the database.
-     * This function executes a query to select all recipes linked to the provided plan ID,
-     * including the recipe details such as name, calories, and the date associated with each recipe.
-     * 
-     * @param int $planId The ID of the plan to retrieve recipe details for.
-     * @return array|null Returns an array containing the details of recipes associated with the plan.
-     *                   If no recipes are found for the given plan ID, returns null.
+     * getRecipesAndDay
+     *
+     * Retrieves recipes along with their associated day from the database based on the provided plan ID.
+     * @param int $planId The ID of the plan for which recipes are being retrieved.
+     * @return array An array containing recipe information along with their associated day, or an empty array if no recipes are found.
      */
     function getRecipesAndDay($planId)
     {

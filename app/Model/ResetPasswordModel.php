@@ -4,6 +4,11 @@ namespace Manger\Model;
 
 use Config\Database;
 
+/**
+ * ResetPasswordModel
+ * 
+ * Model to access the database to reset passwords
+ */
 class ResetPasswordModel
 {
 
@@ -24,7 +29,6 @@ class ResetPasswordModel
         $this->db->query('DELETE FROM pwdreset WHERE pwdResetEmail=:email');
         $this->db->bind(':email', $email);
 
-        //Execute
         return $this->db->execute();
     }
 

@@ -175,10 +175,13 @@ ALTER TABLE `users`
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `fullname`, `password`, `email`, `active`, `creation_date`, `age`, `role`, `height`, `weight`, `daily_caloriegoal`, `gender`, `goal`) VALUES
-(41, 'Ahmed Boulaabi', '$2y$10$7jAEIB7zXKP5M0uhP4ntuuVth5kOHFkjredT.Kfaq67a7AY6HvosO', 'ahmed@gmail.com', 1, '2024-01-27', 23, 'Regular', 178, 73, 227449, 'male', 'lose-weight-normal'),
-(42, 'Admin', '$2y$10$Q5cdRJXVEp05oKUfefW6ZOh.meRN.UYM6/QR62NUw0Q0VoZRmQ1wa', 'admin@gmail.com', 1, '2024-01-27', 25, 'Admin', 185, 85, 355815, 'male', 'gain-weight-normal');
-
+INSERT INTO `users` (`id`, `fullname`, `password`, `email`, `active`, `creation_date`, `age`, `role`, `height`, `weight`, `daily_caloriegoal`, `gender`, `goal`, `img`) VALUES
+(41, 'Ahmed Boulaabi', '$2y$10$7jAEIB7zXKP5M0uhP4ntuuVth5kOHFkjredT.Kfaq67a7AY6HvosO', 'ahmed@gmail.com', 1, '2024-01-27 00:00:00', 23, 'Regular', 178, 73, 227449, 'male', 'lose-weight-normal', '/public/images/default-user.png'),
+(42, 'Admin', '$2y$10$Q5cdRJXVEp05oKUfefW6ZOh.meRN.UYM6/QR62NUw0Q0VoZRmQ1wa', 'admin@gmail.com', 1, '2024-01-27 00:00:00', 25, 'Admin', 185, 85, 355815, 'male', 'gain-weight-normal', '/public/images/default-user.png'),
+(43, 'l', '$2y$10$EzcOr/J1puxzNQMwnNxbGe0Lhvz9NiGBbvnzZfEhGCFK0IrZOMqK.', 'l@gmail.com', 1, '2024-03-07 10:52:18', 45, 'Regular', 123, 34, 86194, 'male', 'lose-weight-normal', '/public/images/default-user.png'),
+(44, 'nutri', '$2y$10$a8BLHeRtDwQuy48A.05dEe5iQPe/QpNxPrtxV3gDFBc16y3gmUp1W', 'nutri@gmail.com', 1, '2024-03-07 10:53:07', 34, 'Nutritionist', 34, 34, 29671, 'male', 'lose-weight-normal', '/public/images/default-user.png'),
+(45, 'm', '$2y$10$JHFyqb7kyXUXL.Cwc4Lp8ODzyNrH9IdEHmrnj6VcQE1TxKiFdiZ9K', 'm@gmail.com', 1, '2024-03-15 20:36:21', 1, 'Regular', 0, 0, -31146, 'female', 'lose-weight-fast', '/public/images/default-user.png'),
+(46, 'changed', '$2y$10$N6L9VyRICso.k4aKm6Eyt..6f7mA/NflUPwRf0AqKuaMQxdaq4VLC', 'v@gmail.com', 1, '2024-03-16 13:15:27', 33, 'Regular', 33, 33, 195873, 'male', 'gain-weight-normal', '');
 -- --------------------------------------------------------
 
 --

@@ -21,7 +21,7 @@
         "sort-packages": true
     },
     "scripts": {
-        "phpdoc": "phpDocumentor -d app -t doc",
+        "phpdoc": "phpDocumentor -d app Config -t doc --ignore app/PHPMailer/",
         "update_db": "sudo bash ./db_refresh_script.sh"
     },
     "minimum-stability": "stable",
