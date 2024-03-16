@@ -4,8 +4,6 @@ namespace Manger\Model;
 
 use Config\Database;
 
-define('USER_ID', ':user_id');
-define('EMAIL', ':email');
 
 
 /**
