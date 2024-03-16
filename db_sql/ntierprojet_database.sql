@@ -74,7 +74,7 @@ CREATE TABLE `plan_recipes` (
   `id` int(11) NOT NULL,
   `plan_id` int(11) DEFAULT NULL,
   `recipe_id` int(11) DEFAULT NULL,
-  `date` date DEFAULT NULL
+  `date` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
