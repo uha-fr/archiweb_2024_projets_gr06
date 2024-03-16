@@ -49,7 +49,7 @@ function handleAjaxResponse(
       text: successMessage,
       icon: "success",
     }).then(function () {
-      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser' && action != 'insertPlan') {
+      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser' && action != 'insertPlan' && action != 'addNewRecipe') {
         window.location.href = redirectHref;
       } else if (redirectHref == "recipes-list") {
         window.parent.rafraichirPage();
@@ -303,6 +303,7 @@ function debounce(func, wait) {
 
 function performAjaxWithImage(formId, action, successTitle, successMessage) {
   var formData = new FormData(document.getElementById(formId));
+  console.log(formId);
   formData.append("action", action); // Ensure your backend handles this action appropriately
 
   $.ajax({
