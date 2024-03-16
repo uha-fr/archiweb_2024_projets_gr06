@@ -213,12 +213,17 @@ function performAjaxRequest(
           console.log(response.message);
           if (response.message === 'PlanExist') {
             localStorage.setItem('recipes', JSON.stringify(response.data));
+            lienActuel=window.location.href;
+            if(lienActuel=="https://localhost/archiweb_2024_projets_gr06/planning")
+            {
+               window.location.href = "https://localhost/archiweb_2024_projets_gr06/planning?period=" + response.planInfo["period"]+ "&duration=" + response.planInfo["total_length"];
+            }
             $('#userHavePlan').show();
             $('#userNotHavePlan').hide();
             $("#planNameId").html(response.planInfo["name"]);
             $("#periodValue").html(response.planInfo["period"]);
             $("#durationValue").html(response.planInfo["total_length"]);
-          } else if (response.message === 'noPlanExist ') {
+          } else if (response.message === 'noPlanExist') {
             $('#userHavePlan').hide();
             $('#userNotHavePlan').show();
 

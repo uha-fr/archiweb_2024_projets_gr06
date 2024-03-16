@@ -270,7 +270,7 @@ $durationJson = json_encode($duration);
                         'width: fit-content; max-width: 250px; min-width: 250px; align-items:center';
                     recipeElement.innerHTML = `
                 <img style="width: 200px; height: 200px; object-fit: cover; border-radius: 100%;"
-                    src="${recipe.image_url ?? "https://www.allrecipes.com/thmb/5SdUVhHTMs-rta5sOblJESXThEE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11691-tomato-and-garlic-pasta-ddmfs-3x4-1-bf607984a23541f4ad936b33b22c9074.jpg"}" />
+                src="<?= BASE_APP_DIR ?>/public/images/recipesImages/${recipe.image_url ?? "https://www.allrecipes.com/thmb/5SdUVhHTMs-rta5sOblJESXThEE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/11691-tomato-and-garlic-pasta-ddmfs-3x4-1-bf607984a23541f4ad936b33b22c9074.jpg"}" />
                 <div class="mt-4">
                     <p style="margin: 0;">
                         ${recipe.calories ?? "400"} Cal
