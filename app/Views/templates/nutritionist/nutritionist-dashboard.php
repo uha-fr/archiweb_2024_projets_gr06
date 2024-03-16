@@ -33,8 +33,10 @@ function generateTabLink($currentTab, $tabName, $label, $svgContent)
   <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/colors.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/globals.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css" />
+  <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
 
+  <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/globals.css" />
   <link rel="stylesheet" href="<?= BASE_APP_DIR ?>/public/css/nutritionist-dashboard.css">
 
 
@@ -98,8 +100,6 @@ function generateTabLink($currentTab, $tabName, $label, $svgContent)
             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
           </svg>
         </button>
-
-
 
         <button class="add-btn" title="Add New Client">
           <a href="#open-modal" style="text-decoration: none;">
