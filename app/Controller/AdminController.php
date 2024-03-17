@@ -69,7 +69,7 @@ class AdminController
             // Echo the content captured, which now includes $data being used in usersList.php
             echo json_encode(['message' => $output]);
         } else {
-            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">:( No users present in the database!</h3>']);
+            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">No users present in the database!</h3>']);
         }
         exit;
     }
@@ -151,7 +151,7 @@ class AdminController
             // Echo the content captured, which now includes $data being used in recipesList.php
             echo json_encode(['message' => $output]);
         } else {
-            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">:( No recipes present in the database!</h3>']);
+            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">No recipes present in the database!</h3>']);
         }
         exit;
     }

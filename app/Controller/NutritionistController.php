@@ -111,7 +111,7 @@ class NutritionistController
             // Echo the content captured, which now includes $data being used in usersList.php
             echo json_encode(['message' => $output]);
         } else {
-            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">:( No clients present for this nutritionist!</h3>']);
+            echo json_encode(['message' => '<h3 class="text-center text-secondary mt-5">No clients present for this nutritionist!</h3>']);
         }
         exit;
     }
