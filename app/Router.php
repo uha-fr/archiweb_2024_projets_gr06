@@ -179,6 +179,9 @@ class Router
                     case 'getRecipeDetails':
                         $this->adminController->getRecipeDetails();
                         break;
+                    case 'loadRecipeDetails':
+                        $this->adminController->getRecipeDetails();
+                        break;
                     case 'planSearchForRecipe':
                         $this->userController->getRecipesByName();
                         break;
