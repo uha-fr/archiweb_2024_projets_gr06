@@ -36,6 +36,9 @@ function handleAjaxResponse(
       redirectHref = "dashboardAdmin?tab=recipesList";
       $("#recipe-form-data")[0].reset();
       break;
+    case "updateRecipe":
+      redirectHref = "dashboardAdmin?tab=recipesList";
+      break;
     case "deleteRecipe":
       redirectHref = "dashboardAdmin?tab=recipesList";
       break;
@@ -49,7 +52,7 @@ function handleAjaxResponse(
       text: successMessage,
       icon: "success",
     }).then(function () {
-      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser' && action != 'insertPlan' && action != 'addNewRecipe') {
+      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser' && action != 'insertPlan' && action != 'addNewRecipe' && action != 'updateRecipe') {
         window.location.href = redirectHref;
       } else if (redirectHref == "recipes-list") {
         window.parent.rafraichirPage();

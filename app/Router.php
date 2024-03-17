@@ -124,6 +124,9 @@ class Router
                 case 'addNewRecipe':
                     $this->adminController->addNewRecipe();
                     break;
+                case 'updateRecipe':
+                    $this->adminController->updateRecipe();
+                    break;
                 case 'insertPlan':
                     if (isset($_POST['recipesData']) && isset($_POST['period']) && isset($_POST['duration'])) {
 
