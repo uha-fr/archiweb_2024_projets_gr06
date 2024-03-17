@@ -54,18 +54,6 @@
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
-                                    <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/phpmailer.html">PHPMailer</a></h4>
-    <ul class="phpdocumentor-list">
-                    <li>
-                <a href="namespaces/phpmailer-phpmailer.html">PHPMailer</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/phpmailer-exception.html">Exception</a>
-                
-            </li>
-            </ul>
-
                                     <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/manger.html">Manger</a></h4>
     <ul class="phpdocumentor-list">
                     <li>
@@ -90,16 +78,6 @@
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace"><a href="packages/Application.html">Application</a></h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace"><a href="packages/PHPMailer.html">PHPMailer</a></h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace"><a href="packages/PHPMailerSomeFrenchpunctuationrequiresathinnon.html">PHPMailerSomeFrenchpunctuationrequiresathinnon</a></h4>
-    <ul class="phpdocumentor-list">
-                    <li>
-                <a href="packages/PHPMailerSomeFrenchpunctuationrequiresathinnon-breakingspaceU202Fcharacterbeforeitforexamplebeforeacolonorexclamationmark.html">breakingspaceU202Fcharacterbeforeitforexamplebeforeacolonorexclamationmark</a>
-                
-            </li>
-            </ul>
 
                         </section>
             
@@ -177,6 +155,41 @@
 <dd>Admin constructor.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Manger-Model-AdminModel.html#method_addNewRecipe">addNewRecipe()</a>
+    <span>
+                        &nbsp;: bool    </span>
+</dt>
+<dd>Add New Recipe</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Manger-Model-AdminModel.html#method_addNewUser">addNewUser()</a>
+    <span>
+                        &nbsp;: bool    </span>
+</dt>
+<dd>Add New User</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Manger-Model-AdminModel.html#method_deleteRecipeById">deleteRecipeById()</a>
+    <span>
+                        &nbsp;: bool    </span>
+</dt>
+<dd>Delete Recipe By ID</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Manger-Model-AdminModel.html#method_deleteUserById">deleteUserById()</a>
+    <span>
+                        &nbsp;: bool    </span>
+</dt>
+<dd>Deletes a user by their ID.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Manger-Model-AdminModel.html#method_getAllRecipes">getAllRecipes()</a>
+    <span>
+                        &nbsp;: mixed    </span>
+</dt>
+<dd>Get All Recipes</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Manger-Model-AdminModel.html#method_getAllUsers">getAllUsers()</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;|false    </span>
@@ -191,11 +204,32 @@
 <dd>Get Count of Nutritionist Users</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Manger-Model-AdminModel.html#method_getRecipeById">getRecipeById()</a>
+    <span>
+                        &nbsp;: object|bool    </span>
+</dt>
+<dd>Get Recipe By ID</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Manger-Model-AdminModel.html#method_getRecipesCount">getRecipesCount()</a>
+    <span>
+                        &nbsp;: int    </span>
+</dt>
+<dd>Get Count of Recipes</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Manger-Model-AdminModel.html#method_getRegularUsersCount">getRegularUsersCount()</a>
     <span>
                         &nbsp;: int    </span>
 </dt>
 <dd>Get Count of Regular Users</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Manger-Model-AdminModel.html#method_getUserById">getUserById()</a>
+    <span>
+                        &nbsp;: mixed    </span>
+</dt>
+<dd>Fetch a single user by ID.</dd>
 
         </dl>
 
@@ -289,6 +323,264 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_addNewRecipe">
+        addNewRecipe()
+        <a href="classes/Manger-Model-AdminModel.html#method_addNewRecipe" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="app/Model/AdminModel.php"><a href="files/app-model-adminmodel.html"><abbr title="app/Model/AdminModel.php">AdminModel.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">296</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Add New Recipe</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">addNewRecipe</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p>Inserts a new recipe into the database with the provided data. This function prepares an SQL insert query,
+binds the input data to the query parameters, and executes the query. The data is expected to include
+details about the recipe such as name, calories, type (e.g., vegetarian, non-vegetarian), image URL,
+visibility status (e.g., public, private), creation date, and the creator's identifier.</p>
+<p>If the database operation is successful, the function returns true, indicating that the recipe has been
+added successfully. In case of a database error, the error is caught, and the function returns false.
+This error handling mechanism ensures that the application can gracefully handle database exceptions without
+crashing.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>An associative array containing the recipe's details. Expected keys are 'name', 'calories',
+'type', 'image', 'visibility', 'creation_date', and 'creator'.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">bool</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>Returns true if the recipe was successfully added to the database, false otherwise.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_addNewUser">
+        addNewUser()
+        <a href="classes/Manger-Model-AdminModel.html#method_addNewUser" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="app/Model/AdminModel.php"><a href="files/app-model-adminmodel.html"><abbr title="app/Model/AdminModel.php">AdminModel.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">257</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Add New User</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">addNewUser</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p>add a new user in the database using the content of $data, including their profile image.
+It executes a prepared statement to insert the user's data into the database.
+If the operation is successful, it returns true, otherwise false.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>An associative array containing user data (fullname, password, email, image).</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">bool</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>True if the user is added successfully, false otherwise.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_deleteRecipeById">
+        deleteRecipeById()
+        <a href="classes/Manger-Model-AdminModel.html#method_deleteRecipeById" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="app/Model/AdminModel.php"><a href="files/app-model-adminmodel.html"><abbr title="app/Model/AdminModel.php">AdminModel.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">337</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Delete Recipe By ID</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">deleteRecipeById</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p>Deletes a recipe from the database based on the provided unique identifier (ID). This function prepares
+an SQL delete query using the recipe's ID to identify the specific record to be removed. The ID is bound
+to the prepared statement to safely execute the deletion operation.</p>
+<p>The function executes the prepared query. If the deletion is successful, it returns true, indicating that
+the record has been successfully removed from the database. If the deletion fails for any reason, the function
+returns false. This return value can be used to determine the success of the deletion operation and to provide
+appropriate feedback to the user or to trigger further actions within the application.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The unique identifier of the recipe to be deleted. The type can be int or string,
+depending on the database design.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">bool</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>Returns true if the recipe was successfully deleted from the database, false otherwise.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_deleteUserById">
+        deleteUserById()
+        <a href="classes/Manger-Model-AdminModel.html#method_deleteUserById" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="app/Model/AdminModel.php"><a href="files/app-model-adminmodel.html"><abbr title="app/Model/AdminModel.php">AdminModel.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">61</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Deletes a user by their ID.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">deleteUserById</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p>This method executes a DELETE SQL statement to remove a user from the database.
+It uses prepared statements to prevent SQL injection attacks.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The unique identifier of the user to be deleted.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">bool</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>Returns true if the operation was successful, false otherwise.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getAllRecipes">
+        getAllRecipes()
+        <a href="classes/Manger-Model-AdminModel.html#method_getAllRecipes" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="app/Model/AdminModel.php"><a href="files/app-model-adminmodel.html"><abbr title="app/Model/AdminModel.php">AdminModel.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">118</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get All Recipes</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">getAllRecipes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>This method prepares an SQL query to select all columns from the recipes table
+where the ID matches the provided recipe ID.
+It then binds the provided ID to the query to ensure a safe query execution.</p>
+<p>After executing the query, it attempts to fetch a single row from the result set. If a recipe with the
+specified ID exists, the function returns an associative array containing the recipe's details. If no
+recipe is found with the given ID, or if the query fails for any reason, the function returns false.</p>
+<p>This method allows for the retrieval of detailed information about a specific recipe, making it useful
+for displaying recipe details on a webpage or within an application.</p>
+</section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>Returns an associative array of the recipe's details if found, false otherwise.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getAllUsers">
         getAllUsers()
         <a href="classes/Manger-Model-AdminModel.html#method_getAllUsers" class="headerlink"><i class="fas fa-link"></i></a>
@@ -333,7 +625,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="app/Model/AdminModel.php"><a href="files/app-model-adminmodel.html"><abbr title="app/Model/AdminModel.php">AdminModel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">202</span>
 
     </aside>
 
@@ -363,6 +655,101 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getRecipeById">
+        getRecipeById()
+        <a href="classes/Manger-Model-AdminModel.html#method_getRecipeById" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="app/Model/AdminModel.php"><a href="files/app-model-adminmodel.html"><abbr title="app/Model/AdminModel.php">AdminModel.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">155</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get Recipe By ID</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">getRecipeById</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$recipeId</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">object|bool</span></code>
+
+        <section class="phpdocumentor-description"><p>Retrieves a single recipe from the database using its unique identifier (ID). This method executes a SQL query
+to select a recipe where the 'id' column matches the provided ID. The method uses prepared statements to bind
+the ID parameter, enhancing security by preventing SQL injection attacks.</p>
+<p>Upon execution, if a recipe with the specified ID is found, the method returns an associative array containing
+the recipe's details, such as its name, calories, type, image URL, and others as per the database schema. If no
+recipe is found matching the provided ID (e.g., if the ID does not exist in the database), the method returns false.</p>
+<p>This method is particularly useful for fetching detailed information about a specific recipe, for instance, when
+displaying the recipe's details on a webpage or within an application's UI.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$recipeId</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The unique identifier of the recipe to retrieve. The type can be int or string,
+depending on the database design.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">object|bool</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>An associative array containing the recipe's details if found, or false if no recipe
+matches the provided ID.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getRecipesCount">
+        getRecipesCount()
+        <a href="classes/Manger-Model-AdminModel.html#method_getRecipesCount" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="app/Model/AdminModel.php"><a href="files/app-model-adminmodel.html"><abbr title="app/Model/AdminModel.php">AdminModel.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">229</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get Count of Recipes</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">getRecipesCount</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+        <section class="phpdocumentor-description"><p>Returns the number of Recipes.</p>
+</section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">int</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>The count of Recipes.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getRegularUsersCount">
         getRegularUsersCount()
         <a href="classes/Manger-Model-AdminModel.html#method_getRegularUsersCount" class="headerlink"><i class="fas fa-link"></i></a>
@@ -370,7 +757,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="app/Model/AdminModel.php"><a href="files/app-model-adminmodel.html"><abbr title="app/Model/AdminModel.php">AdminModel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">179</span>
 
     </aside>
 
@@ -390,6 +777,56 @@
     <span class="phpdocumentor-signature__response_type">int</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The count of regular users.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getUserById">
+        getUserById()
+        <a href="classes/Manger-Model-AdminModel.html#method_getUserById" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="app/Model/AdminModel.php"><a href="files/app-model-adminmodel.html"><abbr title="app/Model/AdminModel.php">AdminModel.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">84</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Fetch a single user by ID.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">getUserById</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$userId</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Retrieves a user from the database based on the provided ID and returns it.
+If the user is found, their data is returned. Otherwise, false is returned.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$userId</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The ID of the user to retrieve.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>The user data as an object if found, otherwise false.</p>
 </section>
 
     
