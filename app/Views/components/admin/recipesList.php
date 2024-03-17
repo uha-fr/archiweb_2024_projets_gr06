@@ -99,12 +99,11 @@
   </div>
 </div>
 
-
 <script src="<?= BASE_APP_DIR ?>/public/js/ajax.js"></script>
 
 
 <script type="text/javascript">
- console.log("Document ready");
+  console.log("Document ready");
   $(document).ready(function() {
     console.log("Making AJAX call");
     performAjaxRequest("GET", "getAllRecipes", "", "", "");
@@ -112,11 +111,10 @@
   $("#addNewRecipe").click(function(e) {
     e.preventDefault(); // Prevent default form submission
     if ($("#recipe-form-data")[0].checkValidity()) {
+
         var formData = new FormData($("#recipe-form-data")[0]); // Create FormData object from the form
         //Verifs a ajouter
         performAjaxWithImage('recipe-form-data', 'addNewRecipe', 'Recipe added successfully!', 'The recipe has been successfully added.');
-
     }
-});
-
+  });
 </script>

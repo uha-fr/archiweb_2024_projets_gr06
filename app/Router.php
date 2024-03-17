@@ -9,6 +9,12 @@ use Manger\Controller\NutritionistController;
 use Manger\Controller\ResetPasswords;
 
 
+/**
+ * Router
+ * 
+ * The routing part of the project, decide to which controller
+ * go based on the sent request
+ */
 class Router
 {
     private $userController;

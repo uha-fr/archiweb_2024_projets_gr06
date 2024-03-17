@@ -62,6 +62,7 @@ function handleAjaxResponse(
       $("#form-data")[0].reset();
     }
   } else {
+    console.log(response);
     Swal.fire({
       title: "Operation failed!",
       text: response.message,

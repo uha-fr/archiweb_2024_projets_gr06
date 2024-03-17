@@ -4,8 +4,6 @@ namespace Manger\Model;
 
 use Config\Database;
 
-define('USER_ID', ':user_id');
-define('EMAIL', ':email');
 
 
 /**
@@ -116,9 +114,12 @@ class UserModel
         $this->db->query('INSERT INTO users (fullname, password, email, active, creation_date)
             VALUES (:fullname, :password, :email, 1, NOW())');
 
-        $this->db->bind(':fullname', $data['fullname']);
-        $this->db->bind(':password', $data['password']);
-        $this->db->bind(EMAIL, $data['email']);
+        $params = [
+            ':fullname',
+            ':password',
+            EMAIL
+        ];
+        $this->db->bindMultipleParams($params, $data);
 
         try {
             return $this->db->execute();
@@ -168,16 +169,29 @@ class UserModel
      */
     public function updateUserDetails($data)
     {
-        $this->db->query('UPDATE users SET fullname = :fullname, goal = :goal, height = :height,
-             weight = :weight, age = :age WHERE id = :user_id');
-        $this->db->bind(':fullname', $data['fullname']);
-        $this->db->bind(':goal', $data['goal']);
-        $this->db->bind(':height', $data['height']);
-        $this->db->bind(':weight', $data['weight']);
-        $this->db->bind(':age', $data['age']);
-        $this->db->bind(USER_ID, $data['id']);
+        $sql = 'UPDATE users SET fullname = :fullname, img= :img, goal = :goal, height = :height,
+             weight = :weight, age = :age WHERE id = :user_id';
 
-        return $this->db->execute();
+        $params = [
+            USER_ID,
+            ':img',
+            ':fullname',
+            ':goal',
+            ':height',
+            ':weight',
+            ':age'
+        ];
+
+        $this->db->query($sql);
+        $this->db->bindMultipleParams($params, $data);
+
+        try {
+            return $this->db->execute();
+        } catch (\PDOException $e) {
+            // Handle or log the exception
+            error_log("PDOException: " . $e->getMessage() . "\nSQL: " . $sql . "\nParams: " . print_r($params, true) . "\Data: " . print_r($data, true)); // Log details
+            return false;
+        }
     }
 
     /**
@@ -199,14 +213,17 @@ class UserModel
         if (!password_verify($data['old_password'], $currentPassword)) {
             return false;
         }
-
         $hashedPassword = password_hash($data['new_password'], PASSWORD_DEFAULT);
 
         // Update credentials in the database
         $this->db->query('UPDATE users SET email = :email, password = :password WHERE id = :user_id');
-        $this->db->bind(EMAIL, $data['email']);
-        $this->db->bind(':password', $hashedPassword);
-        $this->db->bind(USER_ID, $data['id']);
+
+        $params = [
+            USER_ID,
+            EMAIL,
+            ':password'
+        ];
+        $this->db->bindMultipleParams($params, [$data['id'], $data['email'], $hashedPassword]);
 
         return $this->db->execute();
     }
@@ -222,21 +239,28 @@ class UserModel
      */
     public function updateUserFirstLogin($data)
     {
-        $this->db->query('UPDATE users SET goal = :goal, height = :height, weight = :weight, age = :age,
-            gender= :gender,daily_caloriegoal = :dailyCalories WHERE id = :id');
-        $this->db->bind(':goal', $data['goal']);
-        $this->db->bind(':height', $data['height']);
-        $this->db->bind(':weight', $data['weight']);
-        $this->db->bind(':age', $data['age']);
-        $this->db->bind(':id', $data['id']);
-        $this->db->bind(':gender', $data['gender']);
-        $this->db->bind(':dailyCalories', $data['dailyCalories']);
+        $sql = 'UPDATE users SET goal = :goal,fullname = :fullname, height = :height, weight = :weight, age = :age,
+            gender= :gender,daily_caloriegoal = :dailyCalories WHERE id = :id';
+
+
+        $params = [
+            ':id',
+            ':fullname',
+            ':goal',
+            ':height',
+            ':weight',
+            ':age',
+            ':gender',
+            ':dailyCalories'
+        ];
+        $this->db->query($sql);
+        $this->db->bindMultipleParams($params, $data);
 
         try {
             return $this->db->execute();
         } catch (\PDOException $e) {
             // Handle or log the exception
-            error_log("PDOException: " . $e->getMessage()); // Exception logging
+            error_log("PDOException: " . $e->getMessage() . "\nSQL: " . $sql . "\nParams: " . print_r($params, true) . "\Data: " . print_r($data, true)); // Log details
             return false;
         }
     }
@@ -254,10 +278,7 @@ class UserModel
     public function resetPassword($newPwdHash, $tokenEmail)
     {
         $this->db->query('UPDATE users SET password=:pwd WHERE email=:email');
-        $this->db->bind(':pwd', $newPwdHash);
-        $this->db->bind(EMAIL, $tokenEmail);
-
-        //Execute
+        $this->db->bindMultipleParams([':pwd', EMAIL], [$newPwdHash, $tokenEmail]);
         return $this->db->execute();
     }
 
@@ -269,8 +290,8 @@ class UserModel
         $userId = $_SESSION['id'];
         $sql = "SELECT * FROM recipes WHERE name LIKE :searchValue AND (creator = :userId OR creator = 42)";
         $this->db->query($sql);
-        $this->db->bind(':searchValue', "%$searchValue%");
-        $this->db->bind(':userId', $userId);
+        $this->db->bindMultipleParams([':searchValue', ':userId'], ["%$searchValue%", $userId]);
+
         $results = $this->db->resultSet();
         if ($this->db->rowCount() > 0) {
             return $results;
@@ -359,11 +380,9 @@ class UserModel
         $this->db->query("SELECT * FROM nutritionist_client WHERE client_id = :clientId AND nutritionist_id = :nutritionistId");
 
         if ($requestType == "Regular") {
-            $this->db->bind(':clientId', $userId);
-            $this->db->bind(':nutritionistId', $senderId);
+            $this->db->bindMultipleParams([':clientId', ':nutritionistId'], [$userId, $senderId]);
         } else if ($requestType == "Nutritionist") {
-            $this->db->bind(':clientId', $senderId);
-            $this->db->bind(':nutritionistId', $userId);
+            $this->db->bindMultipleParams([':clientId', ':nutritionistId'], [$senderId, $userId]);
         }
         $this->db->execute();
 
@@ -457,9 +476,8 @@ class UserModel
 
 
         $this->db->query('UPDATE notifications SET type=:newState WHERE sender_id=:senderId AND receiver_id=:userId AND type=1');
-        $this->db->bind(':newState', $newNotifState);
-        $this->db->bind(':senderId', $senderId);
-        $this->db->bind(':userId', $userId);
+        $this->db->bindMultipleParams([':newState', ':senderId', ':userId'], [$newNotifState, $senderId, $userId]);
+
 
         if (!$this->db->execute()) {
             $returnMessage = "Couldn't update notification table";
@@ -512,9 +530,8 @@ class UserModel
 
         $sql = "INSERT INTO  recipes(name,calories,image_url) VALUES (:name, :calories, :image_url )";
         $this->db->query($sql);
-        $this->db->bind(':name', $donnees['name']);
-        $this->db->bind(':calories', $donnees['calories']);
-        $this->db->bind(':image_url', $donnees['image_url']);
+
+        $this->db->bindMultipleParams([':name', ':calories', ':image_url'], $donnees);
 
         try {
             if ($this->db->execute()) {
@@ -552,28 +569,38 @@ class UserModel
         $type = "Your Plan Type"; // You can define a type for the plan
         $sql = "INSERT INTO plans (name, period, total_length, creator, type) VALUES (:name, :period, :total_length, :creator, :type)";
         $this->db->query($sql);
-        $this->db->bind(':name', $planName);
-        $this->db->bind(':period', $period);
-        $this->db->bind(':total_length', $duration);
-        $this->db->bind(':creator', $creatorId);
-        $this->db->bind(':type', $type);
+        $params_dict = [
+            ":name",
+            ":period",
+            ":total_length",
+            ":creator",
+            ":type",
+        ];
+
+        $values_dict = [
+            $plan_name,
+            $period,
+            $duration,
+            $creatorId,
+            $type
+        ];
+        $this->db->bindMultipleParams($params_dict, $values_dict);
+
         $this->db->execute();
         $planId = $this->db->lastInsertId(); // Get the ID of the inserted plan
 
         $sql = "INSERT INTO user_plan (user_id, plan_id, creation_date) VALUES (:user_id, :plan_id, NOW())";
         $this->db->query($sql);
-        $this->db->bind(':user_id', $userId);
-        $this->db->bind(':plan_id', $planId);
+        $this->db->bindMultipleParams([':user_id', ':plan_id'], [$userId, $planId]);
         $this->db->execute();
 
         foreach ($recipesData as $recipe) {
             $recipeId = $recipe['id'];
             $date = $recipe['date'];
+
             $sql = "INSERT INTO plan_recipes (plan_id, recipe_id, date) VALUES (:plan_id, :recipe_id, :date)";
             $this->db->query($sql);
-            $this->db->bind(':plan_id', $planId);
-            $this->db->bind(':recipe_id', $recipeId);
-            $this->db->bind(':date', $date);
+            $this->db->bindMultipleParams([':recipe_id', ':plan_id', ':date'], [$recipeId, $planId, $date]);
             $this->db->execute();
         }
         return true;
@@ -644,15 +671,11 @@ class UserModel
         }
     }
     /**
-     * getPlanRecipesDetails
-     * 
-     * Retrieves the details of recipes associated with the specified plan ID from the database.
-     * This function executes a query to select all recipes linked to the provided plan ID,
-     * including the recipe details such as name, calories, and the date associated with each recipe.
-     * 
-     * @param int $planId The ID of the plan to retrieve recipe details for.
-     * @return array|null Returns an array containing the details of recipes associated with the plan.
-     *                   If no recipes are found for the given plan ID, returns null.
+     * getRecipesAndDay
+     *
+     * Retrieves recipes along with their associated day from the database based on the provided plan ID.
+     * @param int $planId The ID of the plan for which recipes are being retrieved.
+     * @return array An array containing recipe information along with their associated day, or an empty array if no recipes are found.
      */
     function getRecipesAndDay($planId)
     {

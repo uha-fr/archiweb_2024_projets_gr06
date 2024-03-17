@@ -73,8 +73,6 @@ class UserController
 
 
 
-
-
     /**
      * Register
      *
@@ -188,16 +186,7 @@ class UserController
      */
     public function logout()
     {
-        unset($_SESSION['id']);
-        unset($_SESSION['fullname']);
-        unset($_SESSION['email']);
-        unset($_SESSION['height']);
-        unset($_SESSION['age']);
-        unset($_SESSION['weight']);
-        unset($_SESSION['goal']);
-        unset($_SESSION['role']);
-
-
+        session_unset();
         session_destroy();
         echo json_encode(['success' => true]);
         exit;
@@ -215,7 +204,8 @@ class UserController
     {
 
         $id = filter_var(trim($_POST['user_id'] ?? ''), FILTER_SANITIZE_NUMBER_INT);
-        $fullname = filter_var(trim($_SESSION['fullname'] ?? ''), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $img_path = filter_var(trim($_POST['profile-image'] ?? ''), FILTER_SANITIZE_NUMBER_INT);
+        $fullname = filter_var(trim($_POST['fullname'] ?? ''), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $goal = filter_var(trim($_POST['goal'] ?? ''), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $height = filter_var(trim($_POST['height'] ?? ''), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $weight = filter_var(trim($_POST['weight'] ?? ''), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -224,6 +214,7 @@ class UserController
         //Init data
         $data = [
             'id' => $id,
+            'img_path' => $img_path,
             'fullname' => $fullname,
             'goal' => $goal,
             'height' => $height,

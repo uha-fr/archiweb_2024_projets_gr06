@@ -1,3 +1,5 @@
 /vendor/*
 composer.lock
 .env
+
+public/images/recipesImages/3wayHSWireShark.png

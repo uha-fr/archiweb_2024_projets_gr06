@@ -121,17 +121,16 @@ CREATE TABLE `recipes` (
 --
 
 INSERT INTO `recipes` (`id`, `name`, `calories`, `type`, `image_url`, `visibility`, `creation_date`, `creator`) VALUES
-(1, 'Green Smoothie Bowl', 350, 'breakfast', 'http://example.com/images/green_smoothie_bowl.jpg', 1, '2024-01-27 00:00:00', 41),
-(2, 'Quinoa Salad', 450, 'lunch', 'http://example.com/images/quinoa_salad.jpg', 1, '2024-01-27 00:00:00', 41),
-(3, 'Grilled Salmon with Asparagus', 500, 'dinner', 'http://example.com/images/grilled_salmon_asparagus.jpg', 1, '2024-01-27 00:00:00', 41),
-(4, 'Avocado Toast', 250, 'breakfast', 'http://example.com/images/avocado_toast.jpg', 1, '2024-01-27 00:00:00', 41),
-(5, 'Tomato Basil Soup', 175, 'lunch', 'http://example.com/images/tomato_basil_soup.jpg', 1, '2024-01-27 00:00:00', 41),
-(6, 'Chicken Caesar Salad', 400, 'lunch', 'http://example.com/images/chicken_caesar_salad.jpg', 1, '2024-01-27 00:00:00', 41),
-(7, 'Beef Stir Fry', 550, 'dinner', 'http://example.com/images/beef_stir_fry.jpg', 1, '2024-01-27 00:00:00', 41),
-(8, 'Vegetable Curry', 300, 'dinner', 'http://example.com/images/vegetable_curry.jpg', 1, '2024-01-27 00:00:00', 41),
-(9, 'Berry Yogurt Parfait', 220, 'snack', 'http://example.com/images/berry_yogurt_parfait.jpg', 1, '2024-01-27 00:00:00', 41),
-(10, 'Peanut Butter Banana Smoothie', 350, 'snack', 'http://example.com/images/peanut_butter_banana_smoothie.jpg', 1, '2024-01-27 00:00:00', 41);
-
+(1, 'Green Smoothie Bowl', 350, 'breakfast', 'https://hungryhealthyhappy.com/wp-content/uploads/2014/08/Smoothie-Bowl-1.jpg', 1, '2024-01-27 00:00:00', 41),
+(2, 'Quinoa Salad', 450, 'lunch', 'https://cdn.loveandlemons.com/wp-content/uploads/2020/08/quinoa-salad-recipes-580x763.jpg', 1, '2024-01-27 00:00:00', 41),
+(3, 'Grilled Salmon with Asparagus', 500, 'dinner', 'https://www.eatwell101.com/wp-content/uploads/2019/03/baked-salmon-in-foil-recipe.jpg', 1, '2024-01-27 00:00:00', 41),
+(4, 'Avocado Toast', 250, 'breakfast', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.eatingwell.com%2Frecipe%2F8029771%2Favocado-toast-recipe%2F&psig=AOvVaw0QeKNNnShWZCMOkr1p3k7g&ust=1710691468004000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCODK-buU-YQDFQAAAAAdAAAAABAE', 1, '2024-01-27 00:00:00', 41),
+(5, 'Tomato Basil Soup', 175, 'lunch', 'https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_1:1/k%2FPhoto%2FRecipes%2F2019-08-Recipe-Best-Tomato-Basil-Soup%2FTomato_Basil_Soup_067', 1, '2024-01-27 00:00:00', 41),
+(6, 'Chicken Caesar Salad', 400, 'lunch', 'https://s23209.pcdn.co/wp-content/uploads/2023/01/220905_DD_Chx-Caesar-Salad_051.jpg', 1, '2024-01-27 00:00:00', 41),
+(7, 'Beef Stir Fry', 550, 'dinner', 'https://khinskitchen.com/wp-content/uploads/2023/03/beef-stir-fry-01.jpg', 1, '2024-01-27 00:00:00', 41),
+(8, 'Vegetable Curry', 300, 'dinner', 'https://images.immediate.co.uk/production/volatile/sites/30/2022/06/Courgette-curry-c295fa0.jpg?resize=768,574', 1, '2024-01-27 00:00:00', 41),
+(9, 'Berry Yogurt Parfait', 220, 'snack', 'https://foolproofliving.com/wp-content/uploads/2017/12/Greek-Yogurt-Parfait-Recipe.jpg', 1, '2024-01-27 00:00:00', 41),
+(10, 'Peanut Butter Banana Smoothie', 350, 'snack', 'https://www.delscookingtwist.com/wp-content/uploads/2023/09/Peanut-Butter-Banana-Smoothie_1-730x1095.jpg', 1, '2024-01-27 00:00:00', 41);
 -- --------------------------------------------------------
 
 --
@@ -176,10 +175,13 @@ ALTER TABLE `users`
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `fullname`, `password`, `email`, `active`, `creation_date`, `age`, `role`, `height`, `weight`, `daily_caloriegoal`, `gender`, `goal`) VALUES
-(41, 'Ahmed Boulaabi', '$2y$10$7jAEIB7zXKP5M0uhP4ntuuVth5kOHFkjredT.Kfaq67a7AY6HvosO', 'ahmed@gmail.com', 1, '2024-01-27', 23, 'Regular', 178, 73, 227449, 'male', 'lose-weight-normal'),
-(42, 'Admin', '$2y$10$Q5cdRJXVEp05oKUfefW6ZOh.meRN.UYM6/QR62NUw0Q0VoZRmQ1wa', 'admin@gmail.com', 1, '2024-01-27', 25, 'Admin', 185, 85, 355815, 'male', 'gain-weight-normal');
-
+INSERT INTO `users` (`id`, `fullname`, `password`, `email`, `active`, `creation_date`, `age`, `role`, `height`, `weight`, `daily_caloriegoal`, `gender`, `goal`, `img`) VALUES
+(41, 'Ahmed Boulaabi', '$2y$10$7jAEIB7zXKP5M0uhP4ntuuVth5kOHFkjredT.Kfaq67a7AY6HvosO', 'ahmed@gmail.com', 1, '2024-01-27 00:00:00', 23, 'Regular', 178, 73, 227449, 'male', 'lose-weight-normal', '/public/images/default-user.png'),
+(42, 'Admin', '$2y$10$Q5cdRJXVEp05oKUfefW6ZOh.meRN.UYM6/QR62NUw0Q0VoZRmQ1wa', 'admin@gmail.com', 1, '2024-01-27 00:00:00', 25, 'Admin', 185, 85, 355815, 'male', 'gain-weight-normal', '/public/images/default-user.png'),
+(43, 'l', '$2y$10$EzcOr/J1puxzNQMwnNxbGe0Lhvz9NiGBbvnzZfEhGCFK0IrZOMqK.', 'l@gmail.com', 1, '2024-03-07 10:52:18', 45, 'Regular', 123, 34, 86194, 'male', 'lose-weight-normal', '/public/images/default-user.png'),
+(44, 'nutri', '$2y$10$a8BLHeRtDwQuy48A.05dEe5iQPe/QpNxPrtxV3gDFBc16y3gmUp1W', 'nutri@gmail.com', 1, '2024-03-07 10:53:07', 34, 'Nutritionist', 34, 34, 29671, 'male', 'lose-weight-normal', '/public/images/default-user.png'),
+(45, 'm', '$2y$10$JHFyqb7kyXUXL.Cwc4Lp8ODzyNrH9IdEHmrnj6VcQE1TxKiFdiZ9K', 'm@gmail.com', 1, '2024-03-15 20:36:21', 1, 'Regular', 0, 0, -31146, 'female', 'lose-weight-fast', '/public/images/default-user.png'),
+(46, 'changed', '$2y$10$N6L9VyRICso.k4aKm6Eyt..6f7mA/NflUPwRf0AqKuaMQxdaq4VLC', 'v@gmail.com', 1, '2024-03-16 13:15:27', 33, 'Regular', 33, 33, 195873, 'male', 'gain-weight-normal', '');
 -- --------------------------------------------------------
 
 --
