@@ -39,14 +39,9 @@
           </li>
           <?php if ($_SESSION['role'] === "Admin") : ?>
             <a href="dashboardAdmin"><img src="<?= BASE_APP_DIR ?>/public/images/icons/admin.png" alt="" /></a>
-            <img src="" alt="" />
-            </a>
           <?php endif; ?>
           <?php if ($_SESSION['role'] === "Nutritionist") : ?>
-            <a class="logo" href="nutritionist-dashboard">
-              Nutritionist
-              <img src="" alt="" />
-            </a>
+            <a class="logo" href="nutritionist-dashboard"><img src="<?= BASE_APP_DIR ?>/public/images/icons/nutritionist.png" alt="Nutritionist" /></a>
           <?php endif; ?>
 
         </ul>
