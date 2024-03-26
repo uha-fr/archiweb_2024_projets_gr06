@@ -36,6 +36,9 @@ function handleAjaxResponse(
       redirectHref = "dashboardAdmin?tab=recipesList";
       $("#recipe-form-data")[0].reset();
       break;
+    case "updateRecipe":
+      redirectHref = "dashboardAdmin?tab=recipesList";
+      break;
     case "deleteRecipe":
       redirectHref = "dashboardAdmin?tab=recipesList";
       break;
@@ -49,7 +52,7 @@ function handleAjaxResponse(
       text: successMessage,
       icon: "success",
     }).then(function () {
-      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser' && action != 'insertPlan' && action != 'addNewRecipe') {
+      if (redirectHref != "update" && redirectHref != "recipes-list" && action != 'deleteUser' && action != 'insertPlan' && action != 'addNewRecipe' && action != 'updateRecipe') {
         window.location.href = redirectHref;
       } else if (redirectHref == "recipes-list") {
         window.parent.rafraichirPage();
@@ -206,6 +209,24 @@ function performAjaxRequest(
             showCancelButton: true,
           });
           break;
+        case "loadRecipeDetails":
+          // Remplir les champs du modal avec les données reçues
+          $("#edit_id").val(response.data.id);
+          $("#edit_name").val(response.data.name);
+          $("#edit_calories").val(response.data.calories);
+          $("#edit_type").val(response.data.type);
+    
+          // Gérer l'image de la recette
+          if (response.data.image_url) {
+            $("#edit_imageUpload").next(".custom-file-label").html(response.data.image_url.split('/').pop());
+          } else {
+            $("#edit_imageUpload").next(".custom-file-label").html("Choose file...");
+          }
+    
+          // Afficher le modal d'édition de la recette
+          $("#editRecipeModal").modal("show");
+          break;
+          
         case 'insertPlan':
           console.log(response.message);
           handleAjaxResponse(action, response, "Plan Added successfully", "", false);

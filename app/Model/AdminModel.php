@@ -317,7 +317,45 @@ class AdminModel
             return false;
         }
     }
+    /**
+     * Update Recipe
+     *
+     * Updates an existing recipe in the database with the provided data. This function prepares an SQL update query,
+     * binds the input data to the query parameters, and executes the query. The data is expected to include
+     * the recipe's identifier, as well as the updated details such as name, calories, type (e.g., vegetarian, non-vegetarian),
+     * image URL, visibility status (e.g., public, private), and the creator's identifier.
+     *
+     * If the database operation is successful, the function returns true, indicating that the recipe has been
+     * updated successfully. In case of a database error, the error is caught, and the function returns false.
+     * This error handling mechanism ensures that the application can gracefully handle database exceptions without
+     * crashing.
+     *
+     * @param array $data An associative array containing the recipe's updated details. Expected keys are 'id', 'name', 'calories',
+     *                    'type', 'image', 'visibility', and 'creator'.
+     * @return bool Returns true if the recipe was successfully updated in the database, false otherwise.
+     */
+    public function updateRecipe($data)
+    {
+        // Prepare SQL query to update recipe data in the database.
+        $this->db->query('UPDATE recipes SET name = :name, calories = :calories, type = :type, image_url = :image_url, visibility = :visibility WHERE id = :id');
 
+        // Bind parameters to the query.
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':calories', $data['calories']);
+        $this->db->bind(':type', $data['type']);
+        $this->db->bind(':image_url', $data['image']);
+        $this->db->bind(':visibility', $data['visibility']);
+
+        // Execute the query and handle any exceptions.
+        try {
+            return $this->db->execute();
+        } catch (\PDOException $e) {
+            // Log or handle the database error accordingly.
+            echo "Database error: " . $e->getMessage();
+            return false;
+        }
+    }
     /**
      * Delete Recipe By ID
      * 

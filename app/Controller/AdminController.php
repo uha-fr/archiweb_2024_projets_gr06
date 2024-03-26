@@ -390,6 +390,69 @@ class AdminController
         }
     }
     /**
+ * Update an existing recipe with or without a new image.
+ *
+ * Processes the form submission, sanitizes input, handles image upload (if a new image is provided),
+ * and updates the recipe in the database. If a new image is provided, it updates the image filename in the database.
+ * Responds with JSON indicating success or failure.
+ *
+ * @return void Outputs JSON response.
+ */
+public function updateRecipe()
+{
+    // Check if a new file was uploaded and handle the file upload first
+    $newImageUploadPath = ''; // Default value if no new file is uploaded
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["edit_imageUpload"])) {
+        $targetDir = $_SERVER['DOCUMENT_ROOT'] . '/archiweb_2024_projets_gr06/public/images/recipesImages/';
+        $fileName = basename($_FILES["edit_imageUpload"]["name"]);
+        $targetFilePath = $targetDir . $fileName;
+
+        // Optional: Validate file size and type here before proceeding with the upload
+
+        // Create the target directory if it doesn't exist
+        if (!file_exists($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
+
+        // Attempt to move the uploaded file to the target directory
+        if (move_uploaded_file($_FILES["edit_imageUpload"]["tmp_name"], $targetFilePath)) {
+            $newImageUploadPath = '/public/images/recipesImages/' . $fileName;
+        } else {
+            // Handle file upload failure
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'File upload failed']);
+            exit; // Stop execution if file upload fails
+        }
+    }
+
+    // Sanitize input data
+    $id = trim($_POST['edit_id'] ?? '');
+    $name = trim($_POST['edit_name'] ?? '');
+    $calories = trim($_POST['edit_calories'] ?? '');
+    $type = trim($_POST['edit_type'] ?? '');
+    $visibility = ($_POST['edit_visibility'] ?? '') === 'visible' ? 1 : 0;
+    $creator = trim($_POST['edit_creator'] ?? '');
+
+    $data = [
+        'id' => $id,
+        'name' => $name,
+        'calories' => $calories,
+        'type' => $type,
+        'visibility' => $visibility,
+        'creator' => $creator,
+        'image' => $newImageUploadPath
+    ];
+
+    // Attempt to update the recipe
+    if ($this->adminModel->updateRecipe($data)) {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'message' => 'Recipe updated successfully']);
+    } else {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Something went wrong']);
+    }
+}
+    /**
      * Handles the deletion of a recipe.
      *
      * This method is called when a request to delete a recipe is received.
